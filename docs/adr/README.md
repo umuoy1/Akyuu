@@ -23,6 +23,12 @@
 11. [ADR-011 本地开发与测试数据策略：Fixture-first，Live Smoke 可选](./ADR-011-local-dev-and-test-data-strategy.md) `Accepted`
 12. [ADR-012 初始鉴权与 Workspace 模型：先单用户 Personal Workspace，再预留升级点](./ADR-012-initial-auth-and-workspace-model.md) `Accepted`
 
+## 多周期扩展
+
+13. [ADR-013 多周期 Digest 窗口语义：Weekly 先按 Workspace ISO Week 落地](./ADR-013-multi-period-digest-window-semantics.md) `Accepted`
+14. [ADR-014 多周期 Digest 窗口语义：Monthly 按 Workspace 自然月落地](./ADR-014-monthly-digest-window-semantics.md) `Accepted`
+15. [ADR-015 Feedback Personalization v1：先做 Workspace 级显式反馈画像](./ADR-015-feedback-personalization-v1.md) `Accepted`
+
 ## 说明
 
 - 本索引对应 `IMPLEMENTATION_PLAN.md` 中定义的完整 ADR 清单。

@@ -1,0 +1,19 @@
+{
+  "name": "@akyuu/web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev -p ${WEB_PORT:-3100}",
+    "build": "next build",
+    "start": "next start -p ${WEB_PORT:-3100}",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@akyuu/shared-config": "workspace:*",
+    "@akyuu/shared-types": "workspace:*",
+    "next": "16.2.3",
+    "react": "19.2.5",
+    "react-dom": "19.2.5"
+  }
+}

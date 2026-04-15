@@ -1,0 +1,42 @@
+{
+  "compilerOptions": {
+    "target": "ES2023",
+    "lib": ["ES2023", "DOM"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+    "ignoreDeprecations": "6.0",
+    "baseUrl": ".",
+    "rootDir": ".",
+    "paths": {
+      "@akyuu/shared-config": ["packages/shared-config/src/index.ts"],
+      "@akyuu/shared-types": ["packages/shared-types/src/index.ts"],
+      "@akyuu/shared-utils": ["packages/shared-utils/src/index.ts"],
+      "@akyuu/shared-testing": ["packages/shared-testing/src/index.ts"],
+      "@akyuu/infra-db": ["packages/infra-db/src/index.ts"],
+      "@akyuu/infra-queue": ["packages/infra-queue/src/index.ts"],
+      "@akyuu/infra-github": ["packages/infra-github/src/index.ts"],
+      "@akyuu/infra-scraper": ["packages/infra-scraper/src/index.ts"],
+      "@akyuu/infra-llm": ["packages/infra-llm/src/index.ts"],
+      "@akyuu/infra-observability": ["packages/infra-observability/src/index.ts"],
+      "@akyuu/domain-watch": ["packages/domain-watch/src/index.ts"],
+      "@akyuu/domain-source": ["packages/domain-source/src/index.ts"],
+      "@akyuu/domain-canonical": ["packages/domain-canonical/src/index.ts"],
+      "@akyuu/domain-topic": ["packages/domain-topic/src/index.ts"],
+      "@akyuu/domain-trend": ["packages/domain-trend/src/index.ts"],
+      "@akyuu/domain-score": ["packages/domain-score/src/index.ts"],
+      "@akyuu/domain-digest": ["packages/domain-digest/src/index.ts"],
+      "@akyuu/domain-ask": ["packages/domain-ask/src/index.ts"]
+    },
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "forceConsistentCasingInFileNames": true,
+    "skipLibCheck": true,
+    "declaration": false,
+    "sourceMap": true,
+    "types": ["node"]
+  }
+}

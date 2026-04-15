@@ -1,0 +1,15 @@
+{
+  "name": "@akyuu/infra-scraper",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@akyuu/shared-config": "workspace:*",
+    "@akyuu/shared-types": "workspace:*",
+    "cheerio": "1.2.0"
+  }
+}

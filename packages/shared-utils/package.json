@@ -1,0 +1,14 @@
+{
+  "name": "@akyuu/shared-utils",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "date-fns": "4.1.0",
+    "date-fns-tz": "3.2.0"
+  }
+}

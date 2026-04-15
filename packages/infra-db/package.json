@@ -1,0 +1,19 @@
+{
+  "name": "@akyuu/infra-db",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "exports": "./src/index.ts",
+  "scripts": {
+    "migrate": "tsx src/migrate.ts",
+    "seed": "tsx src/seed.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@akyuu/shared-config": "workspace:*",
+    "@akyuu/shared-types": "workspace:*",
+    "drizzle-orm": "0.45.2",
+    "pg": "8.20.0",
+    "zod": "4.3.6"
+  }
+}

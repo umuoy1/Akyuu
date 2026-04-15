@@ -1,0 +1,33 @@
+{
+  "name": "@akyuu/worker",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx watch src/server.ts",
+    "typecheck": "tsc --noEmit -p tsconfig.json"
+  },
+  "dependencies": {
+    "@akyuu/domain-canonical": "workspace:*",
+    "@akyuu/domain-digest": "workspace:*",
+    "@akyuu/domain-feedback": "workspace:*",
+    "@akyuu/domain-score": "workspace:*",
+    "@akyuu/domain-source": "workspace:*",
+    "@akyuu/domain-topic": "workspace:*",
+    "@akyuu/domain-trend": "workspace:*",
+    "@akyuu/infra-db": "workspace:*",
+    "@akyuu/infra-github": "workspace:*",
+    "@akyuu/infra-llm": "workspace:*",
+    "@akyuu/infra-observability": "workspace:*",
+    "@akyuu/infra-queue": "workspace:*",
+    "@akyuu/infra-scraper": "workspace:*",
+    "@akyuu/shared-config": "workspace:*",
+    "@akyuu/shared-types": "workspace:*",
+    "@fastify/cors": "11.2.0",
+    "@fastify/helmet": "13.0.2",
+    "@fastify/sensible": "6.0.4",
+    "drizzle-orm": "0.45.2",
+    "fastify": "5.8.5",
+    "pino": "10.3.1"
+  }
+}
