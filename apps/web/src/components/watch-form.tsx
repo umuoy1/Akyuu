@@ -2,6 +2,8 @@
 
 import { useState, useTransition } from "react";
 
+import { getClientApiBaseUrl, readResponseError } from "../lib/client-request";
+
 export function WatchForm() {
   const [watchType, setWatchType] = useState<"repo" | "trend" | "topic">("repo");
   const [name, setName] = useState("");
@@ -11,6 +13,7 @@ export function WatchForm() {
   const [topicKeywords, setTopicKeywords] = useState("agent, llm");
   const [topicRepos, setTopicRepos] = useState("openai/codex, microsoft/typescript");
   const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
 
   const splitCsv = (value: string) =>
     value
@@ -22,6 +25,8 @@ export function WatchForm() {
     event.preventDefault();
 
     startTransition(async () => {
+      setError(null);
+
       const body =
         watchType === "repo"
           ? {
@@ -56,7 +61,7 @@ export function WatchForm() {
                 }
               };
 
-      const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/watches`, {
+      const response = await fetch(`${getClientApiBaseUrl()}/api/v1/watches`, {
         method: "POST",
         headers: {
           "content-type": "application/json"
@@ -65,7 +70,8 @@ export function WatchForm() {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to create watch");
+        setError(await readResponseError(response, "Failed to create watch"));
+        return;
       }
 
       window.location.reload();
@@ -133,6 +139,7 @@ export function WatchForm() {
       <button type="submit" disabled={isPending}>
         {isPending ? "Saving..." : "Create Watch"}
       </button>
+      {error ? <p className="status status--error">{error}</p> : null}
     </form>
   );
 }

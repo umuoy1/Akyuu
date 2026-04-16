@@ -1,16 +1,18 @@
 import Link from "next/link";
 
-import { fetchFeedback, fetchLatestDigest, fetchNotifications, fetchPreferenceProfile } from "../../lib/api";
+import { fetchFeedback, fetchLatestDigest, fetchNotifications, fetchPreferenceProfile, fetchWatches } from "../../lib/api";
 import { FeedbackActions } from "../../components/feedback-actions";
 import { RunPipelineButton } from "../../components/run-pipeline-button";
 
 export default async function TodayPage() {
-  const [digest, feedback, notifications, preferenceProfile] = await Promise.all([
+  const [digest, feedback, notifications, preferenceProfile, watches] = await Promise.all([
     fetchLatestDigest(),
     fetchFeedback(),
     fetchNotifications(),
-    fetchPreferenceProfile()
+    fetchPreferenceProfile(),
+    fetchWatches()
   ]);
+  const hasRunnableWatch = watches.watches.some((watch) => watch.status === "active");
   const topItemTypeWeights = preferenceProfile.profile
     ? Object.entries(preferenceProfile.profile.profile.itemTypeWeights)
         .sort((left, right) => right[1] - left[1])
@@ -29,9 +31,20 @@ export default async function TodayPage() {
         <h1>Today</h1>
         <p className="muted">Run the pipeline after adding at least one RepoWatch, TopicWatch, or TrendWatch.</p>
         <div className="feedback-actions">
-          <RunPipelineButton />
-          <RunPipelineButton digestType="weekly" label="Run Weekly Digest" />
-          <RunPipelineButton digestType="monthly" label="Run Monthly Digest" />
+          <RunPipelineButton
+            disabled={!hasRunnableWatch}
+            disabledReason={!hasRunnableWatch ? "Create at least one active watch before running the pipeline." : null}
+          />
+          <RunPipelineButton
+            digestType="weekly"
+            label="Run Weekly Digest"
+            disabled={!hasRunnableWatch}
+          />
+          <RunPipelineButton
+            digestType="monthly"
+            label="Run Monthly Digest"
+            disabled={!hasRunnableWatch}
+          />
         </div>
       </section>
 

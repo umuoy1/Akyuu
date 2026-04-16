@@ -10,9 +10,11 @@
   "dependencies": {
     "@akyuu/domain-watch": "workspace:*",
     "@akyuu/infra-db": "workspace:*",
+    "@akyuu/infra-observability": "workspace:*",
     "@akyuu/infra-queue": "workspace:*",
     "@akyuu/shared-config": "workspace:*",
     "@akyuu/shared-types": "workspace:*",
+    "@akyuu/shared-utils": "workspace:*",
     "@fastify/cors": "11.2.0",
     "@fastify/helmet": "13.0.2",
     "@fastify/sensible": "6.0.4",

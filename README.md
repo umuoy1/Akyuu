@@ -27,7 +27,7 @@ The current end-to-end chain is:
 5. Events are scored and matched into topic evidence / topic updates
 6. A daily digest is built and saved
 7. Web reads the latest digest, topics, trends, feedback, and ask history from API
-8. Users can ask a deterministic follow-up question grounded on digest and topic evidence
+8. Users can ask an LLM-composed follow-up question grounded on digest and topic evidence
 9. Users can leave explicit worthwhile / not worthwhile feedback on digest items
 10. Feedback updates a workspace-level preference profile and reranks future recommended items
 11. Digest delivery attempts are written to `outbound_notification` and surfaced in the Web UI
@@ -53,6 +53,9 @@ corepack prepare pnpm@10.33.0 --activate
 pnpm install
 ```
 
+Browser E2E uses `puppeteer-core` and defaults to a local Chrome or Chromium binary. If auto-detection does not work, set `PUPPETEER_EXECUTABLE_PATH`.
+Local web development defaults `NEXT_PUBLIC_API_BASE_URL` to `http://localhost:3001` when it is not explicitly provided.
+
 ### 2. Start infrastructure
 
 ```bash
@@ -72,7 +75,15 @@ Default dev ports:
 
 ### 3. Start apps
 
-Use separate terminals:
+Fastest path:
+
+```bash
+pnpm dev:all
+```
+
+This command ensures `postgres` and `redis` are up, applies migrations, then starts `worker`, `api`, `scheduler`, and `web` with prefixed logs in one terminal.
+
+If you need separate terminals instead:
 
 ```bash
 pnpm dev:worker
@@ -118,6 +129,7 @@ Open `/ask` and submit a question such as:
 - `Node Runtime 最近有没有推进？`
 
 The answer is stored in `question_session` / `answer_record` and rendered back in the Ask page.
+When `OPENAI_API_KEY` is configured, Ask uses retrieval-first + LLM composition; otherwise it falls back to deterministic composition.
 
 ### Review trends and feedback
 
@@ -141,8 +153,14 @@ Key variables:
 - `DEFAULT_WORKSPACE_SLUG`
 - `GITHUB_TOKEN`
 - `OPENAI_API_KEY`
+- `OPENAI_BASE_URL`
+- `OPENAI_MODEL`
+- `PUPPETEER_EXECUTABLE_PATH`
 
 `GITHUB_TOKEN` is optional for the current public-source flow, but strongly recommended to avoid low unauthenticated limits.
+Without `GITHUB_TOKEN`, live GitHub polling can hit public rate limits quickly, so the default API integration suite uses an isolated test database plus replayable real-data fixtures under [`tests/fixtures/api`](./tests/fixtures/api).
+`OPENAI_BASE_URL` now defaults to Zhipu's OpenAI-compatible endpoint, and `OPENAI_MODEL` defaults to `glm-5`.
+`PUPPETEER_EXECUTABLE_PATH` is optional on macOS when Google Chrome is installed under `/Applications`, but is the supported override for CI and non-standard browser locations.
 
 ## Quality Checks
 
@@ -150,7 +168,14 @@ Key variables:
 pnpm typecheck
 pnpm lint
 pnpm test
+pnpm test:api
+pnpm test:api:live
+pnpm test:browser
 ```
+
+`pnpm test:api` starts isolated PostgreSQL / Redis-backed API + Worker processes, loads a real captured workspace snapshot into a dedicated test database, and validates the HTTP contract across watches, topics, trends, digests, ask, feedback, preferences, and notifications.
+`pnpm test:api:live` starts isolated PostgreSQL / Redis-backed API + Worker + Scheduler processes and runs a real end-to-end flow against live GitHub API data plus the configured OpenAI-compatible LLM endpoint. The current live suite focuses on the RepoWatch / TopicWatch / digest / ask / feedback chain, while TrendWatch remains covered by the fixture-backed API integration suite because `github.com/trending` is less stable from automated test environments.
+`pnpm test:browser` uses `puppeteer-core` plus a production-style `apps/web` build, then drives the real browser UI across `Today`, `History`, `Delivery`, `Trends`, `Watches`, `Topics`, and `Ask` against isolated API + Worker test services. When both `GITHUB_TOKEN` and `OPENAI_API_KEY` are present, it also runs a live browser suite that creates watches, clicks `Run Pipeline` / `Run Weekly Digest` / `Run Monthly Digest`, records feedback, and submits a real Ask request through the UI.
 
 ## Known Gaps
 

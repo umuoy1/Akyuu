@@ -15,6 +15,7 @@ dist/
 build/
 out/
 coverage/
+test-results/
 *.tsbuildinfo
 
 # Logs

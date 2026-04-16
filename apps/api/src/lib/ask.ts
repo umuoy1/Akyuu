@@ -1,6 +1,7 @@
 import { desc, eq } from "drizzle-orm";
 
 import { buildAskSession } from "@akyuu/domain-ask";
+import { composeAskAnswer } from "@akyuu/infra-llm";
 import type { AskRequest, AskSessionView, DigestView, TopicView } from "@akyuu/shared-types";
 import { db, answerRecord, questionSession } from "@akyuu/infra-db";
 
@@ -45,6 +46,15 @@ export async function askQuestion(
     digest: digestView,
     topics
   });
+  const composed = await composeAskAnswer({
+    question: built.question,
+    anchorType: built.anchorType,
+    anchorId: built.anchorId,
+    retrievalContext: built.retrievalContext,
+    fallbackAnswerMarkdown: built.answerMarkdown
+  });
+  const answerMarkdown = composed.markdown;
+  const llmVersion = composed.llmVersion ?? built.llmVersion;
 
   const [sessionRow] = await db
     .insert(questionSession)
@@ -63,9 +73,9 @@ export async function askQuestion(
 
   await db.insert(answerRecord).values({
     questionSessionId: sessionRow.id,
-    answerMarkdown: built.answerMarkdown,
+    answerMarkdown,
     retrievalContext: built.retrievalContext as Record<string, unknown>,
-    llmVersion: built.llmVersion
+    llmVersion
   });
 
   return {
@@ -73,8 +83,8 @@ export async function askQuestion(
     anchorType: built.anchorType,
     anchorId: built.anchorId,
     question: built.question,
-    answerMarkdown: built.answerMarkdown,
-    llmVersion: built.llmVersion,
+    answerMarkdown,
+    llmVersion,
     createdAt: sessionRow.createdAt.toISOString(),
     retrievalContext: built.retrievalContext
   };

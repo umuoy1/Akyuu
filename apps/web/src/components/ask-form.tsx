@@ -2,9 +2,12 @@
 
 import { useState, useTransition } from "react";
 
+import { getClientApiBaseUrl, readResponseError } from "../lib/client-request";
+
 export function AskForm() {
   const [question, setQuestion] = useState("今天最值得看的 3 个 PR 是什么？");
   const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
 
   return (
     <form
@@ -13,7 +16,9 @@ export function AskForm() {
         event.preventDefault();
 
         startTransition(async () => {
-          const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/ask`, {
+          setError(null);
+
+          const response = await fetch(`${getClientApiBaseUrl()}/api/v1/ask`, {
             method: "POST",
             headers: {
               "content-type": "application/json"
@@ -25,7 +30,8 @@ export function AskForm() {
           });
 
           if (!response.ok) {
-            throw new Error("Failed to ask question");
+            setError(await readResponseError(response, "Failed to ask question"));
+            return;
           }
 
           window.location.reload();
@@ -45,6 +51,7 @@ export function AskForm() {
       <button type="submit" disabled={isPending}>
         {isPending ? "Asking..." : "Ask"}
       </button>
+      {error ? <p className="status status--error">{error}</p> : null}
     </form>
   );
 }

@@ -1,0 +1,1908 @@
+{
+  "meta": {
+    "workspaceSlug": "dev",
+    "workspaceName": "Dev Workspace",
+    "timezone": "Asia/Shanghai",
+    "userEmail": "dev@akyuu.local",
+    "userDisplayName": "Dev User"
+  },
+  "tables": {
+    "workspace": [
+      {
+        "id": "811ddd33-7124-4c7e-811f-08d6b042f2e4",
+        "name": "Dev Workspace",
+        "slug": "dev",
+        "plan_tier": "free",
+        "timezone": "Asia/Shanghai",
+        "created_at": "2026-04-15T17:36:08.380Z",
+        "updated_at": "2026-04-15T17:36:08.380Z"
+      }
+    ],
+    "app_user": [
+      {
+        "id": "08b2600a-501d-4eba-be82-63404e6c020f",
+        "email": "dev@akyuu.local",
+        "display_name": "Dev User",
+        "avatar_url": null,
+        "last_login_at": null,
+        "created_at": "2026-04-15T17:36:08.384Z",
+        "updated_at": "2026-04-15T17:36:08.384Z"
+      }
+    ],
+    "workspace_member": [
+      {
+        "id": "1a838a18-606c-4109-b1f8-34996f76b431",
+        "workspace_id": "811ddd33-7124-4c7e-811f-08d6b042f2e4",
+        "user_id": "08b2600a-501d-4eba-be82-63404e6c020f",
+        "role": "owner",
+        "created_at": "2026-04-15T17:36:08.388Z"
+      }
+    ],
+    "watch_target": [
+      {
+        "id": "a38e9473-bf93-4d48-813f-51147acc4174",
+        "workspace_id": "811ddd33-7124-4c7e-811f-08d6b042f2e4",
+        "type": "repo",
+        "name": "Node.js",
+        "status": "active",
+        "priority": 5,
+        "config": {
+          "repo": "node",
+          "owner": "nodejs",
+          "pullsLimit": 3,
+          "issuesLimit": 3
+        },
+        "created_by": "08b2600a-501d-4eba-be82-63404e6c020f",
+        "created_at": "2026-04-15T17:37:00.631Z",
+        "updated_at": "2026-04-15T17:37:00.631Z",
+        "deleted_at": null
+      },
+      {
+        "id": "22586ebe-46e3-4ebb-b31b-e12031d9f969",
+        "workspace_id": "811ddd33-7124-4c7e-811f-08d6b042f2e4",
+        "type": "topic",
+        "name": "Node Runtime",
+        "status": "active",
+        "priority": 5,
+        "config": {
+          "aliases": [
+            "node runtime"
+          ],
+          "topicId": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+          "keywords": [
+            "runtime",
+            "node"
+          ],
+          "topicSlug": "node-runtime",
+          "repoBindings": [
+            "nodejs/node"
+          ]
+        },
+        "created_by": "08b2600a-501d-4eba-be82-63404e6c020f",
+        "created_at": "2026-04-15T17:57:22.325Z",
+        "updated_at": "2026-04-15T17:57:22.330Z",
+        "deleted_at": null
+      },
+      {
+        "id": "8abb347f-afd2-4e04-9e1c-bc637c0eadb5",
+        "workspace_id": "811ddd33-7124-4c7e-811f-08d6b042f2e4",
+        "type": "trend",
+        "name": "Trending Global",
+        "status": "archived",
+        "priority": 3,
+        "config": {
+          "scope": "global",
+          "source": "github_trending"
+        },
+        "created_by": "08b2600a-501d-4eba-be82-63404e6c020f",
+        "created_at": "2026-04-15T17:37:00.672Z",
+        "updated_at": "2026-04-15T17:59:36.495Z",
+        "deleted_at": "2026-04-15T17:59:36.495Z"
+      }
+    ],
+    "topic": [
+      {
+        "id": "b33c8d7a-eab2-4364-95b1-a57e4f7086cd",
+        "workspace_id": null,
+        "name": "AI Agent",
+        "slug": "ai-agent",
+        "description": "System topic for AI coding agent related changes.",
+        "status": "active",
+        "metadata": {},
+        "created_at": "2026-04-15T17:36:08.391Z",
+        "updated_at": "2026-04-15T17:36:08.391Z"
+      },
+      {
+        "id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "workspace_id": "811ddd33-7124-4c7e-811f-08d6b042f2e4",
+        "name": "Node Runtime",
+        "slug": "node-runtime",
+        "description": "Topic watch for Node Runtime.",
+        "status": "active",
+        "metadata": {
+          "watchTargetId": "22586ebe-46e3-4ebb-b31b-e12031d9f969"
+        },
+        "created_at": "2026-04-15T17:57:22.325Z",
+        "updated_at": "2026-04-15T17:57:22.325Z"
+      }
+    ],
+    "topic_alias": [
+      {
+        "id": "3333fe13-d3bd-449c-8435-103f550de8ec",
+        "topic_id": "b33c8d7a-eab2-4364-95b1-a57e4f7086cd",
+        "alias": "agent",
+        "alias_type": "keyword",
+        "weight": "2.00"
+      },
+      {
+        "id": "c52342eb-0a45-475b-9305-54832d86bc24",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "alias": "node runtime",
+        "alias_type": "keyword",
+        "weight": "1.50"
+      }
+    ],
+    "topic_rule": [
+      {
+        "id": "dd31cd07-2c03-450c-a800-c4370f85f828",
+        "topic_id": "b33c8d7a-eab2-4364-95b1-a57e4f7086cd",
+        "rule_type": "keyword",
+        "operator": "include",
+        "value": "agent",
+        "weight": "2.00",
+        "enabled": true,
+        "created_at": "2026-04-15T17:36:08.394Z"
+      },
+      {
+        "id": "779c4a19-b8fc-4f72-a35c-4c3da759c9d2",
+        "topic_id": "b33c8d7a-eab2-4364-95b1-a57e4f7086cd",
+        "rule_type": "keyword",
+        "operator": "include",
+        "value": "llm",
+        "weight": "1.50",
+        "enabled": true,
+        "created_at": "2026-04-15T17:36:08.394Z"
+      },
+      {
+        "id": "2955989d-51f9-495d-ac8c-48be3d0cd9a8",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "rule_type": "repo_binding",
+        "operator": "exact",
+        "value": "nodejs/node",
+        "weight": "3.00",
+        "enabled": true,
+        "created_at": "2026-04-15T17:57:22.325Z"
+      },
+      {
+        "id": "28a1c7f2-2cd5-4596-a863-bfdf96a616c6",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "rule_type": "keyword",
+        "operator": "include",
+        "value": "runtime",
+        "weight": "2.00",
+        "enabled": true,
+        "created_at": "2026-04-15T17:57:22.325Z"
+      },
+      {
+        "id": "33cd7ede-e587-4398-958d-d78c38a1338d",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "rule_type": "keyword",
+        "operator": "include",
+        "value": "node",
+        "weight": "2.00",
+        "enabled": true,
+        "created_at": "2026-04-15T17:57:22.325Z"
+      }
+    ],
+    "topic_evidence": [
+      {
+        "id": "61a11c2d-82b6-43e4-a067-a023b7586add",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "canonical_event_id": "80e78793-d446-41c8-9b07-20147e3085ec",
+        "evidence_type": "repo_binding",
+        "score": "3.00",
+        "explanation": "Matched repo binding \"nodejs/node\"",
+        "created_at": "2026-04-15T17:59:42.434Z"
+      },
+      {
+        "id": "e3d5d7f9-2b2a-48ad-b81d-ec330157c75d",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "canonical_event_id": "80e78793-d446-41c8-9b07-20147e3085ec",
+        "evidence_type": "keyword_hit",
+        "score": "2.00",
+        "explanation": "Matched keyword \"node\"",
+        "created_at": "2026-04-15T17:59:42.436Z"
+      },
+      {
+        "id": "22669246-cb7a-4589-83b6-07e57b5b3ad3",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "canonical_event_id": "1620a9dd-cb80-4784-bbc7-831b72201308",
+        "evidence_type": "repo_binding",
+        "score": "3.00",
+        "explanation": "Matched repo binding \"nodejs/node\"",
+        "created_at": "2026-04-15T17:59:42.451Z"
+      },
+      {
+        "id": "664e11ab-c4d5-4ac9-807d-357bf48eaa10",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "canonical_event_id": "20cf0e4d-64e3-4464-b14a-2909decee648",
+        "evidence_type": "repo_binding",
+        "score": "3.00",
+        "explanation": "Matched repo binding \"nodejs/node\"",
+        "created_at": "2026-04-15T18:00:46.146Z"
+      },
+      {
+        "id": "526c28d3-c830-4b3a-8200-8d50604694dd",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "canonical_event_id": "20cf0e4d-64e3-4464-b14a-2909decee648",
+        "evidence_type": "keyword_hit",
+        "score": "2.00",
+        "explanation": "Matched keyword \"node\"",
+        "created_at": "2026-04-15T18:00:46.148Z"
+      },
+      {
+        "id": "20be8b48-ba78-4913-a45f-f0da96d67fba",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "canonical_event_id": "1a5adcb1-dd4f-43c4-b19c-8e88b25fa26f",
+        "evidence_type": "repo_binding",
+        "score": "3.00",
+        "explanation": "Matched repo binding \"nodejs/node\"",
+        "created_at": "2026-04-15T18:00:46.183Z"
+      },
+      {
+        "id": "208d884f-0bf7-4ede-a587-d6c8d61bf4c2",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "canonical_event_id": "1a5adcb1-dd4f-43c4-b19c-8e88b25fa26f",
+        "evidence_type": "keyword_hit",
+        "score": "2.00",
+        "explanation": "Matched keyword \"node\"",
+        "created_at": "2026-04-15T18:00:46.185Z"
+      },
+      {
+        "id": "1ae2a738-dc30-42ff-aefd-160de0385299",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "canonical_event_id": "e12f817d-22e2-4948-9a0b-251d635ec985",
+        "evidence_type": "repo_binding",
+        "score": "3.00",
+        "explanation": "Matched repo binding \"nodejs/node\"",
+        "created_at": "2026-04-15T18:00:46.192Z"
+      },
+      {
+        "id": "293f8263-d6e1-4522-bcfa-00a3a78ad1d6",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "canonical_event_id": "e12f817d-22e2-4948-9a0b-251d635ec985",
+        "evidence_type": "keyword_hit",
+        "score": "2.00",
+        "explanation": "Matched keyword \"node\"",
+        "created_at": "2026-04-15T18:00:46.192Z"
+      },
+      {
+        "id": "e22a1528-9052-4b38-8ba9-a7caeb3a5f8d",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "canonical_event_id": "46383be6-46f4-4a9b-aacd-f2edc7f5acca",
+        "evidence_type": "repo_binding",
+        "score": "3.00",
+        "explanation": "Matched repo binding \"nodejs/node\"",
+        "created_at": "2026-04-15T18:00:46.204Z"
+      },
+      {
+        "id": "fa468024-2b48-43aa-aebb-d9ca7c0eff06",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "canonical_event_id": "46383be6-46f4-4a9b-aacd-f2edc7f5acca",
+        "evidence_type": "keyword_hit",
+        "score": "2.00",
+        "explanation": "Matched keyword \"node\"",
+        "created_at": "2026-04-15T18:00:46.204Z"
+      },
+      {
+        "id": "e5056565-afbe-4375-a047-d6158dfad942",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "canonical_event_id": "758ecd70-5a72-479c-a5a1-c0f798cffc1f",
+        "evidence_type": "repo_binding",
+        "score": "3.00",
+        "explanation": "Matched repo binding \"nodejs/node\"",
+        "created_at": "2026-04-15T18:00:46.211Z"
+      },
+      {
+        "id": "04a5abba-a7d9-47ce-a206-c2bd70a56b86",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "canonical_event_id": "758ecd70-5a72-479c-a5a1-c0f798cffc1f",
+        "evidence_type": "keyword_hit",
+        "score": "2.00",
+        "explanation": "Matched keyword \"node\"",
+        "created_at": "2026-04-15T18:00:46.212Z"
+      },
+      {
+        "id": "c1991529-87ee-46d1-b930-914a443c02fb",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "canonical_event_id": "0bf7fca3-8d59-4295-beec-9a49b92a78f0",
+        "evidence_type": "repo_binding",
+        "score": "3.00",
+        "explanation": "Matched repo binding \"nodejs/node\"",
+        "created_at": "2026-04-15T18:42:30.810Z"
+      },
+      {
+        "id": "097ee90f-d921-41a7-9354-f6a5dc45f7bf",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "canonical_event_id": "0bf7fca3-8d59-4295-beec-9a49b92a78f0",
+        "evidence_type": "keyword_hit",
+        "score": "2.00",
+        "explanation": "Matched keyword \"node\"",
+        "created_at": "2026-04-15T18:42:30.811Z"
+      },
+      {
+        "id": "7596a151-33e8-4368-90be-82630eae7461",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "canonical_event_id": "d0526790-e67a-4044-9a36-95160f56a1b9",
+        "evidence_type": "repo_binding",
+        "score": "3.00",
+        "explanation": "Matched repo binding \"nodejs/node\"",
+        "created_at": "2026-04-15T18:42:30.819Z"
+      },
+      {
+        "id": "495d7ca9-21dd-48c8-ad9e-30f9abc8fa99",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "canonical_event_id": "d0526790-e67a-4044-9a36-95160f56a1b9",
+        "evidence_type": "keyword_hit",
+        "score": "2.00",
+        "explanation": "Matched keyword \"node\"",
+        "created_at": "2026-04-15T18:42:30.820Z"
+      },
+      {
+        "id": "f04a731c-bc49-4c76-b240-ce0bbe6f586e",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "canonical_event_id": "09b59783-c0fb-4b74-92ea-5632f686c277",
+        "evidence_type": "repo_binding",
+        "score": "3.00",
+        "explanation": "Matched repo binding \"nodejs/node\"",
+        "created_at": "2026-04-15T18:42:30.825Z"
+      },
+      {
+        "id": "412076af-ee39-4a76-bff5-eea9ef00b056",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "canonical_event_id": "09b59783-c0fb-4b74-92ea-5632f686c277",
+        "evidence_type": "keyword_hit",
+        "score": "2.00",
+        "explanation": "Matched keyword \"node\"",
+        "created_at": "2026-04-15T18:42:30.826Z"
+      },
+      {
+        "id": "517af6cb-255a-4e30-947e-a6c3a0d32c2d",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "canonical_event_id": "f30e0eac-0d55-40a4-861a-8aaca592f66e",
+        "evidence_type": "repo_binding",
+        "score": "3.00",
+        "explanation": "Matched repo binding \"nodejs/node\"",
+        "created_at": "2026-04-15T18:42:30.838Z"
+      },
+      {
+        "id": "8d6f8448-10d3-48a0-9ca0-603a971b98a5",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "canonical_event_id": "f30e0eac-0d55-40a4-861a-8aaca592f66e",
+        "evidence_type": "keyword_hit",
+        "score": "2.00",
+        "explanation": "Matched keyword \"node\"",
+        "created_at": "2026-04-15T18:42:30.839Z"
+      },
+      {
+        "id": "a9641575-2753-4417-bdf1-7c392ff73735",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "canonical_event_id": "86f1432b-0d1c-4490-8d2e-830a309a51f3",
+        "evidence_type": "repo_binding",
+        "score": "3.00",
+        "explanation": "Matched repo binding \"nodejs/node\"",
+        "created_at": "2026-04-15T18:42:30.844Z"
+      },
+      {
+        "id": "895cded0-9af1-4343-ada4-e6f1c1e6f821",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "canonical_event_id": "86f1432b-0d1c-4490-8d2e-830a309a51f3",
+        "evidence_type": "keyword_hit",
+        "score": "2.00",
+        "explanation": "Matched keyword \"node\"",
+        "created_at": "2026-04-15T18:42:30.845Z"
+      }
+    ],
+    "topic_update": [
+      {
+        "id": "7eca758d-8603-46ab-a3dc-38130fb6590e",
+        "topic_id": "b33c8d7a-eab2-4364-95b1-a57e4f7086cd",
+        "window_start": "2026-04-14T16:00:00.000Z",
+        "window_end": "2026-04-15T15:59:59.999Z",
+        "update_type": "daily",
+        "importance_score": "0.00",
+        "summary_struct": {
+          "summary": "AI Agent had no matched signals in the current window.",
+          "highlights": [],
+          "evidenceCount": 0
+        },
+        "created_at": "2026-04-15T17:59:42.465Z"
+      },
+      {
+        "id": "2f03568e-4e01-4d1f-9068-c1fc11ef4306",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "window_start": "2026-04-14T16:00:00.000Z",
+        "window_end": "2026-04-15T15:59:59.999Z",
+        "update_type": "daily",
+        "importance_score": "0.00",
+        "summary_struct": {
+          "summary": "Node Runtime had no matched signals in the current window.",
+          "highlights": [],
+          "evidenceCount": 0
+        },
+        "created_at": "2026-04-15T17:59:42.473Z"
+      },
+      {
+        "id": "ba0e3f69-3cc0-4994-ba42-048429e28c48",
+        "topic_id": "b33c8d7a-eab2-4364-95b1-a57e4f7086cd",
+        "window_start": "2026-04-15T16:00:00.000Z",
+        "window_end": "2026-04-16T15:59:59.999Z",
+        "update_type": "daily",
+        "importance_score": "0.00",
+        "summary_struct": {
+          "summary": "AI Agent had no matched signals in the current window.",
+          "highlights": [],
+          "evidenceCount": 0
+        },
+        "created_at": "2026-04-15T18:00:46.218Z"
+      },
+      {
+        "id": "1a30c416-45f5-48e4-8610-e5dc18439fd8",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "window_start": "2026-04-15T16:00:00.000Z",
+        "window_end": "2026-04-16T15:59:59.999Z",
+        "update_type": "daily",
+        "importance_score": "26.00",
+        "summary_struct": {
+          "summary": "Node Runtime matched 10 signals in the current window.",
+          "highlights": [
+            "build,win: enable PGO and LTO for Windows builds -> pr_opened in nodejs/node",
+            "doc: add experimental modules lifetime policy -> pr_opened in nodejs/node",
+            "src: clean up experimental flag variables -> pr_opened in nodejs/node"
+          ],
+          "evidenceCount": 10
+        },
+        "created_at": "2026-04-15T18:00:46.225Z"
+      },
+      {
+        "id": "36269039-9f0b-40ce-8f65-5c4d70571ca4",
+        "topic_id": "b33c8d7a-eab2-4364-95b1-a57e4f7086cd",
+        "window_start": "2026-03-31T16:00:00.000Z",
+        "window_end": "2026-04-30T16:00:00.000Z",
+        "update_type": "monthly",
+        "importance_score": "0.00",
+        "summary_struct": {
+          "summary": "AI Agent had no matched signals in the current window.",
+          "highlights": [],
+          "evidenceCount": 0
+        },
+        "created_at": "2026-04-15T18:30:00.803Z"
+      },
+      {
+        "id": "bbde361d-d00f-4b55-b979-50c9698edb57",
+        "topic_id": "3b5e8fc8-060d-4440-b2dc-5229c19afe5c",
+        "window_start": "2026-03-31T16:00:00.000Z",
+        "window_end": "2026-04-30T16:00:00.000Z",
+        "update_type": "monthly",
+        "importance_score": "30.00",
+        "summary_struct": {
+          "summary": "Node Runtime matched 10 signals in the current window.",
+          "highlights": [
+            "src: allow empty --experimental-config-file -> pr_opened in nodejs/node",
+            "[v24.x] src: add permission support to config file -> pr_opened in nodejs/node",
+            "ffi: added new methods and error codes -> pr_opened in nodejs/node"
+          ],
+          "evidenceCount": 10
+        },
+        "created_at": "2026-04-15T18:30:00.811Z"
+      }
+    ],
+    "trend_snapshot": [
+      {
+        "id": "c0e093f3-735b-4951-8877-5ba49ab83879",
+        "source": "github_trending",
+        "scope": "global",
+        "snapshot_date": "2026-04-15T16:00:00.000Z",
+        "raw_snapshot_id": null,
+        "captured_at": "2026-04-15T17:39:42.088Z",
+        "metadata": {}
+      }
+    ],
+    "trend_snapshot_item": [
+      {
+        "id": "577e64d6-c681-47c6-b13e-f67c52fa7324",
+        "trend_snapshot_id": "c0e093f3-735b-4951-8877-5ba49ab83879",
+        "rank": 1,
+        "repo_full_name": "forrestchang/andrej-karpathy-skills",
+        "language": null,
+        "description": "A single CLAUDE.md file to improve Claude Code behavior, derived from Andrej Karpathy's observations on LLM coding pitfalls.",
+        "metric_primary": "9622.00",
+        "metric_secondary": null,
+        "metadata": {}
+      },
+      {
+        "id": "b472c6b7-cab1-4503-874c-fa138b7a2539",
+        "trend_snapshot_id": "c0e093f3-735b-4951-8877-5ba49ab83879",
+        "rank": 2,
+        "repo_full_name": "pascalorg/editor",
+        "language": "TypeScript",
+        "description": "Create and share 3D architectural projects.",
+        "metric_primary": "1422.00",
+        "metric_secondary": null,
+        "metadata": {}
+      },
+      {
+        "id": "e628041c-db67-4eeb-93d3-58ed245d9187",
+        "trend_snapshot_id": "c0e093f3-735b-4951-8877-5ba49ab83879",
+        "rank": 3,
+        "repo_full_name": "thedotmack/claude-mem",
+        "language": "TypeScript",
+        "description": "A Claude Code plugin that automatically captures everything Claude does during your coding sessions, compresses it with AI (using Claude's agent-sdk), and injects relevant context back into future sessions.",
+        "metric_primary": "2330.00",
+        "metric_secondary": null,
+        "metadata": {}
+      },
+      {
+        "id": "1ea54159-df3c-4344-9a80-6c9c94e343d4",
+        "trend_snapshot_id": "c0e093f3-735b-4951-8877-5ba49ab83879",
+        "rank": 4,
+        "repo_full_name": "Lordog/dive-into-llms",
+        "language": "Jupyter Notebook",
+        "description": "《动手学大模型Dive into LLMs》系列编程实践教程",
+        "metric_primary": "1068.00",
+        "metric_secondary": null,
+        "metadata": {}
+      },
+      {
+        "id": "45b1c9c0-381f-4101-b56a-2af60760cb40",
+        "trend_snapshot_id": "c0e093f3-735b-4951-8877-5ba49ab83879",
+        "rank": 5,
+        "repo_full_name": "virattt/ai-hedge-fund",
+        "language": "Python",
+        "description": "An AI Hedge Fund Team",
+        "metric_primary": "1062.00",
+        "metric_secondary": null,
+        "metadata": {}
+      },
+      {
+        "id": "821ce61a-06d9-48c3-b1ba-30bb96199fcf",
+        "trend_snapshot_id": "c0e093f3-735b-4951-8877-5ba49ab83879",
+        "rank": 6,
+        "repo_full_name": "chrislgarry/Apollo-11",
+        "language": "Assembly",
+        "description": "Original Apollo 11 Guidance Computer (AGC) source code for the command and lunar modules.",
+        "metric_primary": "625.00",
+        "metric_secondary": null,
+        "metadata": {}
+      },
+      {
+        "id": "2d09248e-1de2-4569-a80a-25eef71dd837",
+        "trend_snapshot_id": "c0e093f3-735b-4951-8877-5ba49ab83879",
+        "rank": 7,
+        "repo_full_name": "obra/superpowers",
+        "language": "Shell",
+        "description": "An agentic skills framework & software development methodology that works.",
+        "metric_primary": "2079.00",
+        "metric_secondary": null,
+        "metadata": {}
+      },
+      {
+        "id": "cbe13f37-a012-4b6c-8945-b43955e09476",
+        "trend_snapshot_id": "c0e093f3-735b-4951-8877-5ba49ab83879",
+        "rank": 8,
+        "repo_full_name": "jamiepine/voicebox",
+        "language": "TypeScript",
+        "description": "The open-source voice synthesis studio",
+        "metric_primary": "1079.00",
+        "metric_secondary": null,
+        "metadata": {}
+      },
+      {
+        "id": "e8c8e7cb-a0eb-4a9b-814c-2990bc3df08d",
+        "trend_snapshot_id": "c0e093f3-735b-4951-8877-5ba49ab83879",
+        "rank": 9,
+        "repo_full_name": "public-apis/public-apis",
+        "language": "Python",
+        "description": "A collective list of free APIs",
+        "metric_primary": "839.00",
+        "metric_secondary": null,
+        "metadata": {}
+      },
+      {
+        "id": "c9acd8cb-94f3-4cc1-b8e1-b5a5d1e28bc3",
+        "trend_snapshot_id": "c0e093f3-735b-4951-8877-5ba49ab83879",
+        "rank": 10,
+        "repo_full_name": "vercel-labs/open-agents",
+        "language": "TypeScript",
+        "description": "An open source template for building cloud agents.",
+        "metric_primary": "1020.00",
+        "metric_secondary": null,
+        "metadata": {}
+      },
+      {
+        "id": "0c96a4e3-9a58-4fe7-92c7-a427781a3e14",
+        "trend_snapshot_id": "c0e093f3-735b-4951-8877-5ba49ab83879",
+        "rank": 11,
+        "repo_full_name": "lsdefine/GenericAgent",
+        "language": "Python",
+        "description": "Self-evolving agent: grows skill tree from 3.3K-line seed, achieving full system control with 6x less token consumption",
+        "metric_primary": "413.00",
+        "metric_secondary": null,
+        "metadata": {}
+      },
+      {
+        "id": "49d2eb8c-5f9b-4293-9a85-b01d009bd883",
+        "trend_snapshot_id": "c0e093f3-735b-4951-8877-5ba49ab83879",
+        "rank": 12,
+        "repo_full_name": "google/magika",
+        "language": "Python",
+        "description": "Fast and accurate AI powered file content types detection",
+        "metric_primary": "833.00",
+        "metric_secondary": null,
+        "metadata": {}
+      },
+      {
+        "id": "98293798-cbb7-4688-aa16-1c4b4f0089b9",
+        "trend_snapshot_id": "c0e093f3-735b-4951-8877-5ba49ab83879",
+        "rank": 13,
+        "repo_full_name": "Donchitos/Claude-Code-Game-Studios",
+        "language": "Shell",
+        "description": "Turn Claude Code into a full game dev studio — 49 AI agents, 72 workflow skills, and a complete coordination system mirroring real studio hierarchy.",
+        "metric_primary": "523.00",
+        "metric_secondary": null,
+        "metadata": {}
+      }
+    ],
+    "digest": [
+      {
+        "id": "18bf1b04-4956-40bf-b088-6b6670e0c648",
+        "workspace_id": "811ddd33-7124-4c7e-811f-08d6b042f2e4",
+        "digest_type": "weekly",
+        "window_start": "2026-04-12T16:00:00.000Z",
+        "window_end": "2026-04-19T16:00:00.000Z",
+        "status": "ready",
+        "title": "Weekly Digest · 2026-04-13 to 2026-04-19",
+        "summary_struct": {
+          "date": "2026-04-16",
+          "summary": "Workspace weekly digest for 2026-04-13 to 2026-04-19."
+        },
+        "rendered_markdown": "# Weekly Digest · 2026-04-13 to 2026-04-19\n\nWorkspace weekly digest for 2026-04-13 to 2026-04-19.\n\n## Top Stories\n\n- build,win: enable PGO and LTO for Windows builds: pr_opened in nodejs/node\n- doc: add experimental modules lifetime policy: pr_opened in nodejs/node\n- src: clean up experimental flag variables: pr_opened in nodejs/node\n\n## Repo Summary\n\n- nodejs/node: pr_opened (8.0)\n- nodejs/node: pr_opened (8.0)\n- nodejs/node: pr_opened (8.0)\n- nodejs/node: pr_opened (8.0)\n- nodejs/node: pr_opened (6.5)\n\n## Topic Summary\n\n- Node Runtime: Node Runtime matched 10 signals in the current window.\n- AI Agent: AI Agent had no matched signals in the current window.\n- Node Runtime: Node Runtime had no matched signals in the current window.\n\n## Trend Summary\n\n\n## Recommended Reading\n\n- build,win: enable PGO and LTO for Windows builds: Importance score 8.0 from pr_opened\n- doc: add experimental modules lifetime policy: Importance score 8.0 from pr_opened\n- src: clean up experimental flag variables: Importance score 8.0 from pr_opened\n-  doc,src,test: fix dead inspector help URL: Importance score 8.0 from pr_opened\n- deps: V8: cherry-pick 67507b2a88f4: Importance score 6.5 from pr_opened",
+        "llm_version": null,
+        "created_at": "2026-04-15T18:14:47.707Z",
+        "updated_at": "2026-04-15T18:14:47.722Z"
+      },
+      {
+        "id": "3694ed03-aff5-4c5b-a388-048fffe52ef9",
+        "workspace_id": "811ddd33-7124-4c7e-811f-08d6b042f2e4",
+        "digest_type": "daily",
+        "window_start": "2026-04-14T16:00:00.000Z",
+        "window_end": "2026-04-15T15:59:59.999Z",
+        "status": "ready",
+        "title": "Daily Digest · 2026-04-15",
+        "summary_struct": {
+          "date": "2026-04-15",
+          "summary": "Workspace digest for 2026-04-15."
+        },
+        "rendered_markdown": "# Daily Digest · 2026-04-15\n\nWorkspace digest for 2026-04-15.\n\n## Top Stories\n\n\n## Repo Summary\n\n\n## Topic Summary\n\n- Node Runtime: Node Runtime had no matched signals in the current window.\n- AI Agent: AI Agent had no matched signals in the current window.\n\n## Trend Summary\n\n\n## Recommended Reading\n",
+        "llm_version": null,
+        "created_at": "2026-04-15T17:59:42.482Z",
+        "updated_at": "2026-04-15T17:59:42.490Z"
+      },
+      {
+        "id": "62063472-deac-4aaa-9225-e023aaa5b5c1",
+        "workspace_id": "811ddd33-7124-4c7e-811f-08d6b042f2e4",
+        "digest_type": "monthly",
+        "window_start": "2026-03-31T16:00:00.000Z",
+        "window_end": "2026-04-30T16:00:00.000Z",
+        "status": "ready",
+        "title": "Monthly Digest · 2026-04-01 to 2026-04-30",
+        "summary_struct": {
+          "date": "2026-04-16",
+          "summary": "Workspace monthly digest for 2026-04-01 to 2026-04-30."
+        },
+        "rendered_markdown": "# Monthly Digest · 2026-04-01 to 2026-04-30\n\nWorkspace monthly digest for 2026-04-01 to 2026-04-30.\n\n## Top Stories\n\n- nodejs/node@v25.9.0: release_published in nodejs/node\n- src: allow empty --experimental-config-file: pr_opened in nodejs/node\n- [v24.x] src: add permission support to config file: pr_opened in nodejs/node\n\n## Repo Summary\n\n- nodejs/node: release_published (13.0)\n- nodejs/node: pr_opened (8.0)\n- nodejs/node: pr_opened (8.0)\n- nodejs/node: pr_opened (8.0)\n- nodejs/node: pr_opened (8.0)\n\n## Topic Summary\n\n- Node Runtime: Node Runtime matched 10 signals in the current window.\n- AI Agent: AI Agent had no matched signals in the current window.\n\n## Trend Summary\n\n\n## Recommended Reading\n\n- nodejs/node@v25.9.0: Importance score 13.0 from release_published\n- src: allow empty --experimental-config-file: Importance score 8.0 from pr_opened\n- [v24.x] src: add permission support to config file: Importance score 8.0 from pr_opened\n- ffi: added new methods and error codes: Importance score 8.0 from pr_opened\n- lib,src,test,doc: add node:ffi module: Importance score 8.0 from pr_opened",
+        "llm_version": null,
+        "created_at": "2026-04-15T18:30:00.821Z",
+        "updated_at": "2026-04-15T18:43:03.770Z"
+      },
+      {
+        "id": "f87c5c12-c48a-421f-b8ca-6aa28913f0d9",
+        "workspace_id": "811ddd33-7124-4c7e-811f-08d6b042f2e4",
+        "digest_type": "daily",
+        "window_start": "2026-04-15T16:00:00.000Z",
+        "window_end": "2026-04-16T15:59:59.999Z",
+        "status": "ready",
+        "title": "Daily Digest · 2026-04-16",
+        "summary_struct": {
+          "date": "2026-04-16",
+          "summary": "Workspace digest for 2026-04-16."
+        },
+        "rendered_markdown": "# Daily Digest · 2026-04-16\n\nWorkspace digest for 2026-04-16.\n\n## Top Stories\n\n- build,win: enable PGO and LTO for Windows builds: pr_opened in nodejs/node\n- doc: add experimental modules lifetime policy: pr_opened in nodejs/node\n- src: clean up experimental flag variables: pr_opened in nodejs/node\n\n## Repo Summary\n\n- nodejs/node: pr_opened (8.0)\n- nodejs/node: pr_opened (8.0)\n- nodejs/node: pr_opened (8.0)\n- nodejs/node: pr_opened (8.0)\n- nodejs/node: pr_opened (6.5)\n\n## Topic Summary\n\n- Node Runtime: Node Runtime matched 10 signals in the current window.\n- AI Agent: AI Agent had no matched signals in the current window.\n\n## Trend Summary\n\n\n## Recommended Reading\n\n- build,win: enable PGO and LTO for Windows builds: Importance score 8.0 from pr_opened\n- doc: add experimental modules lifetime policy: Importance score 8.0 from pr_opened\n- src: clean up experimental flag variables: Importance score 8.0 from pr_opened\n-  doc,src,test: fix dead inspector help URL: Importance score 8.0 from pr_opened\n- deps: V8: cherry-pick 67507b2a88f4: Importance score 6.5 from pr_opened",
+        "llm_version": null,
+        "created_at": "2026-04-15T17:37:35.951Z",
+        "updated_at": "2026-04-15T18:00:46.241Z"
+      }
+    ],
+    "digest_section": [
+      {
+        "id": "2ed23700-0432-452b-8b7c-6f6e2b94d989",
+        "digest_id": "3694ed03-aff5-4c5b-a388-048fffe52ef9",
+        "section_type": "top_stories",
+        "title": "Top Stories",
+        "rank": 1,
+        "summary_struct": {
+          "bullets": []
+        },
+        "rendered_markdown": "## Top Stories\n",
+        "created_at": "2026-04-15T17:59:42.484Z"
+      },
+      {
+        "id": "c2757683-1f08-4fdb-834f-41e1d4e018a7",
+        "digest_id": "3694ed03-aff5-4c5b-a388-048fffe52ef9",
+        "section_type": "repo",
+        "title": "Repo Summary",
+        "rank": 2,
+        "summary_struct": {
+          "bullets": []
+        },
+        "rendered_markdown": "## Repo Summary\n",
+        "created_at": "2026-04-15T17:59:42.484Z"
+      },
+      {
+        "id": "b487db77-50ca-4a9e-9227-a9cae80045ea",
+        "digest_id": "3694ed03-aff5-4c5b-a388-048fffe52ef9",
+        "section_type": "topic",
+        "title": "Topic Summary",
+        "rank": 3,
+        "summary_struct": {
+          "bullets": [
+            "Node Runtime: Node Runtime had no matched signals in the current window.",
+            "AI Agent: AI Agent had no matched signals in the current window."
+          ]
+        },
+        "rendered_markdown": "## Topic Summary\n\n- Node Runtime: Node Runtime had no matched signals in the current window.\n- AI Agent: AI Agent had no matched signals in the current window.",
+        "created_at": "2026-04-15T17:59:42.484Z"
+      },
+      {
+        "id": "68baae86-2e97-4fbe-852d-b06611c9cb8e",
+        "digest_id": "3694ed03-aff5-4c5b-a388-048fffe52ef9",
+        "section_type": "trend",
+        "title": "Trend Summary",
+        "rank": 4,
+        "summary_struct": {
+          "bullets": []
+        },
+        "rendered_markdown": "## Trend Summary\n",
+        "created_at": "2026-04-15T17:59:42.484Z"
+      },
+      {
+        "id": "0cfa86df-007a-42f1-b91b-bd7aedfdca32",
+        "digest_id": "3694ed03-aff5-4c5b-a388-048fffe52ef9",
+        "section_type": "recommended",
+        "title": "Recommended Reading",
+        "rank": 5,
+        "summary_struct": {
+          "bullets": []
+        },
+        "rendered_markdown": "## Recommended Reading\n",
+        "created_at": "2026-04-15T17:59:42.484Z"
+      },
+      {
+        "id": "58a6f055-7fbd-48e6-bbce-9690eadc7c44",
+        "digest_id": "f87c5c12-c48a-421f-b8ca-6aa28913f0d9",
+        "section_type": "top_stories",
+        "title": "Top Stories",
+        "rank": 1,
+        "summary_struct": {
+          "bullets": [
+            "build,win: enable PGO and LTO for Windows builds: pr_opened in nodejs/node",
+            "doc: add experimental modules lifetime policy: pr_opened in nodejs/node",
+            "src: clean up experimental flag variables: pr_opened in nodejs/node"
+          ]
+        },
+        "rendered_markdown": "## Top Stories\n\n- build,win: enable PGO and LTO for Windows builds: pr_opened in nodejs/node\n- doc: add experimental modules lifetime policy: pr_opened in nodejs/node\n- src: clean up experimental flag variables: pr_opened in nodejs/node",
+        "created_at": "2026-04-15T18:00:46.235Z"
+      },
+      {
+        "id": "4748026c-d514-4de0-bdb7-1689f3130cbc",
+        "digest_id": "f87c5c12-c48a-421f-b8ca-6aa28913f0d9",
+        "section_type": "repo",
+        "title": "Repo Summary",
+        "rank": 2,
+        "summary_struct": {
+          "bullets": [
+            "nodejs/node: pr_opened (8.0)",
+            "nodejs/node: pr_opened (8.0)",
+            "nodejs/node: pr_opened (8.0)",
+            "nodejs/node: pr_opened (8.0)",
+            "nodejs/node: pr_opened (6.5)"
+          ]
+        },
+        "rendered_markdown": "## Repo Summary\n\n- nodejs/node: pr_opened (8.0)\n- nodejs/node: pr_opened (8.0)\n- nodejs/node: pr_opened (8.0)\n- nodejs/node: pr_opened (8.0)\n- nodejs/node: pr_opened (6.5)",
+        "created_at": "2026-04-15T18:00:46.235Z"
+      },
+      {
+        "id": "8df3d9ff-3bc7-4023-a0eb-1042978c8fc1",
+        "digest_id": "f87c5c12-c48a-421f-b8ca-6aa28913f0d9",
+        "section_type": "topic",
+        "title": "Topic Summary",
+        "rank": 3,
+        "summary_struct": {
+          "bullets": [
+            "Node Runtime: Node Runtime matched 10 signals in the current window.",
+            "AI Agent: AI Agent had no matched signals in the current window."
+          ]
+        },
+        "rendered_markdown": "## Topic Summary\n\n- Node Runtime: Node Runtime matched 10 signals in the current window.\n- AI Agent: AI Agent had no matched signals in the current window.",
+        "created_at": "2026-04-15T18:00:46.235Z"
+      },
+      {
+        "id": "8090bacf-0fd7-4b7c-86cd-4191b1bbd97a",
+        "digest_id": "f87c5c12-c48a-421f-b8ca-6aa28913f0d9",
+        "section_type": "trend",
+        "title": "Trend Summary",
+        "rank": 4,
+        "summary_struct": {
+          "bullets": []
+        },
+        "rendered_markdown": "## Trend Summary\n",
+        "created_at": "2026-04-15T18:00:46.235Z"
+      },
+      {
+        "id": "3dd9cc1a-00e3-49ea-922e-a479c25eb3df",
+        "digest_id": "f87c5c12-c48a-421f-b8ca-6aa28913f0d9",
+        "section_type": "recommended",
+        "title": "Recommended Reading",
+        "rank": 5,
+        "summary_struct": {
+          "bullets": [
+            "build,win: enable PGO and LTO for Windows builds: Importance score 8.0 from pr_opened",
+            "doc: add experimental modules lifetime policy: Importance score 8.0 from pr_opened",
+            "src: clean up experimental flag variables: Importance score 8.0 from pr_opened",
+            " doc,src,test: fix dead inspector help URL: Importance score 8.0 from pr_opened",
+            "deps: V8: cherry-pick 67507b2a88f4: Importance score 6.5 from pr_opened"
+          ]
+        },
+        "rendered_markdown": "## Recommended Reading\n\n- build,win: enable PGO and LTO for Windows builds: Importance score 8.0 from pr_opened\n- doc: add experimental modules lifetime policy: Importance score 8.0 from pr_opened\n- src: clean up experimental flag variables: Importance score 8.0 from pr_opened\n-  doc,src,test: fix dead inspector help URL: Importance score 8.0 from pr_opened\n- deps: V8: cherry-pick 67507b2a88f4: Importance score 6.5 from pr_opened",
+        "created_at": "2026-04-15T18:00:46.235Z"
+      },
+      {
+        "id": "633a2d99-1e11-4efd-b66c-2092b8ec48d8",
+        "digest_id": "18bf1b04-4956-40bf-b088-6b6670e0c648",
+        "section_type": "top_stories",
+        "title": "Top Stories",
+        "rank": 1,
+        "summary_struct": {
+          "bullets": [
+            "build,win: enable PGO and LTO for Windows builds: pr_opened in nodejs/node",
+            "doc: add experimental modules lifetime policy: pr_opened in nodejs/node",
+            "src: clean up experimental flag variables: pr_opened in nodejs/node"
+          ]
+        },
+        "rendered_markdown": "## Top Stories\n\n- build,win: enable PGO and LTO for Windows builds: pr_opened in nodejs/node\n- doc: add experimental modules lifetime policy: pr_opened in nodejs/node\n- src: clean up experimental flag variables: pr_opened in nodejs/node",
+        "created_at": "2026-04-15T18:14:47.709Z"
+      },
+      {
+        "id": "aa899322-7aa3-48d4-be83-efb65c77d4b5",
+        "digest_id": "18bf1b04-4956-40bf-b088-6b6670e0c648",
+        "section_type": "repo",
+        "title": "Repo Summary",
+        "rank": 2,
+        "summary_struct": {
+          "bullets": [
+            "nodejs/node: pr_opened (8.0)",
+            "nodejs/node: pr_opened (8.0)",
+            "nodejs/node: pr_opened (8.0)",
+            "nodejs/node: pr_opened (8.0)",
+            "nodejs/node: pr_opened (6.5)"
+          ]
+        },
+        "rendered_markdown": "## Repo Summary\n\n- nodejs/node: pr_opened (8.0)\n- nodejs/node: pr_opened (8.0)\n- nodejs/node: pr_opened (8.0)\n- nodejs/node: pr_opened (8.0)\n- nodejs/node: pr_opened (6.5)",
+        "created_at": "2026-04-15T18:14:47.709Z"
+      },
+      {
+        "id": "ac2f8be2-f636-4e4d-abd5-a88cb07e83d2",
+        "digest_id": "18bf1b04-4956-40bf-b088-6b6670e0c648",
+        "section_type": "topic",
+        "title": "Topic Summary",
+        "rank": 3,
+        "summary_struct": {
+          "bullets": [
+            "Node Runtime: Node Runtime matched 10 signals in the current window.",
+            "AI Agent: AI Agent had no matched signals in the current window.",
+            "Node Runtime: Node Runtime had no matched signals in the current window."
+          ]
+        },
+        "rendered_markdown": "## Topic Summary\n\n- Node Runtime: Node Runtime matched 10 signals in the current window.\n- AI Agent: AI Agent had no matched signals in the current window.\n- Node Runtime: Node Runtime had no matched signals in the current window.",
+        "created_at": "2026-04-15T18:14:47.709Z"
+      },
+      {
+        "id": "69735269-6493-439d-8e96-27879975935e",
+        "digest_id": "18bf1b04-4956-40bf-b088-6b6670e0c648",
+        "section_type": "trend",
+        "title": "Trend Summary",
+        "rank": 4,
+        "summary_struct": {
+          "bullets": []
+        },
+        "rendered_markdown": "## Trend Summary\n",
+        "created_at": "2026-04-15T18:14:47.709Z"
+      },
+      {
+        "id": "d30b20ec-231f-44c8-842f-18ff7139b540",
+        "digest_id": "18bf1b04-4956-40bf-b088-6b6670e0c648",
+        "section_type": "recommended",
+        "title": "Recommended Reading",
+        "rank": 5,
+        "summary_struct": {
+          "bullets": [
+            "build,win: enable PGO and LTO for Windows builds: Importance score 8.0 from pr_opened",
+            "doc: add experimental modules lifetime policy: Importance score 8.0 from pr_opened",
+            "src: clean up experimental flag variables: Importance score 8.0 from pr_opened",
+            " doc,src,test: fix dead inspector help URL: Importance score 8.0 from pr_opened",
+            "deps: V8: cherry-pick 67507b2a88f4: Importance score 6.5 from pr_opened"
+          ]
+        },
+        "rendered_markdown": "## Recommended Reading\n\n- build,win: enable PGO and LTO for Windows builds: Importance score 8.0 from pr_opened\n- doc: add experimental modules lifetime policy: Importance score 8.0 from pr_opened\n- src: clean up experimental flag variables: Importance score 8.0 from pr_opened\n-  doc,src,test: fix dead inspector help URL: Importance score 8.0 from pr_opened\n- deps: V8: cherry-pick 67507b2a88f4: Importance score 6.5 from pr_opened",
+        "created_at": "2026-04-15T18:14:47.709Z"
+      },
+      {
+        "id": "19a88ec8-554d-4a6b-9ee3-8a1d3298e290",
+        "digest_id": "62063472-deac-4aaa-9225-e023aaa5b5c1",
+        "section_type": "top_stories",
+        "title": "Top Stories",
+        "rank": 1,
+        "summary_struct": {
+          "bullets": [
+            "nodejs/node@v25.9.0: release_published in nodejs/node",
+            "src: allow empty --experimental-config-file: pr_opened in nodejs/node",
+            "[v24.x] src: add permission support to config file: pr_opened in nodejs/node"
+          ]
+        },
+        "rendered_markdown": "## Top Stories\n\n- nodejs/node@v25.9.0: release_published in nodejs/node\n- src: allow empty --experimental-config-file: pr_opened in nodejs/node\n- [v24.x] src: add permission support to config file: pr_opened in nodejs/node",
+        "created_at": "2026-04-15T18:43:03.765Z"
+      },
+      {
+        "id": "d8bd9e8b-afb1-498c-9def-354bae493f14",
+        "digest_id": "62063472-deac-4aaa-9225-e023aaa5b5c1",
+        "section_type": "repo",
+        "title": "Repo Summary",
+        "rank": 2,
+        "summary_struct": {
+          "bullets": [
+            "nodejs/node: release_published (13.0)",
+            "nodejs/node: pr_opened (8.0)",
+            "nodejs/node: pr_opened (8.0)",
+            "nodejs/node: pr_opened (8.0)",
+            "nodejs/node: pr_opened (8.0)"
+          ]
+        },
+        "rendered_markdown": "## Repo Summary\n\n- nodejs/node: release_published (13.0)\n- nodejs/node: pr_opened (8.0)\n- nodejs/node: pr_opened (8.0)\n- nodejs/node: pr_opened (8.0)\n- nodejs/node: pr_opened (8.0)",
+        "created_at": "2026-04-15T18:43:03.765Z"
+      },
+      {
+        "id": "b5737a75-390c-43a2-afe7-760cf8aed647",
+        "digest_id": "62063472-deac-4aaa-9225-e023aaa5b5c1",
+        "section_type": "topic",
+        "title": "Topic Summary",
+        "rank": 3,
+        "summary_struct": {
+          "bullets": [
+            "Node Runtime: Node Runtime matched 10 signals in the current window.",
+            "AI Agent: AI Agent had no matched signals in the current window."
+          ]
+        },
+        "rendered_markdown": "## Topic Summary\n\n- Node Runtime: Node Runtime matched 10 signals in the current window.\n- AI Agent: AI Agent had no matched signals in the current window.",
+        "created_at": "2026-04-15T18:43:03.765Z"
+      },
+      {
+        "id": "e929d357-e761-4a21-9230-32df8ba5172f",
+        "digest_id": "62063472-deac-4aaa-9225-e023aaa5b5c1",
+        "section_type": "trend",
+        "title": "Trend Summary",
+        "rank": 4,
+        "summary_struct": {
+          "bullets": []
+        },
+        "rendered_markdown": "## Trend Summary\n",
+        "created_at": "2026-04-15T18:43:03.765Z"
+      },
+      {
+        "id": "2bde15d1-118f-4b53-bfd4-c7ee9d40449c",
+        "digest_id": "62063472-deac-4aaa-9225-e023aaa5b5c1",
+        "section_type": "recommended",
+        "title": "Recommended Reading",
+        "rank": 5,
+        "summary_struct": {
+          "bullets": [
+            "nodejs/node@v25.9.0: Importance score 13.0 from release_published",
+            "src: allow empty --experimental-config-file: Importance score 8.0 from pr_opened",
+            "[v24.x] src: add permission support to config file: Importance score 8.0 from pr_opened",
+            "ffi: added new methods and error codes: Importance score 8.0 from pr_opened",
+            "lib,src,test,doc: add node:ffi module: Importance score 8.0 from pr_opened"
+          ]
+        },
+        "rendered_markdown": "## Recommended Reading\n\n- nodejs/node@v25.9.0: Importance score 13.0 from release_published\n- src: allow empty --experimental-config-file: Importance score 8.0 from pr_opened\n- [v24.x] src: add permission support to config file: Importance score 8.0 from pr_opened\n- ffi: added new methods and error codes: Importance score 8.0 from pr_opened\n- lib,src,test,doc: add node:ffi module: Importance score 8.0 from pr_opened",
+        "created_at": "2026-04-15T18:43:03.765Z"
+      }
+    ],
+    "recommended_item": [
+      {
+        "id": "d390217e-1354-48ed-a25a-9d88df9dda56",
+        "workspace_id": "811ddd33-7124-4c7e-811f-08d6b042f2e4",
+        "digest_id": "f87c5c12-c48a-421f-b8ca-6aa28913f0d9",
+        "item_type": "pr",
+        "item_entity_id": "471ed5ca-1408-400a-b5dd-05be1ac09ff6",
+        "source_target_type": "canonical_event",
+        "source_target_id": "80e78793-d446-41c8-9b07-20147e3085ec",
+        "rank": 1,
+        "score": "8.00",
+        "reason_struct": {
+          "href": "https://github.com/nodejs/node/pull/62761",
+          "title": "build,win: enable PGO and LTO for Windows builds",
+          "reason": "Importance score 8.0 from pr_opened"
+        },
+        "created_at": "2026-04-15T18:00:46.244Z"
+      },
+      {
+        "id": "06562f68-fd04-421c-9024-0d5e54398a91",
+        "workspace_id": "811ddd33-7124-4c7e-811f-08d6b042f2e4",
+        "digest_id": "f87c5c12-c48a-421f-b8ca-6aa28913f0d9",
+        "item_type": "pr",
+        "item_entity_id": "a67c7338-eadb-4e40-93d3-772985190847",
+        "source_target_type": "canonical_event",
+        "source_target_id": "1620a9dd-cb80-4784-bbc7-831b72201308",
+        "rank": 2,
+        "score": "8.00",
+        "reason_struct": {
+          "href": "https://github.com/nodejs/node/pull/62753",
+          "title": "doc: add experimental modules lifetime policy",
+          "reason": "Importance score 8.0 from pr_opened"
+        },
+        "created_at": "2026-04-15T18:00:46.245Z"
+      },
+      {
+        "id": "7b395df6-ea6f-42b5-a59d-45dc8bff232e",
+        "workspace_id": "811ddd33-7124-4c7e-811f-08d6b042f2e4",
+        "digest_id": "f87c5c12-c48a-421f-b8ca-6aa28913f0d9",
+        "item_type": "pr",
+        "item_entity_id": "58b133a2-1dbd-4dc2-a1d5-db0209dbcd68",
+        "source_target_type": "canonical_event",
+        "source_target_id": "1a5adcb1-dd4f-43c4-b19c-8e88b25fa26f",
+        "rank": 3,
+        "score": "8.00",
+        "reason_struct": {
+          "href": "https://github.com/nodejs/node/pull/62759",
+          "title": "src: clean up experimental flag variables",
+          "reason": "Importance score 8.0 from pr_opened"
+        },
+        "created_at": "2026-04-15T18:00:46.246Z"
+      },
+      {
+        "id": "39fabe36-3668-4ec7-8aa2-d7e662f85ea4",
+        "workspace_id": "811ddd33-7124-4c7e-811f-08d6b042f2e4",
+        "digest_id": "f87c5c12-c48a-421f-b8ca-6aa28913f0d9",
+        "item_type": "pr",
+        "item_entity_id": "46844871-747d-4c85-b329-56131ba04366",
+        "source_target_type": "canonical_event",
+        "source_target_id": "758ecd70-5a72-479c-a5a1-c0f798cffc1f",
+        "rank": 4,
+        "score": "8.00",
+        "reason_struct": {
+          "href": "https://github.com/nodejs/node/pull/62745",
+          "title": " doc,src,test: fix dead inspector help URL",
+          "reason": "Importance score 8.0 from pr_opened"
+        },
+        "created_at": "2026-04-15T18:00:46.247Z"
+      },
+      {
+        "id": "1fa5f18c-e8a3-4d18-944f-b900cbb644af",
+        "workspace_id": "811ddd33-7124-4c7e-811f-08d6b042f2e4",
+        "digest_id": "f87c5c12-c48a-421f-b8ca-6aa28913f0d9",
+        "item_type": "pr",
+        "item_entity_id": "04ec41fd-af36-479d-9105-d27502a5d34a",
+        "source_target_type": "canonical_event",
+        "source_target_id": "46383be6-46f4-4a9b-aacd-f2edc7f5acca",
+        "rank": 5,
+        "score": "6.50",
+        "reason_struct": {
+          "href": "https://github.com/nodejs/node/pull/61825",
+          "title": "deps: V8: cherry-pick 67507b2a88f4",
+          "reason": "Importance score 6.5 from pr_opened"
+        },
+        "created_at": "2026-04-15T18:00:46.248Z"
+      },
+      {
+        "id": "aa26cbf0-598d-4146-bf11-9f65a5f4a58d",
+        "workspace_id": "811ddd33-7124-4c7e-811f-08d6b042f2e4",
+        "digest_id": "18bf1b04-4956-40bf-b088-6b6670e0c648",
+        "item_type": "pr",
+        "item_entity_id": "471ed5ca-1408-400a-b5dd-05be1ac09ff6",
+        "source_target_type": "canonical_event",
+        "source_target_id": "80e78793-d446-41c8-9b07-20147e3085ec",
+        "rank": 1,
+        "score": "8.00",
+        "reason_struct": {
+          "href": "https://github.com/nodejs/node/pull/62761",
+          "title": "build,win: enable PGO and LTO for Windows builds",
+          "reason": "Importance score 8.0 from pr_opened"
+        },
+        "created_at": "2026-04-15T18:14:47.719Z"
+      },
+      {
+        "id": "c4d9f83c-1975-4e69-a2a2-d6dbe86e3c1c",
+        "workspace_id": "811ddd33-7124-4c7e-811f-08d6b042f2e4",
+        "digest_id": "18bf1b04-4956-40bf-b088-6b6670e0c648",
+        "item_type": "pr",
+        "item_entity_id": "a67c7338-eadb-4e40-93d3-772985190847",
+        "source_target_type": "canonical_event",
+        "source_target_id": "1620a9dd-cb80-4784-bbc7-831b72201308",
+        "rank": 2,
+        "score": "8.00",
+        "reason_struct": {
+          "href": "https://github.com/nodejs/node/pull/62753",
+          "title": "doc: add experimental modules lifetime policy",
+          "reason": "Importance score 8.0 from pr_opened"
+        },
+        "created_at": "2026-04-15T18:14:47.721Z"
+      },
+      {
+        "id": "bbc91d52-701f-4ab4-9cfa-204f63407b8a",
+        "workspace_id": "811ddd33-7124-4c7e-811f-08d6b042f2e4",
+        "digest_id": "18bf1b04-4956-40bf-b088-6b6670e0c648",
+        "item_type": "pr",
+        "item_entity_id": "58b133a2-1dbd-4dc2-a1d5-db0209dbcd68",
+        "source_target_type": "canonical_event",
+        "source_target_id": "1a5adcb1-dd4f-43c4-b19c-8e88b25fa26f",
+        "rank": 3,
+        "score": "8.00",
+        "reason_struct": {
+          "href": "https://github.com/nodejs/node/pull/62759",
+          "title": "src: clean up experimental flag variables",
+          "reason": "Importance score 8.0 from pr_opened"
+        },
+        "created_at": "2026-04-15T18:14:47.722Z"
+      },
+      {
+        "id": "778da566-1a5f-4094-951a-a63378a84767",
+        "workspace_id": "811ddd33-7124-4c7e-811f-08d6b042f2e4",
+        "digest_id": "18bf1b04-4956-40bf-b088-6b6670e0c648",
+        "item_type": "pr",
+        "item_entity_id": "46844871-747d-4c85-b329-56131ba04366",
+        "source_target_type": "canonical_event",
+        "source_target_id": "758ecd70-5a72-479c-a5a1-c0f798cffc1f",
+        "rank": 4,
+        "score": "8.00",
+        "reason_struct": {
+          "href": "https://github.com/nodejs/node/pull/62745",
+          "title": " doc,src,test: fix dead inspector help URL",
+          "reason": "Importance score 8.0 from pr_opened"
+        },
+        "created_at": "2026-04-15T18:14:47.723Z"
+      },
+      {
+        "id": "bbe93bde-2b87-4a1a-aac4-28b8674d036e",
+        "workspace_id": "811ddd33-7124-4c7e-811f-08d6b042f2e4",
+        "digest_id": "18bf1b04-4956-40bf-b088-6b6670e0c648",
+        "item_type": "pr",
+        "item_entity_id": "04ec41fd-af36-479d-9105-d27502a5d34a",
+        "source_target_type": "canonical_event",
+        "source_target_id": "46383be6-46f4-4a9b-aacd-f2edc7f5acca",
+        "rank": 5,
+        "score": "6.50",
+        "reason_struct": {
+          "href": "https://github.com/nodejs/node/pull/61825",
+          "title": "deps: V8: cherry-pick 67507b2a88f4",
+          "reason": "Importance score 6.5 from pr_opened"
+        },
+        "created_at": "2026-04-15T18:14:47.724Z"
+      },
+      {
+        "id": "71655f94-db28-44e6-8446-a8309d078aa1",
+        "workspace_id": "811ddd33-7124-4c7e-811f-08d6b042f2e4",
+        "digest_id": "62063472-deac-4aaa-9225-e023aaa5b5c1",
+        "item_type": "pr",
+        "item_entity_id": "70cd5cdb-d991-4169-a54c-d10a969969aa",
+        "source_target_type": "canonical_event",
+        "source_target_id": "0bf7fca3-8d59-4295-beec-9a49b92a78f0",
+        "rank": 1,
+        "score": "14.00",
+        "reason_struct": {
+          "href": "https://github.com/nodejs/node/pull/61610",
+          "title": "src: allow empty --experimental-config-file",
+          "reason": "Importance score 8.0 with preference 6.0 from pr_opened"
+        },
+        "created_at": "2026-04-15T18:43:03.771Z"
+      },
+      {
+        "id": "c4f0069c-6a5b-4356-9ac8-748081fc0209",
+        "workspace_id": "811ddd33-7124-4c7e-811f-08d6b042f2e4",
+        "digest_id": "62063472-deac-4aaa-9225-e023aaa5b5c1",
+        "item_type": "pr",
+        "item_entity_id": "80ce18d1-9947-4624-9048-5f188cb11361",
+        "source_target_type": "canonical_event",
+        "source_target_id": "d0526790-e67a-4044-9a36-95160f56a1b9",
+        "rank": 2,
+        "score": "14.00",
+        "reason_struct": {
+          "href": "https://github.com/nodejs/node/pull/62760",
+          "title": "[v24.x] src: add permission support to config file",
+          "reason": "Importance score 8.0 with preference 6.0 from pr_opened"
+        },
+        "created_at": "2026-04-15T18:43:03.772Z"
+      },
+      {
+        "id": "d71ce36b-b209-4ed7-a9e1-5e4171ca248b",
+        "workspace_id": "811ddd33-7124-4c7e-811f-08d6b042f2e4",
+        "digest_id": "62063472-deac-4aaa-9225-e023aaa5b5c1",
+        "item_type": "pr",
+        "item_entity_id": "6d35d830-57df-4f59-9614-d90706256960",
+        "source_target_type": "canonical_event",
+        "source_target_id": "09b59783-c0fb-4b74-92ea-5632f686c277",
+        "rank": 3,
+        "score": "14.00",
+        "reason_struct": {
+          "href": "https://github.com/nodejs/node/pull/62762",
+          "title": "ffi: added new methods and error codes",
+          "reason": "Importance score 8.0 with preference 6.0 from pr_opened"
+        },
+        "created_at": "2026-04-15T18:43:03.773Z"
+      },
+      {
+        "id": "926b065c-dab1-4e07-a8e2-51817c951c82",
+        "workspace_id": "811ddd33-7124-4c7e-811f-08d6b042f2e4",
+        "digest_id": "62063472-deac-4aaa-9225-e023aaa5b5c1",
+        "item_type": "pr",
+        "item_entity_id": "65e52e81-2e63-48a0-b108-ff69d203c1b4",
+        "source_target_type": "canonical_event",
+        "source_target_id": "f30e0eac-0d55-40a4-861a-8aaca592f66e",
+        "rank": 4,
+        "score": "14.00",
+        "reason_struct": {
+          "href": "https://github.com/nodejs/node/pull/62072",
+          "title": "lib,src,test,doc: add node:ffi module",
+          "reason": "Importance score 8.0 with preference 6.0 from pr_opened"
+        },
+        "created_at": "2026-04-15T18:43:03.774Z"
+      },
+      {
+        "id": "344c320e-50de-42bd-bd41-e74cbde391c3",
+        "workspace_id": "811ddd33-7124-4c7e-811f-08d6b042f2e4",
+        "digest_id": "62063472-deac-4aaa-9225-e023aaa5b5c1",
+        "item_type": "pr",
+        "item_entity_id": "366ee5cc-0056-4c10-be06-777615008a1a",
+        "source_target_type": "canonical_event",
+        "source_target_id": "86f1432b-0d1c-4490-8d2e-830a309a51f3",
+        "rank": 5,
+        "score": "14.00",
+        "reason_struct": {
+          "href": "https://github.com/nodejs/node/pull/62452",
+          "title": "util: honor breakLength Infinity with unlimited depth",
+          "reason": "Importance score 8.0 with preference 6.0 from pr_opened"
+        },
+        "created_at": "2026-04-15T18:43:03.775Z"
+      }
+    ],
+    "outbound_notification": [
+      {
+        "id": "943d30d8-a6c8-4361-8a82-9f7dd0ac5bbe",
+        "workspace_id": "811ddd33-7124-4c7e-811f-08d6b042f2e4",
+        "channel": "email",
+        "target_address": "dev@akyuu.local",
+        "content_ref_type": "digest",
+        "content_ref_id": "62063472-deac-4aaa-9225-e023aaa5b5c1",
+        "status": "sent",
+        "attempt_count": 3,
+        "last_error": null,
+        "created_at": "2026-04-15T18:30:00.848Z",
+        "sent_at": "2026-04-15T18:43:03.782Z"
+      }
+    ],
+    "canonical_event": [
+      {
+        "id": "20cf0e4d-64e3-4464-b14a-2909decee648",
+        "event_type": "repo_metadata_refreshed",
+        "occurred_at": "2026-04-15T17:00:23.000Z",
+        "window_start": null,
+        "window_end": null,
+        "source_signal_id": null,
+        "source_snapshot_id": null,
+        "subject_entity_id": "822c5f61-e915-41ba-95e6-191bd917f3fb",
+        "actor_entity_id": null,
+        "repo_entity_id": "822c5f61-e915-41ba-95e6-191bd917f3fb",
+        "confidence": "1.00",
+        "metadata": {
+          "htmlUrl": "https://github.com/nodejs/node",
+          "description": "Node.js JavaScript runtime ✨🐢🚀✨"
+        },
+        "dedupe_key": "github:repo_metadata_refreshed:nodejs/node:2026-04-15T17:00:23.000Z",
+        "created_at": "2026-04-15T17:37:35.800Z"
+      },
+      {
+        "id": "1a5adcb1-dd4f-43c4-b19c-8e88b25fa26f",
+        "event_type": "pr_opened",
+        "occurred_at": "2026-04-15T17:30:55.000Z",
+        "window_start": null,
+        "window_end": null,
+        "source_signal_id": null,
+        "source_snapshot_id": null,
+        "subject_entity_id": "58b133a2-1dbd-4dc2-a1d5-db0209dbcd68",
+        "actor_entity_id": "9cfad442-9fdb-4f67-8177-551a58612d28",
+        "repo_entity_id": "822c5f61-e915-41ba-95e6-191bd917f3fb",
+        "confidence": "1.00",
+        "metadata": {
+          "body": "- `fetch` is no longer disable by a CLI flag\r\n- `node:sqlite` requires SQLite, obviously\r\n\r\n<!--\r\nBefore submitting a pull request, please read:\r\n\r\n- the CONTRIBUTING guide at https://github.com/nodejs/node/blob/HEAD/CONTRIBUTING.md\r\n- the commit message formatting guidelines at\r\n  https://github.com/nodejs/node/blob/HEAD/doc/contributing/pull-requests.md#commit-message-guidelines\r\n\r\nFor code changes:\r\n1. Include tests for any bug fixes or new features.\r\n2. Update documentation if relevant.\r\n3. Ensure that `make -j4 test` (UNIX), or `vcbuild test` (Windows) passes.\r\n\r\nIf you believe this PR should be highlighted in the Node.js CHANGELOG\r\nplease add the `notable-change` label.\r\n\r\nDeveloper's Certificate of Origin 1.1\r\n\r\nBy making a contribution to this project, I certify that:\r\n\r\n(a) The contribution was created in whole or in part by me and I\r\n    have the right to submit it under the open source license\r\n    indicated in the file; or\r\n\r\n(b) The contribution is based upon previous work that, to the best\r\n    of my knowledge, is covered under an appropriate open source\r\n    license and I have the right under that license to submit that\r\n    work with modifications, whether created in whole or in part\r\n    by me, under the same open source license (unless I am\r\n    permitted to submit under a different license), as indicated\r\n    in the file; or\r\n\r\n(c) The contribution was provided directly to me by some other\r\n    person who certified (a), (b) or (c) and I have not modified\r\n    it.\r\n\r\n(d) I understand and agree that this project and the contribution\r\n    are public and that a record of the contribution (including all\r\n    personal information I submit with it, including my sign-off) is\r\n    maintained indefinitely and may be redistributed consistent with\r\n    this project or the open source license(s) involved.\r\n-->\r\n",
+          "state": "open",
+          "title": "src: clean up experimental flag variables",
+          "htmlUrl": "https://github.com/nodejs/node/pull/62759",
+          "comments": 0,
+          "reviewComments": 0
+        },
+        "dedupe_key": "github:pr_opened:nodejs/node#62759",
+        "created_at": "2026-04-15T17:37:35.811Z"
+      },
+      {
+        "id": "46383be6-46f4-4a9b-aacd-f2edc7f5acca",
+        "event_type": "pr_opened",
+        "occurred_at": "2026-04-15T17:20:14.000Z",
+        "window_start": null,
+        "window_end": null,
+        "source_signal_id": null,
+        "source_snapshot_id": null,
+        "subject_entity_id": "04ec41fd-af36-479d-9105-d27502a5d34a",
+        "actor_entity_id": "0a26958c-7033-4a3d-bf6a-5fa7729f043e",
+        "repo_entity_id": "822c5f61-e915-41ba-95e6-191bd917f3fb",
+        "confidence": "1.00",
+        "metadata": {
+          "body": "## Summary\n\nCherry-picks two V8 commits (squashed) to add Highway-based `WriteLeadingAscii` and fix its GCC build:\n\n- [`67507b2a88f4`](https://github.com/v8/v8/commit/67507b2a88f4cf6eb18ed351661d218e498fa3e7) — **Reland \"use highway to check and copy leading ascii\"** (Dan Carney)\n  Replaces `IsAsciiOneByteString` + `memcpy` with Highway `WriteLeadingAscii` in `Utf8::Encode`, providing a faster ASCII fast path for `WriteUtf8V2`.\n  CL: https://chromium-review.googlesource.com/c/v8/v8/+/7184338\n\n- [`ee2873a6303d`](https://github.com/v8/v8/commit/ee2873a6303da9116d2b4a87caf8e1e7da50ea3e) — **Fix GCC Build** (Abdirahim Musse)\n  Moves `WriteLeadingAscii` explicit template specializations to namespace scope — C++ forbids them inside class scope, and GCC rejects it.\n  CL: https://chromium-review.googlesource.com/c/v8/v8/+/7138905\n\n  Note: only the `unicode.h` portion of this commit is included; the test file changes (`heap-unittest.cc`, `module-decoder-unittest.cc`) do not apply cleanly to Node.js's V8 copy and are unrelated to the `WriteLeadingAscii` fix.\n\nThis patch addresses part of the remaining ~30-40% performance gap in `WriteUtf8V2` vs v22 after #61712 landed the initial `simdutf` + `memcpy` fast path.\n\nRefs: https://github.com/nodejs/node/issues/60719\n\n## Test plan\n\n- [ ] CI: V8 CI + Node.js CI",
+          "state": "closed",
+          "title": "deps: V8: cherry-pick 67507b2a88f4",
+          "htmlUrl": "https://github.com/nodejs/node/pull/61825",
+          "comments": 0,
+          "reviewComments": 0
+        },
+        "dedupe_key": "github:pr_opened:nodejs/node#61825",
+        "created_at": "2026-04-15T17:37:35.821Z"
+      },
+      {
+        "id": "758ecd70-5a72-479c-a5a1-c0f798cffc1f",
+        "event_type": "pr_opened",
+        "occurred_at": "2026-04-15T17:15:24.000Z",
+        "window_start": null,
+        "window_end": null,
+        "source_signal_id": null,
+        "source_snapshot_id": null,
+        "subject_entity_id": "46844871-747d-4c85-b329-56131ba04366",
+        "actor_entity_id": "05266710-3f50-4797-a3a1-cf297988594d",
+        "repo_entity_id": "822c5f61-e915-41ba-95e6-191bd917f3fb",
+        "confidence": "1.00",
+        "metadata": {
+          "body": "<!--\r\nBefore submitting a pull request, please read:\r\n\r\n- the CONTRIBUTING guide at https://github.com/nodejs/node/blob/HEAD/CONTRIBUTING.md\r\n- the commit message formatting guidelines at\r\n  https://github.com/nodejs/node/blob/HEAD/doc/contributing/pull-requests.md#commit-message-guidelines\r\n\r\nFor code changes:\r\n1. Include tests for any bug fixes or new features.\r\n2. Update documentation if relevant.\r\n3. Ensure that `make -j4 test` (UNIX), or `vcbuild test` (Windows) passes.\r\n\r\nIf you believe this PR should be highlighted in the Node.js CHANGELOG\r\nplease add the `notable-change` label.\r\n\r\nDeveloper's Certificate of Origin 1.1\r\n\r\nBy making a contribution to this project, I certify that:\r\n\r\n(a) The contribution was created in whole or in part by me and I\r\n    have the right to submit it under the open source license\r\n    indicated in the file; or\r\n\r\n(b) The contribution is based upon previous work that, to the best\r\n    of my knowledge, is covered under an appropriate open source\r\n    license and I have the right under that license to submit that\r\n    work with modifications, whether created in whole or in part\r\n    by me, under the same open source license (unless I am\r\n    permitted to submit under a different license), as indicated\r\n    in the file; or\r\n\r\n(c) The contribution was provided directly to me by some other\r\n    person who certified (a), (b) or (c) and I have not modified\r\n    it.\r\n\r\n(d) I understand and agree that this project and the contribution\r\n    are public and that a record of the contribution (including all\r\n    personal information I submit with it, including my sign-off) is\r\n    maintained indefinitely and may be redistributed consistent with\r\n    this project or the open source license(s) involved.\r\n-->\r\n\r\n  The inspector help message pointed to https://nodejs.org/en/docs/inspector\r\n  which returns a 404. Updated to https://nodejs.org/api/inspector.html.\r\n\r\n  - src: update URL in inspector_socket_server.cc\r\n  - doc: update example output in inspector.md and debugger.md\r\n  - test: update response pattern in test-inspector-help-page.js\r\n\r\n  Fixes: https://github.com/nodejs/node/issues/62743",
+          "state": "open",
+          "title": " doc,src,test: fix dead inspector help URL",
+          "htmlUrl": "https://github.com/nodejs/node/pull/62745",
+          "comments": 0,
+          "reviewComments": 0
+        },
+        "dedupe_key": "github:pr_opened:nodejs/node#62745",
+        "created_at": "2026-04-15T17:37:35.831Z"
+      },
+      {
+        "id": "e12f817d-22e2-4948-9a0b-251d635ec985",
+        "event_type": "release_published",
+        "occurred_at": "2026-04-01T14:45:58.000Z",
+        "window_start": null,
+        "window_end": null,
+        "source_signal_id": null,
+        "source_snapshot_id": null,
+        "subject_entity_id": "70d6c292-a3b7-4d76-8074-0e70a48a2022",
+        "actor_entity_id": null,
+        "repo_entity_id": "822c5f61-e915-41ba-95e6-191bd917f3fb",
+        "confidence": "1.00",
+        "metadata": {
+          "body": "\n\n\n### Notable Changes\n\n#### Test runner module mocking improvements\n\n`MockModuleOptions.defaultExport` and `MockModuleOptions.namedExports` have been\nconsolidated into a single option `MockModuleOptions.exports` to align with user\nexpectations and other test runners.\n\nA `default` property on `MockModuleOptions.exports`  represents the default\nexport, and own enumerable properties are treated as named exports.\n\nAn automated migration is available to update user code:\n<https://github.com/nodejs/userland-migrations/tree/main/recipes/mock-module-exports>\n\n```bash\nnpx codemod @nodejs/mock-module-exports\n```\n\nContributed by sangwook in [#61727](https://github.com/nodejs/node/pull/61727).\n\n#### Other notable changes\n\n* \\[[`312476cb84`](https://github.com/nodejs/node/commit/312476cb84)] - **(SEMVER-MINOR)** **async\\_hooks**: add using scopes to `AsyncLocalStorage` (Stephen Belanger) [#61674](https://github.com/nodejs/node/pull/61674)\n* \\[[`62d2cd473b`](https://github.com/nodejs/node/commit/62d2cd473b)] - **(SEMVER-MINOR)** **cli**: add `--max-heap-size` option (tannal) [#58708](https://github.com/nodejs/node/pull/58708)\n* \\[[`d0ebf0e44b`](https://github.com/nodejs/node/commit/d0ebf0e44b)] - **(SEMVER-MINOR)** **crypto**: add `TurboSHAKE` and `KangarooTwelve` Web Cryptography algorithms (Filip Skokan) [#62183](https://github.com/nodejs/node/pull/62183)\n* \\[[`f85b9d9fa8`](https://github.com/nodejs/node/commit/f85b9d9fa8)] - **(SEMVER-MINOR)** **repl**: add customizable error handling (Anna Henningsen) [#62188](https://github.com/nodejs/node/pull/62188)\n* \\[[`67b854d407`](https://github.com/nodejs/node/commit/67b854d407)] - **(SEMVER-MINOR)** **repl**: remove dependency on `node:domain` (Matteo Collina) [#61227](https://github.com/nodejs/node/pull/61227)\n* \\[[`966b700623`](https://github.com/nodejs/node/commit/966b700623)] - **(SEMVER-MINOR)** **sea**: support code cache for ESM entrypoint in SEA (Joyee Cheung) [#62158](https://github.com/nodejs/node/pull/62158)\n* \\[[`e1f0d2a014`](https://github.com/nodejs/node/commit/e1f0d2a014)] - **(SEMVER-MINOR)** **stream**: add stream/iter Implementation (James M Snell) [#62066](https://github.com/nodejs/node/pull/62066)\n\n### Commits\n\n* \\[[`312476cb84`](https://github.com/nodejs/node/commit/312476cb84)] - **(SEMVER-MINOR)** **async\\_hooks**: add using scopes to AsyncLocalStorage (Stephen Belanger) [#61674](https://github.com/nodejs/node/pull/61674)\n* \\[[`bfff8cb2ab`](https://github.com/nodejs/node/commit/bfff8cb2ab)] - **(SEMVER-MINOR)** **benchmark**: add benchmarks for experimental stream/iter (James M Snell) [#62066](https://github.com/nodejs/node/pull/62066)\n* \\[[`c721d68502`](https://github.com/nodejs/node/commit/c721d68502)] - **benchmark**: fix destructuring in dgram/single-buffer (Ali Hassan) [#62084](https://github.com/nodejs/node/pull/62084)\n* \\[[`e2f03c8e92`](https://github.com/nodejs/node/commit/e2f03c8e92)] - **buffer**: improve performance of multiple Buffer operations (Ali Hassan) [#61871](https://github.com/nodejs/node/pull/61871)\n* \\[[`2fcd07f1ba`](https://github.com/nodejs/node/commit/2fcd07f1ba)] - **build**: support empty libname flags in `configure.py` (Antoine du Hamel) [#62477](https://github.com/nodejs/node/pull/62477)\n* \\[[`b800c57fce`](https://github.com/nodejs/node/commit/b800c57fce)] - **build**: fix timezone-update path references (Chengzhong Wu) [#62280](https://github.com/nodejs/node/pull/62280)\n* \\[[`7dc5a1e9b4`](https://github.com/nodejs/node/commit/7dc5a1e9b4)] - **build**: skip dockit on IBMi (SRAVANI GUNDEPALLI) [#62189](https://github.com/nodejs/node/pull/62189)\n* \\[[`f0eea0f905`](https://github.com/nodejs/node/commit/f0eea0f905)] - **build**: fix --node-builtin-modules-path (Filip Skokan) [#62115](https://github.com/nodejs/node/pull/62115)\n* \\[[`62d2cd473b`](https://github.com/nodejs/node/commit/62d2cd473b)] - **(SEMVER-MINOR)** **cli**: add --max-heap-size option (tannal) [#58708](https://github.com/nodejs/node/pull/58708)\n* \\[[`ac4b485698`](https://github.com/nodejs/node/commit/ac4b485698)] - **crypto**: update root certificates to NSS 3.121 (Node.js GitHub Bot) [#62485](https://github.com/nodejs/node/pull/62485)\n* \\[[`d0ebf0e44b`](https://github.com/nodejs/node/commit/d0ebf0e44b)] - **(SEMVER-MINOR)** **crypto**: add TurboSHAKE and KangarooTwelve Web Cryptography algorithms (Filip Skokan) [#62183](https://github.com/nodejs/node/pull/62183)\n* \\[[`3009980d9d`](https://github.com/nodejs/node/commit/3009980d9d)] - **crypto**: add crypto::GetSSLCtx API for addon access to OpenSSL contexts (Tim Perry) [#62254](https://github.com/nodejs/node/pull/62254)\n* \\[[`f5725ca81d`](https://github.com/nodejs/node/commit/f5725ca81d)] - **crypto**: reject ML-KEM/ML-DSA PKCS#8 import without seed in SubtleCrypto (Filip Skokan) [#62218](https://github.com/nodejs/node/pull/62218)\n* \\[[`f69ed4bc3f`](https://github.com/nodejs/node/commit/f69ed4bc3f)] - **crypto**: rename CShakeParams and KmacParams length to outputLength (Filip Skokan) [#61875](https://github.com/nodejs/node/pull/61875)\n* \\[[`4d96e53570`](https://github.com/nodejs/node/commit/4d96e53570)] - **crypto**: refactor WebCrypto AEAD algorithms auth tag handling (Filip Skokan) [#62169](https://github.com/nodejs/node/pull/62169)\n* \\[[`93d77719e8`](https://github.com/nodejs/node/commit/93d77719e8)] - **crypto**: read algorithm name property only once in normalizeAlgorithm (Filip Skokan) [#62170](https://github.com/nodejs/node/pull/62170)\n* \\[[`3d2e23a981`](https://github.com/nodejs/node/commit/3d2e23a981)] - **deps**: update ada to 3.4.4 (Node.js GitHub Bot) [#62414](https://github.com/nodejs/node/pull/62414)\n* \\[[`176d6d2205`](https://github.com/nodejs/node/commit/176d6d2205)] - **deps**: update timezone to 2026a (Node.js GitHub Bot) [#62164](https://github.com/nodejs/node/pull/62164)\n* \\[[`95c7fc67ba`](https://github.com/nodejs/node/commit/95c7fc67ba)] - **deps**: update googletest to 2461743991f9aa53e9a3625eafcbacd81a3c74cd (Node.js GitHub Bot) [#62484](https://github.com/nodejs/node/pull/62484)\n* \\[[`e5e9f2044a`](https://github.com/nodejs/node/commit/e5e9f2044a)] - **deps**: update simdjson to 4.5.0 (Node.js GitHub Bot) [#62382](https://github.com/nodejs/node/pull/62382)\n* \\[[`905b94266a`](https://github.com/nodejs/node/commit/905b94266a)] - **deps**: update ngtcp2 to 1.21.0 (Node.js GitHub Bot) [#62051](https://github.com/nodejs/node/pull/62051)\n* \\[[`180c150122`](https://github.com/nodejs/node/commit/180c150122)] - **deps**: V8: cherry-pick cf1bce40a5ef (Richard Lau) [#62449](https://github.com/nodejs/node/pull/62449)\n* \\[[`bc265aa003`](https://github.com/nodejs/node/commit/bc265aa003)] - **deps**: upgrade npm to 11.12.1 (npm team) [#62448](https://github.com/nodejs/node/pull/62448)\n* \\[[`f1b28612c4`](https://github.com/nodejs/node/commit/f1b28612c4)] - **deps**: V8: cherry-pick b25cd62c7ba2 (Yagiz Nizipli) [#62354](https://github.com/nodejs/node/pull/62354)\n* \\[[`757719d2af`](https://github.com/nodejs/node/commit/757719d2af)] - **deps**: disable rust icu compiled\\_data features (Chengzhong Wu) [#62284](https://github.com/nodejs/node/pull/62284)\n* \\[[`3bdc955b63`](https://github.com/nodejs/node/commit/3bdc955b63)] - **deps**: update sqlite to 3.51.3 (Node.js GitHub Bot) [#62256](https://github.com/nodejs/node/pull/62256)\n* \\[[`a9703d194a`](https://github.com/nodejs/node/commit/a9703d194a)] - **deps**: update googletest to 73a63ea05dc8ca29ec1d2c1d66481dd0de1950f1 (Node.js GitHub Bot) [#61927](https://github.com/nodejs/node/pull/61927)\n* \\[[`85138935cb`](https://github.com/nodejs/node/commit/85138935cb)] - **deps**: update merve to 1.2.2 (Node.js GitHub Bot) [#62213](https://github.com/nodejs/node/pull/62213)\n* \\[[`231521e75e`](https://github.com/nodejs/node/commit/231521e75e)] - **diagnostics\\_channel**: add diagnostics channels for web locks (Ilyas Shabi) [#62123](https://github.com/nodejs/node/pull/62123)\n* \\[[`0093863664`](https://github.com/nodejs/node/commit/0093863664)] - **doc**: deprecate `module.register()` (DEP0205) (Geoffrey Booth) [#62395](https://github.com/nodejs/node/pull/62395)\n* \\[[`0b96ece6be`](https://github.com/nodejs/node/commit/0b96ece6be)] - **doc**: clarify that features cannot be both experimental and deprecated (Antoine du Hamel) [#62456](https://github.com/nodejs/node/pull/62456)\n* \\[[`8d3ea975f5`](https://github.com/nodejs/node/commit/8d3ea975f5)] - **doc**: fix 'transfered' typo in quic.md (lilianakatrina684-a11y) [#62492](https://github.com/nodejs/node/pull/62492)\n* \\[[`08ff16e0ba`](https://github.com/nodejs/node/commit/08ff16e0ba)] - **doc**: move sqlite type conversion section to correct level (René) [#62482](https://github.com/nodejs/node/pull/62482)\n* \\[[`61cc747dd8`](https://github.com/nodejs/node/commit/61cc747dd8)] - **doc**: add Rafael to last security release steward (Rafael Gonzaga) [#62423](https://github.com/nodejs/node/pull/62423)\n* \\[[`64cfa5a6fa`](https://github.com/nodejs/node/commit/64cfa5a6fa)] - **doc**: use npm-published version of doc-kit (Aviv Keller) [#62139](https://github.com/nodejs/node/pull/62139)\n* \\[[`1020321fb0`](https://github.com/nodejs/node/commit/1020321fb0)] - **doc**: fix overstated Date header requirement in response.sendDate (Kit Dallege) [#62206](https://github.com/nodejs/node/pull/62206)\n* \\[[`9caa7855b2`](https://github.com/nodejs/node/commit/9caa7855b2)] - **doc**: fix guaranteed typo (lilianakatrina684-a11y) [#62374](https://github.com/nodejs/node/pull/62374)\n* \\[[`e254f65306`](https://github.com/nodejs/node/commit/e254f65306)] - **doc**: enhance clarification about the main field (Mowafak Almahaini) [#62302](https://github.com/nodejs/node/pull/62302)\n* \\[[`9e724b53f8`](https://github.com/nodejs/node/commit/9e724b53f8)] - **doc**: remove spawn with shell example from bat/cmd section (Kit Dallege) [#62243](https://github.com/nodejs/node/pull/62243)\n* \\[[`7f37c17516`](https://github.com/nodejs/node/commit/7f37c17516)] - **doc**: minor typo fix (Jeff Matson) [#62358](https://github.com/nodejs/node/pull/62358)\n* \\[[`eb0ca98f01`](https://github.com/nodejs/node/commit/eb0ca98f01)] - **doc**: add path to vulnerabilities.json mention (Rafael Gonzaga) [#62355](https://github.com/nodejs/node/pull/62355)\n* \\[[`198b6e0932`](https://github.com/nodejs/node/commit/198b6e0932)] - **doc**: deprecate CryptoKey use in node:crypto (Filip Skokan) [#62321](https://github.com/nodejs/node/pull/62321)\n* \\[[`17e5aee6c5`](https://github.com/nodejs/node/commit/17e5aee6c5)] - **doc**: fix small environment\\_variables typo (chris) [#62279](https://github.com/nodejs/node/pull/62279)\n* \\[[`193d629895`](https://github.com/nodejs/node/commit/193d629895)] - **doc**: test and test-only targets do not run linter (Xavier Stouder) [#62120](https://github.com/nodejs/node/pull/62120)\n* \\[[`4a1f20ec4a`](https://github.com/nodejs/node/commit/4a1f20ec4a)] - **doc**: clarify fs.ReadStream and fs.WriteStream are not constructable (Kit Dallege) [#62208](https://github.com/nodejs/node/pull/62208)\n* \\[[`f976c9214d`](https://github.com/nodejs/node/commit/f976c9214d)] - **doc**: clarify that any truthy value of `shell` is part of DEP0190 (Antoine du Hamel) [#62249](https://github.com/nodejs/node/pull/62249)\n* \\[[`4d83972681`](https://github.com/nodejs/node/commit/4d83972681)] - **doc**: remove outdated Chrome 66 and ndb references from debugger (Kit Dallege) [#62202](https://github.com/nodejs/node/pull/62202)\n* \\[[`71f2eada5b`](https://github.com/nodejs/node/commit/71f2eada5b)] - **doc**: add throwIfNoEntry version history to fs.stat (kovan) [#62204](https://github.com/nodejs/node/pull/62204)\n* \\[[`670c80893b`](https://github.com/nodejs/node/commit/670c80893b)] - **doc**: add note (and caveat) for `mock.module` about customization hooks (Jacob Smith) [#62075](https://github.com/nodejs/node/pull/62075)\n* \\[[`2ff5cb13f5`](https://github.com/nodejs/node/commit/2ff5cb13f5)] - **doc,test**: clarify --eval syntax for leading '-' scripts (kovan) [#62244](https://github.com/nodejs/node/pull/62244)\n* \\[[`6c6c9004c4`](https://github.com/nodejs/node/commit/6c6c9004c4)] - **esm**: fix typo in worker loader hook comment (jakecastelli) [#62475](https://github.com/nodejs/node/pull/62475)\n* \\[[`1cdd23c9f3`](https://github.com/nodejs/node/commit/1cdd23c9f3)] - **esm**: fix source phase identity bug in loadCache eviction (Guy Bedford) [#62415](https://github.com/nodejs/node/pull/62415)\n* \\[[`4f4ff15794`](https://github.com/nodejs/node/commit/4f4ff15794)] - **esm**: fix path normalization in `finalizeResolution` (Antoine du Hamel) [#62080](https://github.com/nodejs/node/pull/62080)\n* \\[[`088167d102`](https://github.com/nodejs/node/commit/088167d102)] - **events**: avoid cloning listeners array on every emit (Gürgün Dayıoğlu) [#62261](https://github.com/nodejs/node/pull/62261)\n* \\[[`0250b436ee`](https://github.com/nodejs/node/commit/0250b436ee)] - **fs**: fix cpSync to handle non-ASCII characters (Stefan Stojanovic) [#61950](https://github.com/nodejs/node/pull/61950)\n* \\[[`b67a8fb171`](https://github.com/nodejs/node/commit/b67a8fb171)] - **inspector**: add Target.getTargets and extract TargetManager (Kohei) [#62487](https://github.com/nodejs/node/pull/62487)\n* \\[[`ffcc5a5722`](https://github.com/nodejs/node/commit/ffcc5a5722)] - **lib**: make SubtleCrypto.supports enumerable (Filip Skokan) [#62307](https://github.com/nodejs/node/pull/62307)\n* \\[[`92ef2ad8fa`](https://github.com/nodejs/node/commit/92ef2ad8fa)] - **lib**: prefer primordials in SubtleCrypto (Filip Skokan) [#62226](https://github.com/nodejs/node/pull/62226)\n* \\[[`40a43ac4d0`](https://github.com/nodejs/node/commit/40a43ac4d0)] - **module**: fix coverage of mocked CJS modules imported from ESM (Marco) [#62133](https://github.com/nodejs/node/pull/62133)\n* \\[[`3ef0a5b90e`](https://github.com/nodejs/node/commit/3ef0a5b90e)] - **quic**: remove CryptoKey support from session keys option (Filip Skokan) [#62335](https://github.com/nodejs/node/pull/62335)\n* \\[[`3c8dd8eb8e`](https://github.com/nodejs/node/commit/3c8dd8eb8e)] - **repl**: use vm DONT\\_CONTEXTIFY context (Chengzhong Wu) [#62371](https://github.com/nodejs/node/pull/62371)\n* \\[[`f85b9d9fa8`](https://github.com/nodejs/node/commit/f85b9d9fa8)] - **(SEMVER-MINOR)** **repl**: add customizable error handling (Anna Henningsen) [#62188](https://github.com/nodejs/node/pull/62188)\n* \\[[`e4c164e045`](https://github.com/nodejs/node/commit/e4c164e045)] - **repl**: handle exceptions from async context after close (Anna Henningsen) [#62165](https://github.com/nodejs/node/pull/62165)\n* \\[[`67b854d407`](https://github.com/nodejs/node/commit/67b854d407)] - **(SEMVER-MINOR)** **repl**: remove dependency on domain module (Matteo Collina) [#61227](https://github.com/nodejs/node/pull/61227)\n* \\[[`966b700623`](https://github.com/nodejs/node/commit/966b700623)] - **(SEMVER-MINOR)** **sea**: support code cache for ESM entrypoint in SEA (Joyee Cheung) [#62158](https://github.com/nodejs/node/pull/62158)\n* \\[[`fe82baf970`](https://github.com/nodejs/node/commit/fe82baf970)] - **src**: improve EC JWK import performance (Filip Skokan) [#62396](https://github.com/nodejs/node/pull/62396)\n* \\[[`d490b171e0`](https://github.com/nodejs/node/commit/d490b171e0)] - **src**: handle null backing store in ArrayBufferViewContents::Read (Mert Can Altin) [#62343](https://github.com/nodejs/node/pull/62343)\n* \\[[`0e4af848bc`](https://github.com/nodejs/node/commit/0e4af848bc)] - **src**: convert context\\_frame field in AsyncWrap to internal field (Anna Henningsen) [#62103](https://github.com/nodejs/node/pull/62103)\n* \\[[`02980b8c8f`](https://github.com/nodejs/node/commit/02980b8c8f)] - **src**: enable compilation/linking with OpenSSL 4.0 (Filip Skokan) [#62410](https://github.com/nodejs/node/pull/62410)\n* \\[[`064f7c2fa6`](https://github.com/nodejs/node/commit/064f7c2fa6)] - **src**: use stack allocation in indexOf latin1 path (Mert Can Altin) [#62268](https://github.com/nodejs/node/pull/62268)\n* \\[[`ede52bc2dc`](https://github.com/nodejs/node/commit/ede52bc2dc)] - **src,sqlite**: fix filterFunc dangling reference (Edy Silva) [#62281](https://github.com/nodejs/node/pull/62281)\n* \\[[`e1f0d2a014`](https://github.com/nodejs/node/commit/e1f0d2a014)] - **(SEMVER-MINOR)** **stream**: add stream/iter Implementation (James M Snell) [#62066](https://github.com/nodejs/node/pull/62066)\n* \\[[`03839fb087`](https://github.com/nodejs/node/commit/03839fb087)] - **stream**: preserve error over AbortError in pipeline (Marco) [#62113](https://github.com/nodejs/node/pull/62113)\n* \\[[`0000d2f011`](https://github.com/nodejs/node/commit/0000d2f011)] - **stream**: replace bind with arrow function for onwrite callback (Ali Hassan) [#62087](https://github.com/nodejs/node/pull/62087)\n* \\[[`3796a73719`](https://github.com/nodejs/node/commit/3796a73719)] - **test**: update WPT for WebCryptoAPI to 2cb332d710 (Node.js GitHub Bot) [#62483](https://github.com/nodejs/node/pull/62483)\n* \\[[`ad8309415b`](https://github.com/nodejs/node/commit/ad8309415b)] - **test**: update WPT for url to fc3e651593 (Node.js GitHub Bot) [#62379](https://github.com/nodejs/node/pull/62379)\n* \\[[`bed89b037e`](https://github.com/nodejs/node/commit/bed89b037e)] - **test**: wait for reattach before initial break on restart (Yuya Inoue) [#62471](https://github.com/nodejs/node/pull/62471)\n* \\[[`c9ffffcc55`](https://github.com/nodejs/node/commit/c9ffffcc55)] - **test**: disable flaky WPT Blob test on AIX (James M Snell) [#62470](https://github.com/nodejs/node/pull/62470)\n* \\[[`fd41ef31f6`](https://github.com/nodejs/node/commit/fd41ef31f6)] - **(SEMVER-MINOR)** **test**: add tests for experimental stream/iter implementation (James M Snell) [#62066](https://github.com/nodejs/node/pull/62066)\n* \\[[`1b9d8d3eec`](https://github.com/nodejs/node/commit/1b9d8d3eec)] - **test**: avoid flaky run wait in debugger restart test (Yuya Inoue) [#62112](https://github.com/nodejs/node/pull/62112)\n* \\[[`cb08a29d51`](https://github.com/nodejs/node/commit/cb08a29d51)] - **test**: skip test-cluster-dgram-reuse on AIX 7.3 (Stewart X Addison) [#62238](https://github.com/nodejs/node/pull/62238)\n* \\[[`abea0af8a9`](https://github.com/nodejs/node/commit/abea0af8a9)] - **test**: add WebCrypto Promise.prototype.then pollution regression tests (Filip Skokan) [#62226](https://github.com/nodejs/node/pull/62226)\n* \\[[`47a2132269`](https://github.com/nodejs/node/commit/47a2132269)] - **test**: update WPT for WebCryptoAPI to 6a1c545d77 (Node.js GitHub Bot) [#62187](https://github.com/nodejs/node/pull/62187)\n* \\[[`2c63d3006c`](https://github.com/nodejs/node/commit/2c63d3006c)] - **test\\_runner**: add exports option for module mocks (sangwook) [#61727](https://github.com/nodejs/node/pull/61727)\n* \\[[`44ac0e1302`](https://github.com/nodejs/node/commit/44ac0e1302)] - **test\\_runner**: make it compatible with fake timers (Matteo Collina) [#59272](https://github.com/nodejs/node/pull/59272)\n* \\[[`1865691275`](https://github.com/nodejs/node/commit/1865691275)] - **test\\_runner**: set non-zero exit code when suite errors occur (Edy Silva) [#62282](https://github.com/nodejs/node/pull/62282)\n* \\[[`0252b2bab8`](https://github.com/nodejs/node/commit/0252b2bab8)] - **tools**: bump picomatch from 4.0.3 to 4.0.4 in /tools/eslint (dependabot\\[bot]) [#62439](https://github.com/nodejs/node/pull/62439)\n* \\[[`3368155267`](https://github.com/nodejs/node/commit/3368155267)] - **tools**: bump yaml from 2.8.2 to 2.8.3 in /tools/doc (dependabot\\[bot]) [#62437](https://github.com/nodejs/node/pull/62437)\n* \\[[`5e47c359f5`](https://github.com/nodejs/node/commit/5e47c359f5)] - **tools**: adopt the `--check-for-duplicates` NCU flag (Antoine du Hamel) [#62478](https://github.com/nodejs/node/pull/62478)\n* \\[[`4a604e82d0`](https://github.com/nodejs/node/commit/4a604e82d0)] - **tools**: bump picomatch in /tools/doc (dependabot\\[bot]) [#62438](https://github.com/nodejs/node/pull/62438)\n* \\[[`d1a98b4ddb`](https://github.com/nodejs/node/commit/d1a98b4ddb)] - **tools**: bump flatted from 3.4.1 to 3.4.2 in /tools/eslint (dependabot\\[bot]) [#62375](https://github.com/nodejs/node/pull/62375)\n* \\[[`c32daa1ab4`](https://github.com/nodejs/node/commit/c32daa1ab4)] - **tools**: bump eslint deps (Huáng Jùnliàng) [#62356](https://github.com/nodejs/node/pull/62356)\n* \\[[`7a2fcc6d41`](https://github.com/nodejs/node/commit/7a2fcc6d41)] - **tools**: do not swallow error in `lint-nix` workflow (Antoine du Hamel) [#62292](https://github.com/nodejs/node/pull/62292)\n* \\[[`c41a2871b5`](https://github.com/nodejs/node/commit/c41a2871b5)] - **tools**: add eslint-plugin-regexp (Huáng Jùnliàng) [#62093](https://github.com/nodejs/node/pull/62093)\n* \\[[`56dfeb06df`](https://github.com/nodejs/node/commit/56dfeb06df)] - **tools**: fix timeout errors in `lint-nix` job (Antoine du Hamel) [#62265](https://github.com/nodejs/node/pull/62265)\n* \\[[`22fc8078e8`](https://github.com/nodejs/node/commit/22fc8078e8)] - **tools**: bump flatted from 3.3.3 to 3.4.1 in /tools/eslint (dependabot\\[bot]) [#62255](https://github.com/nodejs/node/pull/62255)\n* \\[[`409b0663bd`](https://github.com/nodejs/node/commit/409b0663bd)] - **tools**: bump undici from 6.23.0 to 6.24.1 in /tools/doc (dependabot\\[bot]) [#62250](https://github.com/nodejs/node/pull/62250)\n* \\[[`67c69750f4`](https://github.com/nodejs/node/commit/67c69750f4)] - **tools**: validate all commits that are pushed to `main` (Antoine du Hamel) [#62246](https://github.com/nodejs/node/pull/62246)\n* \\[[`7d9db8cd21`](https://github.com/nodejs/node/commit/7d9db8cd21)] - **tools**: keep GN files when updating Merve (Antoine du Hamel) [#62167](https://github.com/nodejs/node/pull/62167)\n* \\[[`6c8fa42ba2`](https://github.com/nodejs/node/commit/6c8fa42ba2)] - **typings**: rationalise TypedArray types (René) [#62174](https://github.com/nodejs/node/pull/62174)\n* \\[[`531c64d04e`](https://github.com/nodejs/node/commit/531c64d04e)] - **url**: enable simdutf for ada (Yagiz Nizipli) [#61477](https://github.com/nodejs/node/pull/61477)\n* \\[[`2000caccde`](https://github.com/nodejs/node/commit/2000caccde)] - **util**: allow color aliases in styleText (sangwook) [#62180](https://github.com/nodejs/node/pull/62180)\n* \\[[`0aed332ab4`](https://github.com/nodejs/node/commit/0aed332ab4)] - **wasm**: support js string constant esm import (Guy Bedford) [#62198](https://github.com/nodejs/node/pull/62198)\n* \\[[`d3fd4a978b`](https://github.com/nodejs/node/commit/d3fd4a978b)] - **worker**: heap profile optimizations (Ilyas Shabi) [#62201](https://github.com/nodejs/node/pull/62201)\n* \\[[`e992a34a18`](https://github.com/nodejs/node/commit/e992a34a18)] - **zlib**: fix use-after-free when reset() is called during write (Matteo Collina) [#62325](https://github.com/nodejs/node/pull/62325)\n\n",
+          "title": "2026-04-01, Version 25.9.0 (Current), @aduh95",
+          "htmlUrl": "https://github.com/nodejs/node/releases/tag/v25.9.0",
+          "tagName": "v25.9.0"
+        },
+        "dedupe_key": "github:release_published:nodejs/node@release:v25.9.0",
+        "created_at": "2026-04-15T17:37:35.839Z"
+      },
+      {
+        "id": "80e78793-d446-41c8-9b07-20147e3085ec",
+        "event_type": "pr_opened",
+        "occurred_at": "2026-04-15T17:55:21.000Z",
+        "window_start": null,
+        "window_end": null,
+        "source_signal_id": null,
+        "source_snapshot_id": null,
+        "subject_entity_id": "471ed5ca-1408-400a-b5dd-05be1ac09ff6",
+        "actor_entity_id": "ec7777a1-4093-4406-a1a4-d9ef5f3aada8",
+        "repo_entity_id": "822c5f61-e915-41ba-95e6-191bd917f3fb",
+        "confidence": "1.00",
+        "metadata": {
+          "body": "### Description\r\n\r\nThis PR enables Profile-Guided Optimization (PGO) and Link-Time Optimization (LTO) for Windows builds (x64 and ARM64). The changes used the Linux implementation of these optimizations as guidelines. They can be used separately, but can also be used alongside each other for the best results.\r\n\r\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \r\n\r\n### PGO\r\n\r\nPGO adds 2 new, mutually exclusive, vcbuild options:\r\n- `pgo-generate` - for building an instrumented binary for generating profile data\r\n- `pgo-use` - for building an optimized binary using the generated profile data\r\n\r\nPGO is planned to be used like this:\r\n1. `vcbuild.bat pgo-generate` - builds instrumented binary\r\n2.  Run workload to generate profile data\r\n3. `vcbuild.bat pgo-use` - builds optimized binary\r\n\r\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \r\n\r\n### LTO\r\n\r\nOn Windows, LTCG was used for a long time. Since moving to ClangCL, LTO is an option, and this PR adds support for it. Together with adapting the legacy LTCG option (which is still available and used for release builds), there are 2 new LTO options in vcbuild. All 3 are mutually exclusive:\r\n- `ltcg` - since LTCG is an MSVC-specific optimization, it is now changed to apply thin LTO, but only to the Node.js executable. This is how LTCG was applied previously.\r\n- `thin-lto` - applies thin LTO to all projects (except build-time tools)\r\n- `lto` - applies full LTO to all projects (except build-time tools) \r\n\r\n- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - \r\n\r\n### Next steps\r\n\r\nThis PR simply enables using PGO and/or LTO in Windows builds, and as such, is a good starting point, but in order to capitalize on it, more work is needed in the future. Because of this, I believe these changes are safe to land, as they just enable optimizations, without forcing them anywhere. Here is a rough set of a few future steps we could take if we wanted to leverage this:\r\n- Remove the `ltcg` option, and start using `thin-lto` for Windows builds. This is a simple change to make, but we need to investigate how it will affect build time and performance, as we do not want to make the Windows compilation job a bottleneck\r\n- Enabling PGO in the release CI for official releases. This is a much bigger task, and should probably be separated into a few minor ones. For example, first we'd have to come up with a good workload for instrumented build, validate the benefits it can give us, and after all of that, we'd need to change the release CI build job to start using this for official releases.\r\n\r\nRefs: https://github.com/nodejs/node/issues/61964",
+          "state": "open",
+          "title": "build,win: enable PGO and LTO for Windows builds",
+          "htmlUrl": "https://github.com/nodejs/node/pull/62761",
+          "comments": 0,
+          "reviewComments": 0
+        },
+        "dedupe_key": "github:pr_opened:nodejs/node#62761",
+        "created_at": "2026-04-15T17:59:42.342Z"
+      },
+      {
+        "id": "1620a9dd-cb80-4784-bbc7-831b72201308",
+        "event_type": "pr_opened",
+        "occurred_at": "2026-04-15T17:55:08.000Z",
+        "window_start": null,
+        "window_end": null,
+        "source_signal_id": null,
+        "source_snapshot_id": null,
+        "subject_entity_id": "a67c7338-eadb-4e40-93d3-772985190847",
+        "actor_entity_id": "1b2a72f2-f478-4644-8f21-68f333b76fa7",
+        "repo_entity_id": "822c5f61-e915-41ba-95e6-191bd917f3fb",
+        "confidence": "1.00",
+        "metadata": {
+          "body": "This PR documents a new lifetime policy for experimental modules by adding guidance to the API documentation and the collaborator guide. It clarifies maintenance expectations and helps contributors apply a consistent standard when introducing or managing experimental modules.",
+          "state": "open",
+          "title": "doc: add experimental modules lifetime policy",
+          "htmlUrl": "https://github.com/nodejs/node/pull/62753",
+          "comments": 0,
+          "reviewComments": 0
+        },
+        "dedupe_key": "github:pr_opened:nodejs/node#62753",
+        "created_at": "2026-04-15T17:59:42.382Z"
+      },
+      {
+        "id": "0bf7fca3-8d59-4295-beec-9a49b92a78f0",
+        "event_type": "pr_opened",
+        "occurred_at": "2026-04-15T18:35:01.000Z",
+        "window_start": null,
+        "window_end": null,
+        "source_signal_id": null,
+        "source_snapshot_id": null,
+        "subject_entity_id": "70cd5cdb-d991-4169-a54c-d10a969969aa",
+        "actor_entity_id": "f3a914af-535e-4482-aef0-1a28281a544b",
+        "repo_entity_id": "822c5f61-e915-41ba-95e6-191bd917f3fb",
+        "confidence": "1.00",
+        "metadata": {
+          "body": "This PR makes `--experimental-config-file` accept no arg. \r\nWhen no arg is passed, it will default to `node.config.json`.\r\n`--experimental-default-config-file` is just an alias of `--experimental-config-file`.\r\nThe reason for this change is so when stable we can just remove `--experimental-default-config-file` and rename `--experimental-config-file` to `--config-file`.\r\nUsers can execute node with `node --config-file index.js` or `node --config-file=foo.json index.js`.\r\n",
+          "state": "open",
+          "title": "src: allow empty --experimental-config-file",
+          "htmlUrl": "https://github.com/nodejs/node/pull/61610",
+          "comments": 0,
+          "reviewComments": 0
+        },
+        "dedupe_key": "github:pr_opened:nodejs/node#61610",
+        "created_at": "2026-04-15T18:42:30.727Z"
+      },
+      {
+        "id": "d0526790-e67a-4044-9a36-95160f56a1b9",
+        "event_type": "pr_opened",
+        "occurred_at": "2026-04-15T18:34:06.000Z",
+        "window_start": null,
+        "window_end": null,
+        "source_signal_id": null,
+        "source_snapshot_id": null,
+        "subject_entity_id": "80ce18d1-9947-4624-9048-5f188cb11361",
+        "actor_entity_id": "f3a914af-535e-4482-aef0-1a28281a544b",
+        "repo_entity_id": "822c5f61-e915-41ba-95e6-191bd917f3fb",
+        "confidence": "1.00",
+        "metadata": {
+          "body": "PR-URL: https://github.com/nodejs/node/pull/60746\r\nReviewed-By: Rafael Gonzaga <rafael.nunu@hotmail.com>\r\nReviewed-By: Pietro Marchini <pietro.marchini94@gmail.com>\r\nReviewed-By: Colin Ihrig <cjihrig@gmail.com>\r\n\r\n<!--\r\nBefore submitting a pull request, please read:\r\n\r\n- the CONTRIBUTING guide at https://github.com/nodejs/node/blob/HEAD/CONTRIBUTING.md\r\n- the commit message formatting guidelines at\r\n  https://github.com/nodejs/node/blob/HEAD/doc/contributing/pull-requests.md#commit-message-guidelines\r\n\r\nFor code changes:\r\n1. Include tests for any bug fixes or new features.\r\n2. Update documentation if relevant.\r\n3. Ensure that `make -j4 test` (UNIX), or `vcbuild test` (Windows) passes.\r\n\r\nIf you believe this PR should be highlighted in the Node.js CHANGELOG\r\nplease add the `notable-change` label.\r\n\r\nDeveloper's Certificate of Origin 1.1\r\n\r\nBy making a contribution to this project, I certify that:\r\n\r\n(a) The contribution was created in whole or in part by me and I\r\n    have the right to submit it under the open source license\r\n    indicated in the file; or\r\n\r\n(b) The contribution is based upon previous work that, to the best\r\n    of my knowledge, is covered under an appropriate open source\r\n    license and I have the right under that license to submit that\r\n    work with modifications, whether created in whole or in part\r\n    by me, under the same open source license (unless I am\r\n    permitted to submit under a different license), as indicated\r\n    in the file; or\r\n\r\n(c) The contribution was provided directly to me by some other\r\n    person who certified (a), (b) or (c) and I have not modified\r\n    it.\r\n\r\n(d) I understand and agree that this project and the contribution\r\n    are public and that a record of the contribution (including all\r\n    personal information I submit with it, including my sign-off) is\r\n    maintained indefinitely and may be redistributed consistent with\r\n    this project or the open source license(s) involved.\r\n-->\r\n",
+          "state": "open",
+          "title": "[v24.x] src: add permission support to config file",
+          "htmlUrl": "https://github.com/nodejs/node/pull/62760",
+          "comments": 0,
+          "reviewComments": 0
+        },
+        "dedupe_key": "github:pr_opened:nodejs/node#62760",
+        "created_at": "2026-04-15T18:42:30.738Z"
+      },
+      {
+        "id": "09b59783-c0fb-4b74-92ea-5632f686c277",
+        "event_type": "pr_opened",
+        "occurred_at": "2026-04-15T18:32:45.000Z",
+        "window_start": null,
+        "window_end": null,
+        "source_signal_id": null,
+        "source_snapshot_id": null,
+        "subject_entity_id": "6d35d830-57df-4f59-9614-d90706256960",
+        "actor_entity_id": "1b2a72f2-f478-4644-8f21-68f333b76fa7",
+        "repo_entity_id": "822c5f61-e915-41ba-95e6-191bd917f3fb",
+        "confidence": "1.00",
+        "metadata": {
+          "body": "- Added null support in DynamicLibrary loading on non-Windows (dlopen(NULL) semantics), plus docs clarifying null is not supported on Windows.\r\n- Added a new FFI benchmark `benchmark/ffi/getpid.js` using `ffi.dlopen(null, ...)` + `uv_os_getpid`. Thanks to @bengl for https://github.com/nodejs/node/pull/46905\r\n- Documented new FFI error codes in `doc/api/errors.md` as asked from @jasnell in https://github.com/nodejs/node/pull/62072#discussion_r3079221259\r\n- Code documented behavior of why JS callback may abort the process. This address what requested by @jasnell in https://github.com/nodejs/node/pull/62072#discussion_r3079212046.\r\n\r\nAs promised to @justjake, also the following followups requested in https://github.com/nodejs/node/pull/62072#issuecomment-4226520291:\r\n\r\n- Added `ffi.exportArrayBuffer(...)` and `ffi.exportArrayBufferView(...)`.\r\n- Added raw pointer helper ffi.getRawPointer(source) (Buffer | ArrayBuffer | ArrayBufferView), with strong “unsafe/dangerous” docs and tests.\r\n- Moved byte-export copying to native code (`exportBytes`) to avoid extra JS Buffer wrapper allocations.\r\n",
+          "state": "open",
+          "title": "ffi: added new methods and error codes",
+          "htmlUrl": "https://github.com/nodejs/node/pull/62762",
+          "comments": 0,
+          "reviewComments": 0
+        },
+        "dedupe_key": "github:pr_opened:nodejs/node#62762",
+        "created_at": "2026-04-15T18:42:30.748Z"
+      },
+      {
+        "id": "f30e0eac-0d55-40a4-861a-8aaca592f66e",
+        "event_type": "pr_opened",
+        "occurred_at": "2026-04-15T18:29:39.000Z",
+        "window_start": null,
+        "window_end": null,
+        "source_signal_id": null,
+        "source_snapshot_id": null,
+        "subject_entity_id": "65e52e81-2e63-48a0-b108-ff69d203c1b4",
+        "actor_entity_id": "b931cc7a-4eac-478c-9c2c-ce57e48d021e",
+        "repo_entity_id": "822c5f61-e915-41ba-95e6-191bd917f3fb",
+        "confidence": "1.00",
+        "metadata": {
+          "body": "This is not ready for review yet. Just opening to see if this is something the project is still interested in.\r\n\r\n<!--\r\nBefore submitting a pull request, please read:\r\n\r\n- the CONTRIBUTING guide at https://github.com/nodejs/node/blob/HEAD/CONTRIBUTING.md\r\n- the commit message formatting guidelines at\r\n  https://github.com/nodejs/node/blob/HEAD/doc/contributing/pull-requests.md#commit-message-guidelines\r\n\r\nFor code changes:\r\n1. Include tests for any bug fixes or new features.\r\n2. Update documentation if relevant.\r\n3. Ensure that `make -j4 test` (UNIX), or `vcbuild test` (Windows) passes.\r\n\r\nIf you believe this PR should be highlighted in the Node.js CHANGELOG\r\nplease add the `notable-change` label.\r\n\r\nDeveloper's Certificate of Origin 1.1\r\n\r\nBy making a contribution to this project, I certify that:\r\n\r\n(a) The contribution was created in whole or in part by me and I\r\n    have the right to submit it under the open source license\r\n    indicated in the file; or\r\n\r\n(b) The contribution is based upon previous work that, to the best\r\n    of my knowledge, is covered under an appropriate open source\r\n    license and I have the right under that license to submit that\r\n    work with modifications, whether created in whole or in part\r\n    by me, under the same open source license (unless I am\r\n    permitted to submit under a different license), as indicated\r\n    in the file; or\r\n\r\n(c) The contribution was provided directly to me by some other\r\n    person who certified (a), (b) or (c) and I have not modified\r\n    it.\r\n\r\n(d) I understand and agree that this project and the contribution\r\n    are public and that a record of the contribution (including all\r\n    personal information I submit with it, including my sign-off) is\r\n    maintained indefinitely and may be redistributed consistent with\r\n    this project or the open source license(s) involved.\r\n-->\r\n",
+          "state": "closed",
+          "title": "lib,src,test,doc: add node:ffi module",
+          "htmlUrl": "https://github.com/nodejs/node/pull/62072",
+          "comments": 0,
+          "reviewComments": 0
+        },
+        "dedupe_key": "github:pr_opened:nodejs/node#62072",
+        "created_at": "2026-04-15T18:42:30.770Z"
+      },
+      {
+        "id": "86f1432b-0d1c-4490-8d2e-830a309a51f3",
+        "event_type": "pr_opened",
+        "occurred_at": "2026-04-15T18:26:47.000Z",
+        "window_start": null,
+        "window_end": null,
+        "source_signal_id": null,
+        "source_snapshot_id": null,
+        "subject_entity_id": "366ee5cc-0056-4c10-be06-777615008a1a",
+        "actor_entity_id": "36bb0f0c-ef78-4247-af80-bc8eca979dbc",
+        "repo_entity_id": "822c5f61-e915-41ba-95e6-191bd917f3fb",
+        "confidence": "1.00",
+        "metadata": {
+          "body": "Restore single-line `util.inspect()` output when `breakLength` is `Infinity`\r\nand depth is unlimited. This covers both `depth: Infinity` and `depth: null`.\r\n\r\nKeep existing behavior for explicit non-default `compact` settings and for\r\ncustomized `util.inspect.defaultOptions.compact`, so the fix only applies to\r\nthe default `compact: 3` formatting behavior.\r\n\r\nAdd regression coverage for:\r\n- `depth: Infinity`\r\n- `depth: null`\r\n- explicit `compact: 3`\r\n- explicit `compact: 1`\r\n- customized `util.inspect.defaultOptions.compact`\r\n\r\nValidation:\r\n- `make -j8 node`\r\n- `python3 tools/test.py test/parallel/test-util-inspect.js`\r\n- `make lint`\r\n\r\nFixes: https://github.com/nodejs/node/issues/60475\r\n\r\n<!--\r\nBefore submitting a pull request, please read:\r\n\r\n- the CONTRIBUTING guide at https://github.com/nodejs/node/blob/HEAD/CONTRIBUTING.md\r\n- the commit message formatting guidelines at\r\n  https://github.com/nodejs/node/blob/HEAD/doc/contributing/pull-requests.md#commit-message-guidelines\r\n\r\nFor code changes:\r\n1. Include tests for any bug fixes or new features.\r\n2. Update documentation if relevant.\r\n3. Ensure that `make -j4 test` (UNIX), or `vcbuild test` (Windows) passes.\r\n\r\nIf you believe this PR should be highlighted in the Node.js CHANGELOG\r\nplease add the `notable-change` label.\r\n\r\nDeveloper's Certificate of Origin 1.1\r\n\r\nBy making a contribution to this project, I certify that:\r\n\r\n(a) The contribution was created in whole or in part by me and I\r\n    have the right to submit it under the open source license\r\n    indicated in the file; or\r\n\r\n(b) The contribution is based upon previous work that, to the best\r\n    of my knowledge, is covered under an appropriate open source\r\n    license and I have the right under that license to submit that\r\n    work with modifications, whether created in whole or in part\r\n    by me, under the same open source license (unless I am\r\n    permitted to submit under a different license), as indicated\r\n    in the file; or\r\n\r\n(c) The contribution was provided directly to me by some other\r\n    person who certified (a), (b) or (c) and I have not modified\r\n    it.\r\n\r\n(d) I understand and agree that this project and the contribution\r\n    are public and that a record of the contribution (including all\r\n    personal information I submit with it, including my sign-off) is\r\n    maintained indefinitely and may be redistributed consistent with\r\n    this project or the open source license(s) involved.\r\n-->\r\n",
+          "state": "open",
+          "title": "util: honor breakLength Infinity with unlimited depth",
+          "htmlUrl": "https://github.com/nodejs/node/pull/62452",
+          "comments": 0,
+          "reviewComments": 0
+        },
+        "dedupe_key": "github:pr_opened:nodejs/node#62452",
+        "created_at": "2026-04-15T18:42:30.780Z"
+      }
+    ],
+    "canonical_entity": [
+      {
+        "id": "822c5f61-e915-41ba-95e6-191bd917f3fb",
+        "entity_type": "repo",
+        "external_source": "github",
+        "external_key": "nodejs/node",
+        "display_name": "nodejs/node",
+        "normalized_name": "nodejs/node",
+        "metadata": {
+          "htmlUrl": "https://github.com/nodejs/node",
+          "forksCount": 35348,
+          "stargazersCount": 116754
+        },
+        "created_at": "2026-04-15T17:37:35.799Z",
+        "updated_at": "2026-04-15T17:37:35.799Z"
+      },
+      {
+        "id": "58b133a2-1dbd-4dc2-a1d5-db0209dbcd68",
+        "entity_type": "pr",
+        "external_source": "github",
+        "external_key": "nodejs/node#62759",
+        "display_name": "nodejs/node#62759",
+        "normalized_name": "nodejs/node#62759",
+        "metadata": {
+          "state": "open",
+          "title": "src: clean up experimental flag variables",
+          "htmlUrl": "https://github.com/nodejs/node/pull/62759",
+          "comments": 0,
+          "mergedAt": null,
+          "reviewComments": 0
+        },
+        "created_at": "2026-04-15T17:37:35.808Z",
+        "updated_at": "2026-04-15T17:37:35.808Z"
+      },
+      {
+        "id": "9cfad442-9fdb-4f67-8177-551a58612d28",
+        "entity_type": "person",
+        "external_source": "github",
+        "external_key": "aduh95",
+        "display_name": "aduh95",
+        "normalized_name": "aduh95",
+        "metadata": {
+          "htmlUrl": "https://github.com/aduh95"
+        },
+        "created_at": "2026-04-15T17:37:35.809Z",
+        "updated_at": "2026-04-15T17:37:35.809Z"
+      },
+      {
+        "id": "04ec41fd-af36-479d-9105-d27502a5d34a",
+        "entity_type": "pr",
+        "external_source": "github",
+        "external_key": "nodejs/node#61825",
+        "display_name": "nodejs/node#61825",
+        "normalized_name": "nodejs/node#61825",
+        "metadata": {
+          "state": "closed",
+          "title": "deps: V8: cherry-pick 67507b2a88f4",
+          "htmlUrl": "https://github.com/nodejs/node/pull/61825",
+          "comments": 0,
+          "mergedAt": null,
+          "reviewComments": 0
+        },
+        "created_at": "2026-04-15T17:37:35.819Z",
+        "updated_at": "2026-04-15T17:37:35.819Z"
+      },
+      {
+        "id": "0a26958c-7033-4a3d-bf6a-5fa7729f043e",
+        "entity_type": "person",
+        "external_source": "github",
+        "external_key": "rmagrin",
+        "display_name": "rmagrin",
+        "normalized_name": "rmagrin",
+        "metadata": {
+          "htmlUrl": "https://github.com/rmagrin"
+        },
+        "created_at": "2026-04-15T17:37:35.820Z",
+        "updated_at": "2026-04-15T17:37:35.820Z"
+      },
+      {
+        "id": "46844871-747d-4c85-b329-56131ba04366",
+        "entity_type": "pr",
+        "external_source": "github",
+        "external_key": "nodejs/node#62745",
+        "display_name": "nodejs/node#62745",
+        "normalized_name": "nodejs/node#62745",
+        "metadata": {
+          "state": "open",
+          "title": " doc,src,test: fix dead inspector help URL",
+          "htmlUrl": "https://github.com/nodejs/node/pull/62745",
+          "comments": 0,
+          "mergedAt": null,
+          "reviewComments": 0
+        },
+        "created_at": "2026-04-15T17:37:35.829Z",
+        "updated_at": "2026-04-15T17:37:35.829Z"
+      },
+      {
+        "id": "05266710-3f50-4797-a3a1-cf297988594d",
+        "entity_type": "person",
+        "external_source": "github",
+        "external_key": "semimikoh",
+        "display_name": "semimikoh",
+        "normalized_name": "semimikoh",
+        "metadata": {
+          "htmlUrl": "https://github.com/semimikoh"
+        },
+        "created_at": "2026-04-15T17:37:35.830Z",
+        "updated_at": "2026-04-15T17:37:35.830Z"
+      },
+      {
+        "id": "70d6c292-a3b7-4d76-8074-0e70a48a2022",
+        "entity_type": "release",
+        "external_source": "github",
+        "external_key": "nodejs/node@release:v25.9.0",
+        "display_name": "nodejs/node@v25.9.0",
+        "normalized_name": "nodejs/node@v25.9.0",
+        "metadata": {
+          "name": "2026-04-01, Version 25.9.0 (Current), @aduh95",
+          "htmlUrl": "https://github.com/nodejs/node/releases/tag/v25.9.0"
+        },
+        "created_at": "2026-04-15T17:37:35.838Z",
+        "updated_at": "2026-04-15T17:37:35.838Z"
+      },
+      {
+        "id": "471ed5ca-1408-400a-b5dd-05be1ac09ff6",
+        "entity_type": "pr",
+        "external_source": "github",
+        "external_key": "nodejs/node#62761",
+        "display_name": "nodejs/node#62761",
+        "normalized_name": "nodejs/node#62761",
+        "metadata": {
+          "state": "open",
+          "title": "build,win: enable PGO and LTO for Windows builds",
+          "htmlUrl": "https://github.com/nodejs/node/pull/62761",
+          "comments": 0,
+          "mergedAt": null,
+          "reviewComments": 0
+        },
+        "created_at": "2026-04-15T17:59:42.338Z",
+        "updated_at": "2026-04-15T17:59:42.338Z"
+      },
+      {
+        "id": "ec7777a1-4093-4406-a1a4-d9ef5f3aada8",
+        "entity_type": "person",
+        "external_source": "github",
+        "external_key": "StefanStojanovic",
+        "display_name": "StefanStojanovic",
+        "normalized_name": "stefanstojanovic",
+        "metadata": {
+          "htmlUrl": "https://github.com/StefanStojanovic"
+        },
+        "created_at": "2026-04-15T17:59:42.340Z",
+        "updated_at": "2026-04-15T17:59:42.340Z"
+      },
+      {
+        "id": "a67c7338-eadb-4e40-93d3-772985190847",
+        "entity_type": "pr",
+        "external_source": "github",
+        "external_key": "nodejs/node#62753",
+        "display_name": "nodejs/node#62753",
+        "normalized_name": "nodejs/node#62753",
+        "metadata": {
+          "state": "open",
+          "title": "doc: add experimental modules lifetime policy",
+          "htmlUrl": "https://github.com/nodejs/node/pull/62753",
+          "comments": 0,
+          "mergedAt": null,
+          "reviewComments": 0
+        },
+        "created_at": "2026-04-15T17:59:42.380Z",
+        "updated_at": "2026-04-15T17:59:42.380Z"
+      },
+      {
+        "id": "1b2a72f2-f478-4644-8f21-68f333b76fa7",
+        "entity_type": "person",
+        "external_source": "github",
+        "external_key": "ShogunPanda",
+        "display_name": "ShogunPanda",
+        "normalized_name": "shogunpanda",
+        "metadata": {
+          "htmlUrl": "https://github.com/ShogunPanda"
+        },
+        "created_at": "2026-04-15T17:59:42.381Z",
+        "updated_at": "2026-04-15T17:59:42.381Z"
+      },
+      {
+        "id": "70cd5cdb-d991-4169-a54c-d10a969969aa",
+        "entity_type": "pr",
+        "external_source": "github",
+        "external_key": "nodejs/node#61610",
+        "display_name": "nodejs/node#61610",
+        "normalized_name": "nodejs/node#61610",
+        "metadata": {
+          "state": "open",
+          "title": "src: allow empty --experimental-config-file",
+          "htmlUrl": "https://github.com/nodejs/node/pull/61610",
+          "comments": 0,
+          "mergedAt": null,
+          "reviewComments": 0
+        },
+        "created_at": "2026-04-15T18:42:30.724Z",
+        "updated_at": "2026-04-15T18:42:30.724Z"
+      },
+      {
+        "id": "f3a914af-535e-4482-aef0-1a28281a544b",
+        "entity_type": "person",
+        "external_source": "github",
+        "external_key": "marco-ippolito",
+        "display_name": "marco-ippolito",
+        "normalized_name": "marco-ippolito",
+        "metadata": {
+          "htmlUrl": "https://github.com/marco-ippolito"
+        },
+        "created_at": "2026-04-15T18:42:30.726Z",
+        "updated_at": "2026-04-15T18:42:30.726Z"
+      },
+      {
+        "id": "80ce18d1-9947-4624-9048-5f188cb11361",
+        "entity_type": "pr",
+        "external_source": "github",
+        "external_key": "nodejs/node#62760",
+        "display_name": "nodejs/node#62760",
+        "normalized_name": "nodejs/node#62760",
+        "metadata": {
+          "state": "open",
+          "title": "[v24.x] src: add permission support to config file",
+          "htmlUrl": "https://github.com/nodejs/node/pull/62760",
+          "comments": 0,
+          "mergedAt": null,
+          "reviewComments": 0
+        },
+        "created_at": "2026-04-15T18:42:30.737Z",
+        "updated_at": "2026-04-15T18:42:30.737Z"
+      },
+      {
+        "id": "6d35d830-57df-4f59-9614-d90706256960",
+        "entity_type": "pr",
+        "external_source": "github",
+        "external_key": "nodejs/node#62762",
+        "display_name": "nodejs/node#62762",
+        "normalized_name": "nodejs/node#62762",
+        "metadata": {
+          "state": "open",
+          "title": "ffi: added new methods and error codes",
+          "htmlUrl": "https://github.com/nodejs/node/pull/62762",
+          "comments": 0,
+          "mergedAt": null,
+          "reviewComments": 0
+        },
+        "created_at": "2026-04-15T18:42:30.746Z",
+        "updated_at": "2026-04-15T18:42:30.746Z"
+      },
+      {
+        "id": "65e52e81-2e63-48a0-b108-ff69d203c1b4",
+        "entity_type": "pr",
+        "external_source": "github",
+        "external_key": "nodejs/node#62072",
+        "display_name": "nodejs/node#62072",
+        "normalized_name": "nodejs/node#62072",
+        "metadata": {
+          "state": "closed",
+          "title": "lib,src,test,doc: add node:ffi module",
+          "htmlUrl": "https://github.com/nodejs/node/pull/62072",
+          "comments": 0,
+          "mergedAt": null,
+          "reviewComments": 0
+        },
+        "created_at": "2026-04-15T18:42:30.767Z",
+        "updated_at": "2026-04-15T18:42:30.767Z"
+      },
+      {
+        "id": "b931cc7a-4eac-478c-9c2c-ce57e48d021e",
+        "entity_type": "person",
+        "external_source": "github",
+        "external_key": "cjihrig",
+        "display_name": "cjihrig",
+        "normalized_name": "cjihrig",
+        "metadata": {
+          "htmlUrl": "https://github.com/cjihrig"
+        },
+        "created_at": "2026-04-15T18:42:30.769Z",
+        "updated_at": "2026-04-15T18:42:30.769Z"
+      },
+      {
+        "id": "366ee5cc-0056-4c10-be06-777615008a1a",
+        "entity_type": "pr",
+        "external_source": "github",
+        "external_key": "nodejs/node#62452",
+        "display_name": "nodejs/node#62452",
+        "normalized_name": "nodejs/node#62452",
+        "metadata": {
+          "state": "open",
+          "title": "util: honor breakLength Infinity with unlimited depth",
+          "htmlUrl": "https://github.com/nodejs/node/pull/62452",
+          "comments": 0,
+          "mergedAt": null,
+          "reviewComments": 0
+        },
+        "created_at": "2026-04-15T18:42:30.778Z",
+        "updated_at": "2026-04-15T18:42:30.778Z"
+      },
+      {
+        "id": "36bb0f0c-ef78-4247-af80-bc8eca979dbc",
+        "entity_type": "person",
+        "external_source": "github",
+        "external_key": "Lellansin",
+        "display_name": "Lellansin",
+        "normalized_name": "lellansin",
+        "metadata": {
+          "htmlUrl": "https://github.com/Lellansin"
+        },
+        "created_at": "2026-04-15T18:42:30.779Z",
+        "updated_at": "2026-04-15T18:42:30.779Z"
+      }
+    ],
+    "trend_diff": [
+      {
+        "id": "5bb008e4-c213-457e-a2ae-30d129ab791e",
+        "source": "github_trending",
+        "scope": "global",
+        "snapshot_date": "2026-04-15T16:00:00.000Z",
+        "compared_to_date": "2026-04-14T16:00:00.000Z",
+        "diff_struct": {
+          "newEntries": [],
+          "leftEntries": [],
+          "movedUp": [],
+          "movedDown": []
+        },
+        "summary_struct": {
+          "highlights": []
+        },
+        "created_at": "2026-04-15T17:39:42.088Z"
+      }
+    ]
+  }
+}

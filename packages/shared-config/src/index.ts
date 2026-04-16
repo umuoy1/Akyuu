@@ -25,18 +25,39 @@ const envSchema = z.object({
   GITHUB_TOKEN: z.string().optional(),
   GITHUB_API_BASE_URL: z.string().default("https://api.github.com"),
   GITHUB_TRENDING_URL: z.string().default("https://github.com/trending"),
-  OPENAI_API_KEY: z.string().optional()
+  OPENAI_API_KEY: z.string().optional(),
+  OPENAI_BASE_URL: z.string().default("https://open.bigmodel.cn/api/paas/v4/"),
+  OPENAI_MODEL: z.string().default("glm-5")
 });
 
 export type AppEnv = z.infer<typeof envSchema>;
 
 let cachedEnv: AppEnv | null = null;
+let envFileLoaded = false;
+
+function loadEnvFileOnce(): void {
+  if (envFileLoaded) {
+    return;
+  }
+
+  envFileLoaded = true;
+
+  try {
+    process.loadEnvFile?.();
+  } catch (error) {
+    const err = error as NodeJS.ErrnoException;
+    if (err.code !== "ENOENT") {
+      throw error;
+    }
+  }
+}
 
 export function getEnv(): AppEnv {
   if (cachedEnv) {
     return cachedEnv;
   }
 
+  loadEnvFileOnce();
   cachedEnv = envSchema.parse(process.env);
   return cachedEnv;
 }

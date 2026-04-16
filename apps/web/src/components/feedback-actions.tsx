@@ -1,6 +1,8 @@
 "use client";
 
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
+
+import { getClientApiBaseUrl, readResponseError } from "../lib/client-request";
 
 type FeedbackActionsProps = {
   targetType: "digest" | "recommended_item" | "topic_update";
@@ -13,8 +15,8 @@ async function sendFeedback(input: {
   targetId: string;
   feedbackType: "worthwhile" | "not_worthwhile";
   metadata?: Record<string, unknown>;
-}) {
-  const response = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/v1/feedback`, {
+}): Promise<string | null> {
+  const response = await fetch(`${getClientApiBaseUrl()}/api/v1/feedback`, {
     method: "POST",
     headers: {
       "content-type": "application/json"
@@ -23,12 +25,15 @@ async function sendFeedback(input: {
   });
 
   if (!response.ok) {
-    throw new Error("Failed to save feedback");
+    return readResponseError(response, "Failed to save feedback");
   }
+
+  return null;
 }
 
 export function FeedbackActions({ targetType, targetId, metadata }: FeedbackActionsProps) {
   const [isPending, startTransition] = useTransition();
+  const [error, setError] = useState<string | null>(null);
 
   function buildPayload(feedbackType: "worthwhile" | "not_worthwhile") {
     const payload: {
@@ -56,7 +61,12 @@ export function FeedbackActions({ targetType, targetId, metadata }: FeedbackActi
         disabled={isPending}
         onClick={() =>
           startTransition(async () => {
-            await sendFeedback(buildPayload("worthwhile"));
+            setError(null);
+            const message = await sendFeedback(buildPayload("worthwhile"));
+            if (message) {
+              setError(message);
+              return;
+            }
             window.location.reload();
           })
         }
@@ -69,13 +79,19 @@ export function FeedbackActions({ targetType, targetId, metadata }: FeedbackActi
         className="button button--secondary"
         onClick={() =>
           startTransition(async () => {
-            await sendFeedback(buildPayload("not_worthwhile"));
+            setError(null);
+            const message = await sendFeedback(buildPayload("not_worthwhile"));
+            if (message) {
+              setError(message);
+              return;
+            }
             window.location.reload();
           })
         }
       >
         {isPending ? "Saving..." : "Not Worthwhile"}
       </button>
+      {error ? <p className="status status--error">{error}</p> : null}
     </div>
   );
 }

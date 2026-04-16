@@ -141,6 +141,19 @@ button:disabled {
   flex-wrap: wrap;
 }
 
+.status {
+  margin: 0;
+  font-size: 0.95rem;
+}
+
+.status--info {
+  color: var(--muted);
+}
+
+.status--error {
+  color: #a13d2d;
+}
+
 .markdown {
   white-space: pre-wrap;
   line-height: 1.6;
