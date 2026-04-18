@@ -1,5 +1,5 @@
 {
-  "name": "@akyuu/domain-ask",
+  "name": "@akyuu/shared-i18n",
   "version": "0.1.0",
   "private": true,
   "type": "module",
@@ -8,8 +8,6 @@
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
-    "@akyuu/shared-i18n": "workspace:*",
-    "@akyuu/shared-types": "workspace:*",
-    "@akyuu/shared-utils": "workspace:*"
+    "@akyuu/shared-types": "workspace:*"
   }
 }

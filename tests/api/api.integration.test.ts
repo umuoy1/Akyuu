@@ -13,6 +13,7 @@ import type {
   ListTrendDiffsResponse,
   ListWatchesResponse,
   PreferenceProfileResponse,
+  WorkspaceSettingsResponse,
   TopicResponse
 } from "@akyuu/shared-types";
 
@@ -202,6 +203,59 @@ describe.sequential("API integration over HTTP with isolated PostgreSQL/Redis an
     expect(preferences.profile).not.toBeNull();
     expect((preferences.profile?.profile.itemTypeWeights.pr ?? 0)).toBeGreaterThan(0);
     expect(preferences.profile?.profile.feedbackCount).toBe(1);
+  });
+
+  it("updates workspace locale and regenerates localized digest and ask output", async () => {
+    const settingsBefore = await jsonRequest<WorkspaceSettingsResponse>(harness.apiBaseUrl, "/api/v1/settings");
+    expect(settingsBefore.locale).toBe("en-US");
+
+    const updatedSettings = await jsonRequest<WorkspaceSettingsResponse>(
+      harness.apiBaseUrl,
+      "/api/v1/settings",
+      {
+        method: "PATCH",
+        body: JSON.stringify({
+          locale: "zh-CN"
+        })
+      }
+    );
+    expect(updatedSettings.locale).toBe("zh-CN");
+
+    const localizedRun = await jsonRequest<{ digestId: string }>(
+      harness.apiBaseUrl,
+      "/api/v1/pipeline/run",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          digestType: "daily",
+          date: harness.dates.today
+        })
+      },
+      202
+    );
+
+    const localizedDigest = await jsonRequest<DigestResponse>(
+      harness.apiBaseUrl,
+      "/api/v1/digests/latest?digestType=daily"
+    );
+    expect(localizedDigest.id).toBe(localizedRun.digestId);
+    expect(localizedDigest.title).toContain("日报");
+    expect(localizedDigest.sections.some((section) => section.title === "重点变化")).toBe(true);
+
+    const localizedAsk = await jsonRequest<AskSessionResponse>(
+      harness.apiBaseUrl,
+      "/api/v1/ask",
+      {
+        method: "POST",
+        body: JSON.stringify({
+          question: "今天最值得看的 3 个 PR 是什么？",
+          anchorType: "digest",
+          anchorId: localizedDigest.id
+        })
+      },
+      201
+    );
+    expect(localizedAsk.answerMarkdown).toContain("### 建议先看");
   });
 
   it("creates repo/topic/trend watches and archives them through the HTTP API", async () => {

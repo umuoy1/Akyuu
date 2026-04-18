@@ -1,3 +1,4 @@
+import { getMessages } from "@akyuu/shared-i18n";
 import type { AskAnchorType, AskRetrievalContext, AskSessionView, DigestView, TopicView } from "@akyuu/shared-types";
 import { normalizeText } from "@akyuu/shared-utils";
 
@@ -17,7 +18,12 @@ function selectDigestBullets(digest: DigestView | null): string[] {
   return digest.sections.flatMap((section) => section.bullets);
 }
 
-function selectTopicContexts(question: string, topics: TopicView[], anchorTopicId?: string): AskRetrievalContext["topics"] {
+function selectTopicContexts(
+  question: string,
+  topics: TopicView[],
+  noSummaryFallback: string,
+  anchorTopicId?: string
+): AskRetrievalContext["topics"] {
   const normalizedQuestion = normalizeText(question);
   const anchoredTopic = anchorTopicId ? topics.find((topic) => topic.id === anchorTopicId) ?? null : null;
   const candidates = anchoredTopic
@@ -37,7 +43,7 @@ function selectTopicContexts(question: string, topics: TopicView[], anchorTopicI
     return {
       topicId: topic.id,
       topicName: topic.name,
-      summary: update?.summary ?? topic.latestSummary ?? "No topic summary yet.",
+      summary: update?.summary ?? topic.latestSummary ?? noSummaryFallback,
       highlights: update?.highlights ?? [],
       windowEnd: update?.windowEnd ?? topic.latestWindowEnd ?? new Date(0).toISOString()
     };
@@ -70,7 +76,9 @@ export function buildAskSession(input: {
   question: string;
   digest: DigestView | null;
   topics: TopicView[];
+  locale: "en-US" | "zh-CN";
 }): Omit<AskSessionView, "sessionId" | "createdAt"> {
+  const messages = getMessages(input.locale);
   const normalizedQuestion = normalizeText(input.question);
   const retrievalContext: AskRetrievalContext = {
     digestId: input.digest?.id ?? null,
@@ -81,6 +89,7 @@ export function buildAskSession(input: {
     topics: selectTopicContexts(
       input.question,
       input.topics,
+      messages.ask.deterministic.noTopicUpdates,
       input.anchorType === "topic" ? input.anchorId ?? undefined : undefined
     ),
     evidence: []
@@ -102,24 +111,24 @@ export function buildAskSession(input: {
     ...retrievalContext.digestBullets.slice(0, 4).map((bullet, index) => ({
       sourceType: "digest_section" as const,
       sourceId: null,
-      label: `${input.digest?.sections[index]?.title ?? "Digest"} · ${bullet}`,
+      label: `${input.digest?.sections[index]?.title ?? messages.ask.deterministic.digestFallbackLabel} · ${bullet}`,
       href: null
     }))
   ].slice(0, 8);
 
-  let answerMarkdown = "当前还没有可用上下文。先生成一份日报，或者给 TopicWatch 绑定至少一个仓库。";
+  let answerMarkdown = messages.ask.deterministic.noContext;
 
   if (containsAny(normalizedQuestion, ["推荐", "值得看", "worth", "read", "pr"])) {
     const lines = retrievalContext.recommendedItems.slice(0, 3).map((item, index) => {
-      const href = item.href ? `（${item.href}）` : "";
-      return `${index + 1}. ${item.title}：${item.reason}${href}`;
+      const href = item.href ? ` (${item.href})` : "";
+      return `${index + 1}. ${item.title}: ${item.reason}${href}`;
     });
 
     answerMarkdown = [
-      "### 建议先看",
-      lines.length > 0 ? lines.join("\n") : "当前 digest 里还没有推荐对象。",
+      messages.ask.deterministic.suggestedFirstReads,
+      lines.length > 0 ? lines.join("\n") : messages.ask.deterministic.noRecommendations,
       "",
-      "### 可追溯依据",
+      messages.ask.deterministic.evidence,
       ...retrievalContext.recommendedItems.slice(0, 3).map((item) => formatEvidenceLine(`${item.title} · ${item.reason}`, item.href))
     ].join("\n");
   } else if (containsAny(normalizedQuestion, ["topic", "主题", "proposal", "推进", "trend of"])) {
@@ -129,28 +138,28 @@ export function buildAskSession(input: {
     ]);
 
     answerMarkdown = [
-      "### 主题视角总结",
-      lines.length > 0 ? lines.join("\n") : "当前没有命中的主题更新。",
+      messages.ask.deterministic.topicPerspective,
+      lines.length > 0 ? lines.join("\n") : messages.ask.deterministic.noTopicUpdates,
       "",
-      "### 可追溯依据",
-      ...retrievalContext.topics.map((topic) => `- ${topic.topicName} · 窗口截止 ${topic.windowEnd}`)
+      messages.ask.deterministic.evidence,
+      ...retrievalContext.topics.map((topic) => messages.ask.deterministic.windowEnd(`${topic.topicName} · ${topic.windowEnd}`))
     ].join("\n");
   } else if (containsAny(normalizedQuestion, ["trend", "trending", "热榜", "榜单"])) {
     const trendBullets = input.digest?.sections.find((section) => section.key === "trend")?.bullets ?? [];
     answerMarkdown = [
-      "### 趋势结论",
-      ...(trendBullets.length > 0 ? trendBullets.map((bullet) => `- ${bullet}`) : ["- 当前没有可用的趋势 diff。"]),
+      messages.ask.deterministic.trendConclusion,
+      ...(trendBullets.length > 0 ? trendBullets.map((bullet) => `- ${bullet}`) : [messages.ask.deterministic.noTrendDiff]),
       "",
-      "### 可追溯依据",
+      messages.ask.deterministic.evidence,
       ...trendBullets.slice(0, 3).map((bullet) => `- ${bullet}`)
     ].join("\n");
   } else if (input.digest) {
     answerMarkdown = [
-      "### 当前结论",
+      messages.ask.deterministic.currentConclusion,
       `- ${input.digest.summary}`,
       ...retrievalContext.digestBullets.slice(0, 4).map((bullet) => `- ${bullet}`),
       "",
-      "### 可追溯依据",
+      messages.ask.deterministic.evidence,
       ...retrievalContext.evidence.slice(0, 5).map((item) => formatEvidenceLine(item.label, item.href))
     ].join("\n");
   }

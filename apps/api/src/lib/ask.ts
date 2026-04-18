@@ -8,12 +8,17 @@ import { db, answerRecord, questionSession } from "@akyuu/infra-db";
 import type { RequestContext } from "./context.js";
 import { listDigestViews, listTopicViews, loadDigestViewById, loadTopicViewById } from "./views.js";
 
-async function loadAnchorDigest(workspaceId: string, anchorType: AskRequest["anchorType"], anchorId?: string): Promise<DigestView | null> {
+async function loadAnchorDigest(
+  workspaceId: string,
+  locale: RequestContext["locale"],
+  anchorType: AskRequest["anchorType"],
+  anchorId?: string
+): Promise<DigestView | null> {
   if (anchorType === "digest" && anchorId) {
-    return loadDigestViewById(anchorId);
+    return loadDigestViewById(anchorId, locale);
   }
 
-  const digests = await listDigestViews(workspaceId);
+  const digests = await listDigestViews(workspaceId, undefined, locale);
   return digests.find((digest) => digest.digestType === "daily") ?? digests[0] ?? null;
 }
 
@@ -35,7 +40,7 @@ export async function askQuestion(
   input: AskRequest
 ): Promise<AskSessionView> {
   const [digestView, topics] = await Promise.all([
-    loadAnchorDigest(context.workspaceId, input.anchorType, input.anchorId),
+    loadAnchorDigest(context.workspaceId, context.locale, input.anchorType, input.anchorId),
     loadAnchorTopics(context.workspaceId, input.anchorType, input.anchorId)
   ]);
 
@@ -44,14 +49,16 @@ export async function askQuestion(
     anchorId: input.anchorId ?? null,
     question: input.question,
     digest: digestView,
-    topics
+    topics,
+    locale: context.locale
   });
   const composed = await composeAskAnswer({
     question: built.question,
     anchorType: built.anchorType,
     anchorId: built.anchorId,
     retrievalContext: built.retrievalContext,
-    fallbackAnswerMarkdown: built.answerMarkdown
+    fallbackAnswerMarkdown: built.answerMarkdown,
+    locale: context.locale
   });
   const answerMarkdown = composed.markdown;
   const llmVersion = composed.llmVersion ?? built.llmVersion;

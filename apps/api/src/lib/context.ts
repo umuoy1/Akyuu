@@ -7,6 +7,7 @@ export type RequestContext = {
   workspaceId: string;
   workspaceName: string;
   timezone: string;
+  locale: "en-US" | "zh-CN";
   userId: string;
 };
 
@@ -24,6 +25,7 @@ export async function getRequestContext(): Promise<RequestContext> {
     workspaceId: workspaceRow.id,
     workspaceName: workspaceRow.name,
     timezone: workspaceRow.timezone,
+    locale: workspaceRow.locale as RequestContext["locale"],
     userId: userRow.id
   };
 }

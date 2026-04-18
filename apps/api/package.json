@@ -22,6 +22,7 @@
     "@akyuu/infra-queue": "workspace:*",
     "@akyuu/infra-observability": "workspace:*",
     "@akyuu/shared-config": "workspace:*",
+    "@akyuu/shared-i18n": "workspace:*",
     "@akyuu/shared-types": "workspace:*",
     "@akyuu/shared-utils": "workspace:*",
     "@fastify/cors": "11.2.0",

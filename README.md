@@ -12,9 +12,10 @@ The repository now includes the first runnable vertical slice:
 - `apps/api` with watch CRUD, topic queries, trend queries, digest queries, feedback/preference endpoints, notification endpoints, ask endpoints, and manual pipeline trigger
 - `apps/scheduler` with health check and manual schedule tick
 - `apps/worker` with queue handlers for ingest, normalize, topic aggregation, score, trend diff, digest build, and notification delivery preview
+- workspace-level I18N across Web, API, Worker, digest generation, and Ask composition with `en-US` / `zh-CN`
 - PostgreSQL schema and SQL migration for the first three implementation stages
 - Redis + BullMQ queue base
-- deterministic digest generation with optional LLM adapter stub
+- deterministic digest generation with OpenAI-compatible LLM composition
 
 ## Implemented Flow
 
@@ -31,6 +32,7 @@ The current end-to-end chain is:
 9. Users can leave explicit worthwhile / not worthwhile feedback on digest items
 10. Feedback updates a workspace-level preference profile and reranks future recommended items
 11. Digest delivery attempts are written to `outbound_notification` and surfaced in the Web UI
+12. Workspace locale can be switched from the top navigation, and new digest / ask output follows that locale
 
 ## Tech Stack
 
@@ -55,6 +57,7 @@ pnpm install
 
 Browser E2E uses `puppeteer-core` and defaults to a local Chrome or Chromium binary. If auto-detection does not work, set `PUPPETEER_EXECUTABLE_PATH`.
 Local web development defaults `NEXT_PUBLIC_API_BASE_URL` to `http://localhost:3001` when it is not explicitly provided.
+Default workspace locale comes from `DEFAULT_LOCALE` and can later be changed from the top-right language switcher or `PATCH /api/v1/settings`.
 
 ### 2. Start infrastructure
 
@@ -121,6 +124,18 @@ curl -X POST http://localhost:3001/api/v1/pipeline/run \
 
 Then refresh `/today` to see the latest digest.
 
+### Switch locale
+
+Use the language switcher in the top navigation, or call:
+
+```bash
+curl -X PATCH http://localhost:3001/api/v1/settings \
+  -H "content-type: application/json" \
+  -d '{"locale":"zh-CN"}'
+```
+
+Newly rendered shell text, digest generation, topic summaries, and Ask composition will use the selected locale.
+
 ### Ask a follow-up
 
 Open `/ask` and submit a question such as:
@@ -149,6 +164,7 @@ Key variables:
 - `DATABASE_URL`
 - `REDIS_URL`
 - `NEXT_PUBLIC_API_BASE_URL`
+- `DEFAULT_LOCALE`
 - `DEFAULT_USER_EMAIL`
 - `DEFAULT_WORKSPACE_SLUG`
 - `GITHUB_TOKEN`
@@ -174,8 +190,9 @@ pnpm test:browser
 ```
 
 `pnpm test:api` starts isolated PostgreSQL / Redis-backed API + Worker processes, loads a real captured workspace snapshot into a dedicated test database, and validates the HTTP contract across watches, topics, trends, digests, ask, feedback, preferences, and notifications.
+It also verifies locale settings updates plus localized digest / Ask output.
 `pnpm test:api:live` starts isolated PostgreSQL / Redis-backed API + Worker + Scheduler processes and runs a real end-to-end flow against live GitHub API data plus the configured OpenAI-compatible LLM endpoint. The current live suite focuses on the RepoWatch / TopicWatch / digest / ask / feedback chain, while TrendWatch remains covered by the fixture-backed API integration suite because `github.com/trending` is less stable from automated test environments.
-`pnpm test:browser` uses `puppeteer-core` plus a production-style `apps/web` build, then drives the real browser UI across `Today`, `History`, `Delivery`, `Trends`, `Watches`, `Topics`, and `Ask` against isolated API + Worker test services. When both `GITHUB_TOKEN` and `OPENAI_API_KEY` are present, it also runs a live browser suite that creates watches, clicks `Run Pipeline` / `Run Weekly Digest` / `Run Monthly Digest`, records feedback, and submits a real Ask request through the UI.
+`pnpm test:browser` uses `puppeteer-core` plus a production-style `apps/web` build, then drives the real browser UI across `Today`, `History`, `Delivery`, `Trends`, `Watches`, `Topics`, and `Ask` against isolated API + Worker test services. It also verifies real locale switching from the browser shell. When both `GITHUB_TOKEN` and `OPENAI_API_KEY` are present, it runs a live browser suite that creates watches, clicks `Run Pipeline` / `Run Weekly Digest` / `Run Monthly Digest`, reviews output, records feedback, and submits a real Ask request through the UI.
 
 ## Known Gaps
 

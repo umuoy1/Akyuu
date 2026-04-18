@@ -12,11 +12,13 @@ import {
   deleteWatchParamsSchema,
   runPipelineRequestSchema,
   topicParamsSchema,
-  type TopicWatchConfig
+  type TopicWatchConfig,
+  updateWorkspaceSettingsRequestSchema
 } from "@akyuu/shared-types";
 import { buildTopicArtifacts, buildTopicSlug } from "@akyuu/domain-topic";
 import { normalizeCreateWatchInput } from "@akyuu/domain-watch";
 import { buildPreferenceProfile } from "@akyuu/domain-feedback";
+import { getMessages } from "@akyuu/shared-i18n";
 import {
   db,
   feedback,
@@ -25,7 +27,8 @@ import {
   topicAlias,
   topicRule,
   watchSchedule,
-  watchTarget
+  watchTarget,
+  workspace
 } from "@akyuu/infra-db";
 import { createLogger } from "@akyuu/infra-observability";
 import { askQuestion, listAskSessions } from "./lib/ask.js";
@@ -49,9 +52,40 @@ export async function createApp() {
     loggerInstance: createLogger("api")
   });
 
-  await app.register(cors, { origin: true });
+  await app.register(cors, {
+    origin: true,
+    methods: ["GET", "HEAD", "POST", "PATCH", "DELETE", "OPTIONS"]
+  });
   await app.register(helmet);
   await app.register(sensible);
+
+  app.setErrorHandler(async (error, request, reply) => {
+    const context = request.url === "/health" ? null : await getRequestContext().catch(() => null);
+    const messages = getMessages(context?.locale ?? "en-US");
+
+    if (error instanceof z.ZodError) {
+      return reply.status(400).send({
+        message: messages.api.invalidRequest
+      });
+    }
+
+    const appError = error as {
+      statusCode?: number;
+      message?: string;
+    };
+    const statusCode = typeof appError.statusCode === "number" ? appError.statusCode : 500;
+
+    if (statusCode < 500) {
+      return reply.status(statusCode).send({
+        message: appError.message || messages.api.invalidRequest
+      });
+    }
+
+    request.log.error(error);
+    return reply.status(500).send({
+      message: messages.api.internalServerError
+    });
+  });
 
   app.get("/health", async () => ({
     status: "ok"
@@ -64,8 +98,35 @@ export async function createApp() {
     };
   });
 
+  app.get("/api/v1/settings", async () => {
+    const context = await getRequestContext();
+    return {
+      locale: context.locale,
+      timezone: context.timezone
+    };
+  });
+
+  app.patch("/api/v1/settings", async (request) => {
+    const context = await getRequestContext();
+    const body = updateWorkspaceSettingsRequestSchema.parse(request.body ?? {});
+
+    await db
+      .update(workspace)
+      .set({
+        locale: body.locale,
+        updatedAt: new Date()
+      })
+      .where(eq(workspace.id, context.workspaceId));
+
+    return {
+      locale: body.locale,
+      timezone: context.timezone
+    };
+  });
+
   app.post("/api/v1/watches", async (request, reply) => {
     const context = await getRequestContext();
+    const messages = getMessages(context.locale);
     const parsed = normalizeCreateWatchInput(createWatchRequestSchema.parse(request.body));
 
     if (parsed.type === "topic") {
@@ -77,7 +138,7 @@ export async function createApp() {
         .limit(1);
 
       if (existingTopic) {
-        return reply.conflict("Topic watch with the same name already exists");
+        return reply.conflict(messages.api.topicWatchExists);
       }
     }
 
@@ -95,7 +156,7 @@ export async function createApp() {
         .returning();
 
       if (!createdWatch) {
-        throw new Error("Failed to create watch");
+        throw new Error(messages.api.watchCreateFailed);
       }
 
       if (parsed.type === "topic") {
@@ -106,7 +167,7 @@ export async function createApp() {
             workspaceId: context.workspaceId,
             name: parsed.name,
             slug: topicSlug,
-            description: `Topic watch for ${parsed.name}.`,
+            description: messages.topics.watchDescription(parsed.name),
             metadata: {
               watchTargetId: createdWatch.id
             }
@@ -114,7 +175,7 @@ export async function createApp() {
           .returning();
 
         if (!topicRow) {
-          throw new Error("Failed to create topic");
+          throw new Error(messages.api.topicCreateFailed);
         }
 
         const artifacts = buildTopicArtifacts({
@@ -169,7 +230,7 @@ export async function createApp() {
     });
 
     if (!watchRow) {
-      throw new Error("Failed to create watch");
+      throw new Error(messages.api.watchCreateFailed);
     }
 
     reply.code(201);
@@ -243,33 +304,35 @@ export async function createApp() {
     }
 
     return {
-      digests: await listDigestViews(context.workspaceId, query)
+      digests: await listDigestViews(context.workspaceId, query, context.locale)
     };
   });
 
   app.get("/api/v1/digests/latest", async (_request, reply) => {
     const context = await getRequestContext();
+    const messages = getMessages(context.locale);
     const digestType = z
       .object({
         digestType: z.enum(["daily", "weekly", "monthly"]).default("daily")
       })
       .parse(_request.query ?? {}).digestType;
-    const digests = await listDigestViews(context.workspaceId);
+    const digests = await listDigestViews(context.workspaceId, undefined, context.locale);
     const latest = digests.find((digest) => digest.digestType === digestType);
 
     if (!latest) {
-      return reply.notFound("No digest found");
+      return reply.notFound(messages.api.noDigestFound);
     }
 
     return latest;
   });
 
   app.get("/api/v1/digests/:digestId", async (request, reply) => {
+    const context = await getRequestContext();
     const digestId = (request.params as { digestId: string }).digestId;
-    const digestView = await loadDigestViewById(digestId);
+    const digestView = await loadDigestViewById(digestId, context.locale);
 
     if (!digestView) {
-      return reply.notFound("Digest not found");
+      return reply.notFound(getMessages(context.locale).api.digestNotFound);
     }
 
     return digestView;
@@ -288,7 +351,7 @@ export async function createApp() {
     const topicView = await loadTopicViewById(params.topicId, context.workspaceId);
 
     if (!topicView) {
-      return reply.notFound("Topic not found");
+      return reply.notFound(getMessages(context.locale).api.topicNotFound);
     }
 
     return topicView;
@@ -337,6 +400,7 @@ export async function createApp() {
 
   app.post("/api/v1/feedback", async (request, reply) => {
     const context = await getRequestContext();
+    const messages = getMessages(context.locale);
     const body = createFeedbackRequestSchema.parse(request.body);
 
     const [feedbackRow] = await db
@@ -353,7 +417,7 @@ export async function createApp() {
       .returning();
 
     if (!feedbackRow) {
-      throw new Error("Failed to persist feedback");
+      throw new Error(messages.api.feedbackPersistFailed);
     }
 
     const feedbackRows = await db.select().from(feedback).where(eq(feedback.workspaceId, context.workspaceId));
@@ -407,20 +471,33 @@ export async function createApp() {
   app.post("/api/v1/pipeline/run", async (request, reply) => {
     const context = await getRequestContext();
     const body = runPipelineRequestSchema.parse(request.body ?? {});
-    const digestId = await runWorkspacePipeline(
-      body.date
-        ? {
-            workspaceId: context.workspaceId,
-            timezone: context.timezone,
-            date: body.date,
-            digestType: body.digestType
-          }
-        : {
-            workspaceId: context.workspaceId,
-            timezone: context.timezone,
-            digestType: body.digestType
-          }
-    );
+    const messages = getMessages(context.locale);
+    let digestId: string;
+
+    try {
+      digestId = await runWorkspacePipeline(
+        body.date
+          ? {
+              workspaceId: context.workspaceId,
+              timezone: context.timezone,
+              locale: context.locale,
+              date: body.date,
+              digestType: body.digestType
+            }
+          : {
+              workspaceId: context.workspaceId,
+              timezone: context.timezone,
+              locale: context.locale,
+              digestType: body.digestType
+            }
+      );
+    } catch (error) {
+      if (error instanceof Error && error.message === messages.api.noActiveWatches) {
+        return reply.badRequest(error.message);
+      }
+
+      throw error;
+    }
 
     reply.code(202);
     return {

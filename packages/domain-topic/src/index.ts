@@ -1,6 +1,7 @@
+import { getMessages } from "@akyuu/shared-i18n";
 import { toSlug } from "@akyuu/shared-utils";
 
-import type { TopicEvidenceRecord, TopicMatchRule, TopicWatchConfig } from "@akyuu/shared-types";
+import type { SupportedLocale, TopicEvidenceRecord, TopicMatchRule, TopicWatchConfig } from "@akyuu/shared-types";
 
 type TopicAlias = {
   topicId: string;
@@ -194,21 +195,23 @@ export function buildTopicUpdateSummary(input: {
     eventType: string;
     explanation: string;
   }>;
+  locale: SupportedLocale;
 }): {
   summary: string;
   highlights: string[];
   evidenceCount: number;
 } {
+  const messages = getMessages(input.locale);
   const highlights = input.evidences.slice(0, 3).map((item) => {
-    const repoPart = item.repoFullName ? ` in ${item.repoFullName}` : "";
-    return `${item.title} -> ${item.eventType}${repoPart}`;
+    const eventType = messages.enums.eventType[item.eventType] ?? item.eventType;
+    return messages.topic.highlight(item.title, eventType, item.repoFullName);
   });
 
   return {
     summary:
       input.evidences.length > 0
-        ? `${input.topicName} matched ${input.evidences.length} signals in the current window.`
-        : `${input.topicName} had no matched signals in the current window.`,
+        ? messages.topic.matchedSignals(input.topicName, input.evidences.length)
+        : messages.topic.noMatchedSignals(input.topicName),
     highlights,
     evidenceCount: input.evidences.length
   };

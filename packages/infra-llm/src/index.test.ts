@@ -81,6 +81,7 @@ describe("buildAskAnswerPrompt", () => {
       question: "今天最值得看的 PR 是什么？",
       anchorType: "digest",
       anchorId: "3b54fb9a-1d70-4f9b-993f-ec474b6932e1",
+      locale: "zh-CN",
       retrievalContext: {
         digestId: "3b54fb9a-1d70-4f9b-993f-ec474b6932e1",
         digestTitle: "Daily Digest",
@@ -101,6 +102,7 @@ describe("buildAskAnswerPrompt", () => {
     });
 
     expect(prompt).toContain("今天最值得看的 PR 是什么？");
+    expect(prompt).toContain("问题");
     expect(prompt).toContain("\"digestTitle\": \"Daily Digest\"");
     expect(prompt).toContain("\"title\": \"nodejs/node#1\"");
   });

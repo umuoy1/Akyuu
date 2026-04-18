@@ -112,6 +112,24 @@ async function waitForTextToDisappear(
   );
 }
 
+async function waitForCondition(
+  condition: () => Promise<boolean>,
+  timeoutMs = defaultTimeoutMs,
+  intervalMs = 250
+): Promise<void> {
+  const startedAt = Date.now();
+
+  while (Date.now() - startedAt < timeoutMs) {
+    if (await condition()) {
+      return;
+    }
+
+    await new Promise((resolve) => setTimeout(resolve, intervalMs));
+  }
+
+  throw new Error(`Condition was not met within ${timeoutMs}ms`);
+}
+
 async function markContainerByHeading(page: Page, containerSelector: string, headingText: string, timeoutMs = defaultTimeoutMs): Promise<string> {
   const marker = buildMarker("container");
 
@@ -466,6 +484,12 @@ const fixtureScenarios: Scenario[] = [
 
       await clickByTextAndWaitForNavigation(page, {
         selector: "a",
+        text: "Observe"
+      });
+      await waitForText(page, "Current Watches");
+
+      await clickByTextAndWaitForNavigation(page, {
+        selector: "a",
         text: "Trends"
       });
       await waitForText(page, "Trends");
@@ -524,7 +548,7 @@ const fixtureScenarios: Scenario[] = [
         }
       );
       await waitForText(page, "feedback 1");
-      await waitForText(page, "item type pr");
+      await waitForText(page, "item type PR");
 
       await clickByTextAndWaitForNavigation(page, {
         selector: "a",
@@ -553,6 +577,31 @@ const fixtureScenarios: Scenario[] = [
       await waitForText(page, "Ask History");
       await waitForText(page, askQuestion);
     }
+  },
+  {
+    name: "fixture: switches locale and rerenders the translated shell",
+    run: async (page, harness) => {
+      await openPage(page, `${harness.webBaseUrl}/today`);
+
+      await selectLabeledControl(page, {
+        labelText: "Language",
+        value: "zh-CN",
+        rootSelector: ".nav__controls"
+      });
+      await waitForCondition(async () => {
+        const response = await fetch(`${harness.apiBaseUrl}/api/v1/settings`);
+        const payload = (await response.json()) as {
+          locale?: string;
+        };
+
+        return payload.locale === "zh-CN";
+      }, 10_000);
+      await openPage(page, `${harness.webBaseUrl}/today`);
+
+      await waitForText(page, "今日", "body", 30_000);
+      await waitForText(page, "语言", "body", 30_000);
+      await waitForText(page, "运行主链路", "body", 30_000);
+    }
   }
 ];
 
@@ -566,9 +615,10 @@ const liveScenarios: Scenario[] = [
 
       await clickByTextAndWaitForNavigation(page, {
         selector: "a",
-        text: "Watches",
+        text: "Observe",
         timeoutMs: liveTimeoutMs
       });
+      await waitForText(page, "Current Watches", "body", liveTimeoutMs);
 
       await createWatch(
         page,

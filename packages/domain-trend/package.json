@@ -8,6 +8,7 @@
     "typecheck": "tsc --noEmit -p tsconfig.json"
   },
   "dependencies": {
+    "@akyuu/shared-i18n": "workspace:*",
     "@akyuu/shared-types": "workspace:*"
   }
 }

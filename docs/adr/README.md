@@ -29,6 +29,7 @@
 14. [ADR-014 多周期 Digest 窗口语义：Monthly 按 Workspace 自然月落地](./ADR-014-monthly-digest-window-semantics.md) `Accepted`
 15. [ADR-015 Feedback Personalization v1：先做 Workspace 级显式反馈画像](./ADR-015-feedback-personalization-v1.md) `Accepted`
 16. [ADR-016 Ask 生成策略：Retrieval First，LLM Composition with Deterministic Fallback](./ADR-016-ask-composition-strategy.md) `Accepted`
+17. [ADR-017 I18N 与 Locale 传播策略：Workspace-Level Locale，贯通 Web / API / Worker / LLM](./ADR-017-i18n-locale-propagation-strategy.md) `Accepted`
 
 ## 说明
 

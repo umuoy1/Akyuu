@@ -1,6 +1,9 @@
 import { notFound } from "next/navigation";
 
+import { formatDate } from "@akyuu/shared-i18n";
+
 import { fetchDigestById } from "../../../lib/api";
+import { getRequestSettings } from "../../../lib/request-settings";
 
 type DigestDetailPageProps = {
   params: Promise<{
@@ -9,6 +12,7 @@ type DigestDetailPageProps = {
 };
 
 export default async function DigestDetailPage({ params }: DigestDetailPageProps) {
+  const { locale, timezone, messages } = await getRequestSettings();
   const { digestId } = await params;
   const digest = await fetchDigestById(digestId);
 
@@ -19,10 +23,11 @@ export default async function DigestDetailPage({ params }: DigestDetailPageProps
   return (
     <section className="grid">
       <div className="hero">
-        <p className="muted">{digest.digestType}</p>
+        <p className="muted">{messages.enums.digestType[digest.digestType]}</p>
         <h1>{digest.title}</h1>
         <p className="muted">
-          {digest.windowStart} - {digest.windowEnd}
+          {formatDate(digest.windowStart, locale, { timeZone: timezone })} -{" "}
+          {formatDate(digest.windowEnd, locale, { timeZone: timezone })}
         </p>
       </div>
 
@@ -33,8 +38,8 @@ export default async function DigestDetailPage({ params }: DigestDetailPageProps
             <article className="card" key={section.key}>
               <h2>{section.title}</h2>
               <ul>
-                {section.bullets.map((bullet) => (
-                  <li key={bullet}>{bullet}</li>
+                {section.bullets.map((bullet, index) => (
+                  <li key={`${section.key}-${index}`}>{bullet}</li>
                 ))}
               </ul>
             </article>

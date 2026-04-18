@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@akyuu/shared-config": "workspace:*",
+    "@akyuu/shared-i18n": "workspace:*",
     "@akyuu/shared-types": "workspace:*"
   }
 }

@@ -1,6 +1,7 @@
 import { and, eq, isNull } from "drizzle-orm";
 
 import { getEnv } from "@akyuu/shared-config";
+import { getMessages } from "@akyuu/shared-i18n";
 import { toSlug } from "@akyuu/shared-utils";
 
 import { closeDb, db } from "./client/index.js";
@@ -8,6 +9,7 @@ import { appUser, topic, topicAlias, topicRule, watchSchedule, workspace, worksp
 
 async function main(): Promise<void> {
   const env = getEnv();
+  const messages = getMessages(env.DEFAULT_LOCALE);
 
   let [workspaceRow] = await db.select().from(workspace).where(eq(workspace.slug, env.DEFAULT_WORKSPACE_SLUG)).limit(1);
 
@@ -17,7 +19,8 @@ async function main(): Promise<void> {
       .values({
         name: env.DEFAULT_WORKSPACE_NAME,
         slug: env.DEFAULT_WORKSPACE_SLUG,
-        timezone: env.DEFAULT_TIMEZONE
+        timezone: env.DEFAULT_TIMEZONE,
+        locale: env.DEFAULT_LOCALE
       })
       .returning();
   }
@@ -59,13 +62,14 @@ async function main(): Promise<void> {
     .limit(1);
 
   if (existingTopic.length === 0) {
+    const systemTopicName = messages.watches.defaultTopicName;
     const [topicRow] = await db
       .insert(topic)
       .values({
         workspaceId: null,
-        name: "AI Agent",
+        name: systemTopicName,
         slug: toSlug("AI Agent"),
-        description: "System topic for AI coding agent related changes."
+        description: messages.topics.systemDescription
       })
       .returning();
 
@@ -106,6 +110,7 @@ async function main(): Promise<void> {
         workspaceId: workspaceRow.id,
         userId: userRow.id,
         timezone: workspaceRow.timezone,
+        locale: workspaceRow.locale,
         schedules: schedules.length
       },
       null,

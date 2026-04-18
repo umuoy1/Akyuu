@@ -1,19 +1,25 @@
 import Link from "next/link";
 
-const links = [
-  { href: "/today", label: "Today" },
-  { href: "/watches", label: "Watches" },
-  { href: "/topics", label: "Topics" },
-  { href: "/trends", label: "Trends" },
-  { href: "/history", label: "History" },
-  { href: "/delivery", label: "Delivery" },
-  { href: "/ask", label: "Ask" }
-];
+import { getMessages } from "@akyuu/shared-i18n";
+import type { SupportedLocale } from "@akyuu/shared-types";
 
-export function Nav() {
+import { LocaleSwitcher } from "./locale-switcher";
+
+export function Nav(props: {
+  locale: SupportedLocale;
+}) {
+  const messages = getMessages(props.locale);
+  const links = [
+    { href: "/today", label: messages.nav.today },
+    { href: "/observe", label: messages.nav.observe },
+    { href: "/history", label: messages.nav.history },
+    { href: "/delivery", label: messages.nav.delivery },
+    { href: "/ask", label: messages.nav.ask }
+  ];
+
   return (
     <nav className="nav">
-      <div className="nav__brand">Akyuu</div>
+      <div className="nav__brand">{messages.nav.brand}</div>
       <div className="nav__links">
         {links.map((link) => (
           <Link key={link.href} href={link.href}>
@@ -21,6 +27,7 @@ export function Nav() {
           </Link>
         ))}
       </div>
+      <LocaleSwitcher currentLocale={props.locale} />
     </nav>
   );
 }

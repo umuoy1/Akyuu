@@ -1,14 +1,20 @@
+import { ObserveNav } from "../../components/observe-nav";
 import { fetchTopics } from "../../lib/api";
 
+import { getRequestSettings } from "../../lib/request-settings";
+
 export default async function TopicsPage() {
+  const { messages } = await getRequestSettings();
   const data = await fetchTopics();
 
   return (
     <section className="grid">
+      <ObserveNav />
+
       <div className="hero">
-        <p className="muted">TopicWatch</p>
-        <h1>Topics</h1>
-        <p className="muted">Rules aggregate cross-repo signals into topic-level summaries.</p>
+        <p className="muted">{messages.topics.productLabel}</p>
+        <h1>{messages.topics.title}</h1>
+        <p className="muted">{messages.topics.intro}</p>
       </div>
 
       <div className="grid grid--two">
@@ -16,9 +22,9 @@ export default async function TopicsPage() {
           data.topics.map((topic) => (
             <article className="panel" key={topic.id}>
               <h2>{topic.name}</h2>
-              <p className="muted">{topic.description ?? "No description."}</p>
+              <p className="muted">{topic.description ?? messages.common.noDescription}</p>
               <p className="muted">
-                {topic.repoBindings.length} repo bindings · {topic.evidenceCount} evidences
+                {messages.topics.repoBindingsAndEvidences(topic.repoBindings.length, topic.evidenceCount)}
               </p>
               <div className="list">
                 {topic.recentUpdates.length > 0 ? (
@@ -26,22 +32,22 @@ export default async function TopicsPage() {
                     <div className="card" key={update.id}>
                       <strong>{update.summary}</strong>
                       <ul>
-                        {update.highlights.map((highlight) => (
-                          <li key={highlight}>{highlight}</li>
+                        {update.highlights.map((highlight, index) => (
+                          <li key={`${update.id}-${index}`}>{highlight}</li>
                         ))}
                       </ul>
                     </div>
                   ))
                 ) : (
-                  <p className="muted">No topic updates yet. Run the pipeline after adding repo bindings.</p>
+                  <p className="muted">{messages.topics.noTopicUpdates}</p>
                 )}
               </div>
             </article>
           ))
         ) : (
           <section className="panel">
-            <h2>No topics yet</h2>
-            <p className="muted">Create a TopicWatch from Watches to start aggregating cross-repo signals.</p>
+            <h2>{messages.topics.noTopics}</h2>
+            <p className="muted">{messages.topics.noTopicsHint}</p>
           </section>
         )}
       </div>

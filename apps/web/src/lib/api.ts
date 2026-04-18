@@ -1,3 +1,5 @@
+import { cache } from "react";
+
 import type {
   ListAskSessionsResponse,
   DigestResponse,
@@ -5,6 +7,7 @@ import type {
   ListDigestsResponse,
   ListNotificationsResponse,
   PreferenceProfileResponse,
+  WorkspaceSettingsResponse,
   ListTopicsResponse,
   ListTrendDiffsResponse,
   ListWatchesResponse
@@ -90,3 +93,7 @@ export async function fetchNotifications(): Promise<ListNotificationsResponse> {
 export async function fetchPreferenceProfile(): Promise<PreferenceProfileResponse> {
   return apiFetch<PreferenceProfileResponse>("/api/v1/preferences");
 }
+
+export const fetchWorkspaceSettings = cache(async (): Promise<WorkspaceSettingsResponse> => {
+  return apiFetch<WorkspaceSettingsResponse>("/api/v1/settings");
+});

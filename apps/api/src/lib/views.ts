@@ -1,8 +1,10 @@
 import { and, desc, eq, isNull, or } from "drizzle-orm";
+import { getMessages } from "@akyuu/shared-i18n";
 
 import type {
   DigestView,
   NotificationRecord,
+  SupportedLocale,
   TopicUpdateView,
   TopicView,
   WatchConfig,
@@ -50,7 +52,7 @@ export async function listWatchViews(workspaceId: string): Promise<WatchRecord[]
     }));
 }
 
-export async function loadDigestViewById(digestId: string): Promise<DigestView | null> {
+export async function loadDigestViewById(digestId: string, locale: SupportedLocale = "en-US"): Promise<DigestView | null> {
   const [digestRow] = await db.select().from(digest).where(eq(digest.id, digestId)).limit(1);
 
   if (!digestRow) {
@@ -63,11 +65,12 @@ export async function loadDigestViewById(digestId: string): Promise<DigestView |
   ]);
 
   const summaryStruct = digestRow.summaryStruct as Record<string, unknown>;
+  const messages = getMessages(locale);
 
   return {
     id: digestRow.id,
     digestType: digestRow.digestType as DigestView["digestType"],
-    title: digestRow.title ?? "Daily Digest",
+    title: digestRow.title ?? messages.common.digest,
     summary: String(summaryStruct.summary ?? ""),
     renderedMarkdown: digestRow.renderedMarkdown,
     windowStart: digestRow.windowStart.toISOString(),
@@ -90,7 +93,13 @@ export async function loadDigestViewById(digestId: string): Promise<DigestView |
       return {
         id: row.id,
         itemType: row.itemType as DigestView["recommendedItems"][number]["itemType"],
-        title: String(reasonStruct.title ?? row.itemType),
+        title: String(
+          reasonStruct.title ??
+            messages.enums.itemType[
+              row.itemType as keyof typeof messages.enums.itemType
+            ] ??
+            row.itemType
+        ),
         href: typeof reasonStruct.href === "string" ? reasonStruct.href : null,
         reason: String(reasonStruct.reason ?? ""),
         score: Number(row.score)
@@ -104,7 +113,8 @@ export async function listDigestViews(
   options?: {
     digestType?: DigestView["digestType"];
     q?: string;
-  }
+  },
+  locale: SupportedLocale = "en-US"
 ): Promise<DigestView[]> {
   const rows = await db
     .select()
@@ -113,7 +123,7 @@ export async function listDigestViews(
     .orderBy(desc(digest.windowStart))
     .limit(50);
 
-  const digests = await Promise.all(rows.map((row) => loadDigestViewById(row.id)));
+  const digests = await Promise.all(rows.map((row) => loadDigestViewById(row.id, locale)));
 
   return digests
     .filter((item): item is DigestView => item !== null)

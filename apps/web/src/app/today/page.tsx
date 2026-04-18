@@ -1,10 +1,14 @@
 import Link from "next/link";
 
+import { formatDateTime } from "@akyuu/shared-i18n";
+
 import { fetchFeedback, fetchLatestDigest, fetchNotifications, fetchPreferenceProfile, fetchWatches } from "../../lib/api";
 import { FeedbackActions } from "../../components/feedback-actions";
 import { RunPipelineButton } from "../../components/run-pipeline-button";
+import { getRequestSettings } from "../../lib/request-settings";
 
 export default async function TodayPage() {
+  const { locale, timezone, messages } = await getRequestSettings();
   const [digest, feedback, notifications, preferenceProfile, watches] = await Promise.all([
     fetchLatestDigest(),
     fetchFeedback(),
@@ -27,22 +31,22 @@ export default async function TodayPage() {
   return (
     <div className="grid">
       <section className="hero">
-        <p className="muted">GitHub Intel Agent</p>
-        <h1>Today</h1>
-        <p className="muted">Run the pipeline after adding at least one RepoWatch, TopicWatch, or TrendWatch.</p>
+        <p className="muted">{messages.today.productLabel}</p>
+        <h1>{messages.today.title}</h1>
+        <p className="muted">{messages.today.intro}</p>
         <div className="feedback-actions">
           <RunPipelineButton
             disabled={!hasRunnableWatch}
-            disabledReason={!hasRunnableWatch ? "Create at least one active watch before running the pipeline." : null}
+            disabledReason={!hasRunnableWatch ? messages.today.disabledReason : null}
           />
           <RunPipelineButton
             digestType="weekly"
-            label="Run Weekly Digest"
+            label={messages.actions.runWeeklyDigest}
             disabled={!hasRunnableWatch}
           />
           <RunPipelineButton
             digestType="monthly"
-            label="Run Monthly Digest"
+            label={messages.actions.runMonthlyDigest}
             disabled={!hasRunnableWatch}
           />
         </div>
@@ -57,8 +61,8 @@ export default async function TodayPage() {
               <article className="card" key={section.key}>
                 <h3>{section.title}</h3>
                 <ul>
-                  {section.bullets.map((bullet) => (
-                    <li key={bullet}>{bullet}</li>
+                  {section.bullets.map((bullet, index) => (
+                    <li key={`${section.key}-${index}`}>{bullet}</li>
                   ))}
                 </ul>
               </article>
@@ -66,7 +70,7 @@ export default async function TodayPage() {
           </div>
 
           <article className="card">
-            <h3>Recommended Items</h3>
+            <h3>{messages.today.recommendedItems}</h3>
             <ul>
               {digest.recommendedItems.map((item) => (
                 <li key={item.id}>
@@ -84,77 +88,90 @@ export default async function TodayPage() {
               ))}
             </ul>
             <p>
-              <Link href="/ask">Continue with Ask</Link>
+              <Link href="/ask">{messages.today.continueWithAsk}</Link>
             </p>
           </article>
 
           <article className="card">
-            <h3>Recent Feedback</h3>
+            <h3>{messages.today.recentFeedback}</h3>
             <ul>
               {feedback.feedback.length > 0 ? (
                 feedback.feedback.slice(0, 5).map((item) => (
                   <li key={item.id}>
-                    {item.feedbackType} on {item.targetType} · {item.createdAt}
+                    {messages.today.feedbackRecord(
+                      messages.enums.feedbackType[item.feedbackType],
+                      messages.enums.feedbackTargetType[item.targetType],
+                      formatDateTime(item.createdAt, locale, {
+                        timeZone: timezone
+                      })
+                    )}
                   </li>
                 ))
               ) : (
-                <li>No feedback yet.</li>
+                <li>{messages.today.noFeedback}</li>
               )}
             </ul>
           </article>
 
           <article className="card">
-            <h3>Recent Delivery</h3>
+            <h3>{messages.today.recentDelivery}</h3>
             <ul>
               {notifications.notifications.length > 0 ? (
                 notifications.notifications.slice(0, 5).map((item) => (
                   <li key={item.id}>
-                    {item.channel} to {item.targetAddress} · {item.status}
+                    {messages.today.deliveryRecord(
+                      messages.enums.notificationChannel[item.channel],
+                      item.targetAddress,
+                      messages.enums.notificationStatus[item.status]
+                    )}
                   </li>
                 ))
               ) : (
-                <li>No deliveries yet.</li>
+                <li>{messages.today.noDelivery}</li>
               )}
             </ul>
             <p>
-              <Link href="/delivery">Open Delivery</Link>
+              <Link href="/delivery">{messages.today.openDelivery}</Link>
             </p>
           </article>
 
           <article className="card">
-            <h3>Preference Profile</h3>
+            <h3>{messages.today.preferenceProfile}</h3>
             {preferenceProfile.profile ? (
               <>
-                <p className="muted">feedback {preferenceProfile.profile.profile.feedbackCount}</p>
+                <p className="muted">{messages.today.feedbackCount(preferenceProfile.profile.profile.feedbackCount)}</p>
                 <ul>
                   {topItemTypeWeights.map(([key, value]) => (
                     <li key={key}>
-                      item type {key} · {value}
+                      {messages.today.itemTypeWeight(
+                        messages.enums.itemType[key as keyof typeof messages.enums.itemType] ?? key,
+                        value
+                      )}
                     </li>
                   ))}
                   {topRepoWeights.map(([key, value]) => (
                     <li key={key}>
-                      repo {key} · {value}
+                      {messages.today.repoWeight(key, value)}
                     </li>
                   ))}
                 </ul>
               </>
             ) : (
-              <p className="muted">No preference profile yet.</p>
+              <p className="muted">{messages.today.noPreferenceProfile}</p>
             )}
           </article>
 
           <article className="card">
-            <h3>Rendered Markdown</h3>
+            <h3>{messages.today.renderedMarkdown}</h3>
             <div className="markdown">{digest.renderedMarkdown}</div>
           </article>
         </section>
       ) : (
         <section className="panel">
-          <h2>No digest yet</h2>
-          <p className="muted">Create watches, start the worker, then run the pipeline here.</p>
+          <h2>{messages.today.noDigest}</h2>
+          <p className="muted">{messages.today.noDigestHint}</p>
           <p>
-            <Link href="/watches">Go to Watches</Link>
+            <Link href="/watches">{messages.today.goToWatches}</Link>
           </p>
         </section>
       )}

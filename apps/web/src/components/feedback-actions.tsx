@@ -2,7 +2,10 @@
 
 import { useState, useTransition } from "react";
 
+import { getMessages } from "@akyuu/shared-i18n";
+
 import { getClientApiBaseUrl, readResponseError } from "../lib/client-request";
+import { useLocale } from "./locale-provider";
 
 type FeedbackActionsProps = {
   targetType: "digest" | "recommended_item" | "topic_update";
@@ -15,23 +18,29 @@ async function sendFeedback(input: {
   targetId: string;
   feedbackType: "worthwhile" | "not_worthwhile";
   metadata?: Record<string, unknown>;
-}): Promise<string | null> {
-  const response = await fetch(`${getClientApiBaseUrl()}/api/v1/feedback`, {
-    method: "POST",
-    headers: {
-      "content-type": "application/json"
-    },
-    body: JSON.stringify(input)
-  });
+}, fallback: string): Promise<string | null> {
+  try {
+    const response = await fetch(`${getClientApiBaseUrl()}/api/v1/feedback`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+      body: JSON.stringify(input)
+    });
 
-  if (!response.ok) {
-    return readResponseError(response, "Failed to save feedback");
+    if (!response.ok) {
+      return readResponseError(response, fallback);
+    }
+  } catch {
+    return fallback;
   }
 
   return null;
 }
 
 export function FeedbackActions({ targetType, targetId, metadata }: FeedbackActionsProps) {
+  const locale = useLocale();
+  const messages = getMessages(locale);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
@@ -62,7 +71,7 @@ export function FeedbackActions({ targetType, targetId, metadata }: FeedbackActi
         onClick={() =>
           startTransition(async () => {
             setError(null);
-            const message = await sendFeedback(buildPayload("worthwhile"));
+            const message = await sendFeedback(buildPayload("worthwhile"), messages.api.feedbackPersistFailed);
             if (message) {
               setError(message);
               return;
@@ -71,7 +80,7 @@ export function FeedbackActions({ targetType, targetId, metadata }: FeedbackActi
           })
         }
       >
-        {isPending ? "Saving..." : "Worthwhile"}
+        {isPending ? messages.actions.save : messages.actions.worthwhile}
       </button>
       <button
         type="button"
@@ -80,7 +89,7 @@ export function FeedbackActions({ targetType, targetId, metadata }: FeedbackActi
         onClick={() =>
           startTransition(async () => {
             setError(null);
-            const message = await sendFeedback(buildPayload("not_worthwhile"));
+            const message = await sendFeedback(buildPayload("not_worthwhile"), messages.api.feedbackPersistFailed);
             if (message) {
               setError(message);
               return;
@@ -89,7 +98,7 @@ export function FeedbackActions({ targetType, targetId, metadata }: FeedbackActi
           })
         }
       >
-        {isPending ? "Saving..." : "Not Worthwhile"}
+        {isPending ? messages.actions.save : messages.actions.notWorthwhile}
       </button>
       {error ? <p className="status status--error">{error}</p> : null}
     </div>

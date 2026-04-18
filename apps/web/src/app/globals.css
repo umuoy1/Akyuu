@@ -14,6 +14,7 @@
 
 html,
 body {
+  height: 100%;
   margin: 0;
   padding: 0;
   background:
@@ -23,9 +24,46 @@ body {
   font-family: Georgia, "Times New Roman", serif;
 }
 
+body {
+  overflow: hidden;
+}
+
 a {
   color: inherit;
   text-decoration: none;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.app-shell {
+  height: 100%;
+  min-height: 100vh;
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  overflow: hidden;
+}
+
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.app-main {
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
 }
 
 .nav {
@@ -33,6 +71,7 @@ a {
   justify-content: space-between;
   align-items: center;
   padding: 1rem 1.5rem;
+  background: rgba(246, 241, 231, 0.86);
   border-bottom: 1px solid rgba(31, 29, 26, 0.08);
   backdrop-filter: blur(10px);
 }
@@ -45,12 +84,66 @@ a {
 .nav__links {
   display: flex;
   gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.nav__controls {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.nav__locale {
+  display: inline-flex;
+  align-items: center;
+}
+
+.nav__locale select {
+  min-width: 7.5rem;
+  padding: 0.45rem 1.9rem 0.45rem 0.75rem;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.92);
+  font: inherit;
+  color: var(--ink);
 }
 
 .page {
   max-width: 1100px;
   margin: 0 auto;
   padding: 2rem 1.5rem 4rem;
+}
+
+.subnav {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  padding: 0.35rem;
+  border: 1px solid rgba(31, 29, 26, 0.08);
+  border-radius: 999px;
+  background: rgba(255, 250, 241, 0.82);
+  width: fit-content;
+  max-width: 100%;
+  position: sticky;
+  top: 0.9rem;
+  z-index: 4;
+  backdrop-filter: blur(8px);
+}
+
+.subnav__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  color: var(--muted);
+}
+
+.subnav__link--active {
+  background: var(--accent);
+  color: white;
 }
 
 .hero,
@@ -98,6 +191,7 @@ button:disabled {
 .form {
   display: grid;
   gap: 0.75rem;
+  align-content: start;
 }
 
 .form--inline {
@@ -120,6 +214,17 @@ button:disabled {
   border-radius: 12px;
   background: white;
   font: inherit;
+}
+
+.form > button,
+.form > .button {
+  justify-self: start;
+  min-width: 8.5rem;
+}
+
+.form textarea {
+  min-height: 7rem;
+  resize: vertical;
 }
 
 .list {
@@ -164,5 +269,19 @@ button:disabled {
     flex-direction: column;
     gap: 0.75rem;
     align-items: flex-start;
+  }
+
+  .nav__controls {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .subnav {
+    width: 100%;
+  }
+
+  .nav__locale select {
+    min-width: 0;
+    width: 100%;
   }
 }

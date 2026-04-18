@@ -1,4 +1,5 @@
-import type { AskAnchorType, AskRetrievalContext } from "@akyuu/shared-types";
+import { getMessages } from "@akyuu/shared-i18n";
+import type { AskAnchorType, AskRetrievalContext, SupportedLocale } from "@akyuu/shared-types";
 import { getEnv } from "@akyuu/shared-config";
 
 export type LlmRenderResult = {
@@ -25,21 +26,6 @@ type ChatCompletionMessage = {
   role: "system" | "user";
   content: string;
 };
-
-const renderSystemPrompt = [
-  "You are editing a GitHub monitoring digest.",
-  "Keep every factual detail, title, ranking, and URL grounded in the input markdown.",
-  "Improve readability and flow, but do not add new claims.",
-  "Return markdown only."
-].join(" ");
-
-const askSystemPrompt = [
-  "You answer follow-up questions about a GitHub monitoring workspace.",
-  "Use only the provided retrieval context.",
-  "Do not invent repositories, pull requests, dates, rankings, or evidence that are not in the context.",
-  "If the context is insufficient, say so directly.",
-  "Write concise markdown only and match the user's language."
-].join(" ");
 
 export function normalizeOpenAiBaseUrl(baseUrl: string): string {
   return baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;
@@ -75,15 +61,17 @@ export function buildAskAnswerPrompt(input: {
   anchorType: AskAnchorType;
   anchorId: string | null;
   retrievalContext: AskRetrievalContext;
+  locale: SupportedLocale;
 }): string {
+  const messages = getMessages(input.locale);
   return [
-    "Question:",
+    `${messages.llm.questionLabel}:`,
     input.question,
     "",
-    `Anchor Type: ${input.anchorType}`,
-    `Anchor Id: ${input.anchorId ?? "null"}`,
+    `${messages.llm.anchorTypeLabel}: ${input.anchorType}`,
+    `${messages.llm.anchorIdLabel}: ${input.anchorId ?? "null"}`,
     "",
-    "Retrieval Context JSON:",
+    `${messages.llm.retrievalContextLabel}:`,
     JSON.stringify(input.retrievalContext, null, 2)
   ].join("\n");
 }
@@ -139,12 +127,13 @@ async function completeMarkdown(messages: ChatCompletionMessage[], fallbackMarkd
   }
 }
 
-export async function renderDigestMarkdown(markdown: string): Promise<LlmRenderResult> {
+export async function renderDigestMarkdown(markdown: string, locale: SupportedLocale): Promise<LlmRenderResult> {
+  const messages = getMessages(locale);
   return completeMarkdown(
     [
       {
         role: "system",
-        content: renderSystemPrompt
+        content: `${messages.llm.renderDigestSystemPrompt} Write the final answer in ${messages.llm.targetLanguage}.`
       },
       {
         role: "user",
@@ -161,12 +150,14 @@ export async function composeAskAnswer(input: {
   anchorId: string | null;
   retrievalContext: AskRetrievalContext;
   fallbackAnswerMarkdown: string;
+  locale: SupportedLocale;
 }): Promise<LlmRenderResult> {
+  const messages = getMessages(input.locale);
   return completeMarkdown(
     [
       {
         role: "system",
-        content: askSystemPrompt
+        content: `${messages.llm.askSystemPrompt} Write the final answer in ${messages.llm.targetLanguage}.`
       },
       {
         role: "user",
@@ -174,7 +165,8 @@ export async function composeAskAnswer(input: {
           question: input.question,
           anchorType: input.anchorType,
           anchorId: input.anchorId,
-          retrievalContext: input.retrievalContext
+          retrievalContext: input.retrievalContext,
+          locale: input.locale
         })
       }
     ],

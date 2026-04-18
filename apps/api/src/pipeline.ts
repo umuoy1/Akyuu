@@ -2,6 +2,7 @@ import { and, eq, isNull, or } from "drizzle-orm";
 
 import { enqueueJob, waitForJobResult } from "@akyuu/infra-queue";
 import { appUser, db, topic, watchTarget, workspaceMember } from "@akyuu/infra-db";
+import { getMessages } from "@akyuu/shared-i18n";
 import { formatDateForTimezone, getDayWindow, getMonthWindow, getWeekWindow, isoNow } from "@akyuu/shared-utils";
 import type {
   JobEnvelope,
@@ -116,11 +117,13 @@ function repoWatchRowToView(row: typeof watchTarget.$inferSelect): WatchRecord {
 export async function runWorkspacePipeline(input: {
   workspaceId: string;
   timezone: string;
+  locale: "en-US" | "zh-CN";
   date?: string;
   digestType: "daily" | "weekly" | "monthly";
 }): Promise<string> {
   const dateLabel = input.date ?? formatDateForTimezone(new Date(), input.timezone);
   const runToken = isoNow();
+  const messages = getMessages(input.locale);
 
   const watchRows = await db.select().from(watchTarget).where(eq(watchTarget.workspaceId, input.workspaceId));
   const watches = watchRows
@@ -129,7 +132,7 @@ export async function runWorkspacePipeline(input: {
     .filter((watch) => watch.type === "repo" || watch.type === "trend" || watch.type === "topic");
 
   if (watches.length === 0) {
-    throw new Error("No active repo/trend/topic watches found.");
+    throw new Error(messages.api.noActiveWatches);
   }
 
   const rawSignalPriority = new Map<string, number>();

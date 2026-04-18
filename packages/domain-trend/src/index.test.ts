@@ -14,7 +14,8 @@ describe("buildTrendDiffSummary", () => {
         { rank: 1, repoFullName: "b/b", description: null, language: null, starsToday: 12 },
         { rank: 2, repoFullName: "a/a", description: null, language: null, starsToday: 11 },
         { rank: 3, repoFullName: "d/d", description: null, language: null, starsToday: 7 }
-      ]
+      ],
+      "en-US"
     );
 
     expect(summary.newEntries).toEqual(["d/d"]);

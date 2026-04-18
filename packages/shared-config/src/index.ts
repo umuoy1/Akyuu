@@ -17,6 +17,7 @@ const envSchema = z.object({
   DEFAULT_WORKSPACE_SLUG: z.string().default("dev"),
   DEFAULT_WORKSPACE_NAME: z.string().default("Dev Workspace"),
   DEFAULT_TIMEZONE: z.string().default("Asia/Shanghai"),
+  DEFAULT_LOCALE: z.enum(["en-US", "zh-CN"]).default("en-US"),
   SCHEDULER_AUTO_RUN: z
     .union([z.literal("true"), z.literal("false")])
     .default("false")

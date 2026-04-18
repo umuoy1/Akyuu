@@ -4,6 +4,7 @@ export * from "./domain/canonical.js";
 export * from "./domain/digest.js";
 export * from "./domain/feedback.js";
 export * from "./domain/job.js";
+export * from "./domain/locale.js";
 export * from "./domain/notification.js";
 export * from "./domain/preference.js";
 export * from "./domain/score.js";

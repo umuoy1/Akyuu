@@ -8,6 +8,7 @@ describe("buildAskSession", () => {
       anchorType: "digest",
       anchorId: "3b54fb9a-1d70-4f9b-993f-ec474b6932e1",
       question: "今天最值得看的 3 个 PR 是什么？",
+      locale: "zh-CN",
       digest: {
         id: "3b54fb9a-1d70-4f9b-993f-ec474b6932e1",
         digestType: "daily",
@@ -48,6 +49,7 @@ describe("buildAskSession", () => {
       anchorType: "topic",
       anchorId: "3e62cc47-b74f-4b5d-b2b2-6e8d0dbf04f4",
       question: "Temporal 最近有没有推进？",
+      locale: "zh-CN",
       digest: null,
       topics: [
         {

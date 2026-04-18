@@ -2,10 +2,15 @@
 
 import { useState, useTransition } from "react";
 
+import { getMessages } from "@akyuu/shared-i18n";
+
 import { getClientApiBaseUrl, readResponseError } from "../lib/client-request";
+import { useLocale } from "./locale-provider";
 
 export function AskForm() {
-  const [question, setQuestion] = useState("今天最值得看的 3 个 PR 是什么？");
+  const locale = useLocale();
+  const messages = getMessages(locale);
+  const [question, setQuestion] = useState(messages.ask.questionPlaceholder);
   const [isPending, startTransition] = useTransition();
   const [error, setError] = useState<string | null>(null);
 
@@ -17,39 +22,42 @@ export function AskForm() {
 
         startTransition(async () => {
           setError(null);
+          try {
+            const response = await fetch(`${getClientApiBaseUrl()}/api/v1/ask`, {
+              method: "POST",
+              headers: {
+                "content-type": "application/json"
+              },
+              body: JSON.stringify({
+                question,
+                anchorType: "digest"
+              })
+            });
 
-          const response = await fetch(`${getClientApiBaseUrl()}/api/v1/ask`, {
-            method: "POST",
-            headers: {
-              "content-type": "application/json"
-            },
-            body: JSON.stringify({
-              question,
-              anchorType: "digest"
-            })
-          });
+            if (!response.ok) {
+              setError(await readResponseError(response, messages.ask.failed));
+              return;
+            }
 
-          if (!response.ok) {
-            setError(await readResponseError(response, "Failed to ask question"));
-            return;
+            window.location.reload();
+          } catch {
+            setError(messages.ask.failed);
           }
-
-          window.location.reload();
         });
       }}
     >
-      <h2>Ask Follow-up</h2>
+      <h2>{messages.ask.followUpTitle}</h2>
       <label>
-        Question
+        {messages.ask.question}
         <textarea
           rows={4}
           value={question}
           onChange={(event) => setQuestion(event.target.value)}
-          placeholder="今天最值得看的 3 个 PR 是什么？"
+          placeholder={messages.ask.questionPlaceholder}
         />
       </label>
       <button type="submit" disabled={isPending}>
-        {isPending ? "Asking..." : "Ask"}
+        {isPending ? messages.actions.asking : messages.actions.ask}
       </button>
       {error ? <p className="status status--error">{error}</p> : null}
     </form>

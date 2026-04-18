@@ -98,6 +98,9 @@ importers:
       '@akyuu/shared-config':
         specifier: workspace:*
         version: link:../../packages/shared-config
+      '@akyuu/shared-i18n':
+        specifier: workspace:*
+        version: link:../../packages/shared-i18n
       '@akyuu/shared-types':
         specifier: workspace:*
         version: link:../../packages/shared-types
@@ -173,6 +176,9 @@ importers:
       '@akyuu/shared-config':
         specifier: workspace:*
         version: link:../../packages/shared-config
+      '@akyuu/shared-i18n':
+        specifier: workspace:*
+        version: link:../../packages/shared-i18n
       '@akyuu/shared-types':
         specifier: workspace:*
         version: link:../../packages/shared-types
@@ -230,6 +236,9 @@ importers:
       '@akyuu/shared-config':
         specifier: workspace:*
         version: link:../../packages/shared-config
+      '@akyuu/shared-i18n':
+        specifier: workspace:*
+        version: link:../../packages/shared-i18n
       '@akyuu/shared-types':
         specifier: workspace:*
         version: link:../../packages/shared-types
@@ -257,6 +266,9 @@ importers:
 
   packages/domain-ask:
     dependencies:
+      '@akyuu/shared-i18n':
+        specifier: workspace:*
+        version: link:../shared-i18n
       '@akyuu/shared-types':
         specifier: workspace:*
         version: link:../shared-types
@@ -272,6 +284,9 @@ importers:
 
   packages/domain-digest:
     dependencies:
+      '@akyuu/shared-i18n':
+        specifier: workspace:*
+        version: link:../shared-i18n
       '@akyuu/shared-types':
         specifier: workspace:*
         version: link:../shared-types
@@ -299,6 +314,9 @@ importers:
 
   packages/domain-topic:
     dependencies:
+      '@akyuu/shared-i18n':
+        specifier: workspace:*
+        version: link:../shared-i18n
       '@akyuu/shared-types':
         specifier: workspace:*
         version: link:../shared-types
@@ -308,6 +326,9 @@ importers:
 
   packages/domain-trend:
     dependencies:
+      '@akyuu/shared-i18n':
+        specifier: workspace:*
+        version: link:../shared-i18n
       '@akyuu/shared-types':
         specifier: workspace:*
         version: link:../shared-types
@@ -326,6 +347,9 @@ importers:
       '@akyuu/shared-config':
         specifier: workspace:*
         version: link:../shared-config
+      '@akyuu/shared-i18n':
+        specifier: workspace:*
+        version: link:../shared-i18n
       '@akyuu/shared-types':
         specifier: workspace:*
         version: link:../shared-types
@@ -356,6 +380,9 @@ importers:
       '@akyuu/shared-config':
         specifier: workspace:*
         version: link:../shared-config
+      '@akyuu/shared-i18n':
+        specifier: workspace:*
+        version: link:../shared-i18n
       '@akyuu/shared-types':
         specifier: workspace:*
         version: link:../shared-types
@@ -401,6 +428,12 @@ importers:
       zod:
         specifier: 4.3.6
         version: 4.3.6
+
+  packages/shared-i18n:
+    dependencies:
+      '@akyuu/shared-types':
+        specifier: workspace:*
+        version: link:../shared-types
 
   packages/shared-testing:
     dependencies:

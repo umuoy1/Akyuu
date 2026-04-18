@@ -1,20 +1,36 @@
 import type { ReactNode } from "react";
 
 import { Nav } from "../components/nav";
+import { LocaleProvider } from "../components/locale-provider";
+import { getRequestSettings } from "../lib/request-settings";
 
 import "./globals.css";
 
-export const metadata = {
-  title: "Akyuu",
-  description: "GitHub intelligence agent"
-};
+export async function generateMetadata() {
+  const { messages } = await getRequestSettings();
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+  return {
+    title: "Akyuu",
+    description: messages.metadata.description
+  };
+}
+
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const { locale } = await getRequestSettings();
+
   return (
-    <html lang="en">
+    <html lang={locale}>
       <body>
-        <Nav />
-        <main className="page">{children}</main>
+        <LocaleProvider locale={locale}>
+          <div className="app-shell">
+            <header className="app-header">
+              <Nav locale={locale} />
+            </header>
+            <main className="app-main">
+              <div className="page">{children}</div>
+            </main>
+          </div>
+        </LocaleProvider>
       </body>
     </html>
   );

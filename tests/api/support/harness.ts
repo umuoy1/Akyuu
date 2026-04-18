@@ -364,6 +364,7 @@ export async function createApiIntegrationHarness(options?: {
     WEB_PORT: String(webPort ?? 3100),
     NEXT_PUBLIC_API_BASE_URL: `http://127.0.0.1:${apiPort}`,
     DEFAULT_TIMEZONE: "Asia/Shanghai",
+    DEFAULT_LOCALE: "en-US",
     SCHEDULER_AUTO_RUN: "false"
   };
 
@@ -372,6 +373,8 @@ export async function createApiIntegrationHarness(options?: {
   await runCommand("pnpm", ["--filter", "@akyuu/infra-db", "migrate"], env, "db:migrate");
 
   if (mode === "fixture") {
+    env.GITHUB_TOKEN = "";
+    env.OPENAI_API_KEY = "";
     const meta = await loadFixtureSnapshot(databaseUrl);
     env.DEFAULT_USER_EMAIL = meta.userEmail;
     env.DEFAULT_USER_NAME = meta.userDisplayName;

@@ -1,9 +1,12 @@
-import type { TrendDiffSummary, TrendingItem } from "@akyuu/shared-types";
+import { getMessages } from "@akyuu/shared-i18n";
+import type { SupportedLocale, TrendDiffSummary, TrendingItem } from "@akyuu/shared-types";
 
 export function buildTrendDiffSummary(
   previousItems: TrendingItem[],
-  currentItems: TrendingItem[]
+  currentItems: TrendingItem[],
+  locale: SupportedLocale
 ): TrendDiffSummary {
+  const messages = getMessages(locale);
   const previousByRepo = new Map(previousItems.map((item) => [item.repoFullName, item]));
   const currentByRepo = new Map(currentItems.map((item) => [item.repoFullName, item]));
 
@@ -47,18 +50,13 @@ export function buildTrendDiffSummary(
   const highlights: string[] = [];
 
   if (newEntries.length > 0) {
-    highlights.push(`New entries: ${newEntries.slice(0, 3).join(", ")}`);
+    highlights.push(messages.trend.newEntries(newEntries));
   }
   if (movedUp.length > 0) {
-    highlights.push(
-      `Fast risers: ${movedUp
-        .slice(0, 3)
-        .map((item) => `${item.repoFullName} ${item.from}->${item.to}`)
-        .join(", ")}`
-    );
+    highlights.push(messages.trend.fastRisers(movedUp));
   }
   if (leftEntries.length > 0) {
-    highlights.push(`Left trending: ${leftEntries.slice(0, 3).join(", ")}`);
+    highlights.push(messages.trend.leftTrending(leftEntries));
   }
 
   return {

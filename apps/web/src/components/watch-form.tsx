@@ -2,9 +2,14 @@
 
 import { useState, useTransition } from "react";
 
+import { getMessages } from "@akyuu/shared-i18n";
+
 import { getClientApiBaseUrl, readResponseError } from "../lib/client-request";
+import { useLocale } from "./locale-provider";
 
 export function WatchForm() {
+  const locale = useLocale();
+  const messages = getMessages(locale);
   const [watchType, setWatchType] = useState<"repo" | "trend" | "topic">("repo");
   const [name, setName] = useState("");
   const [repo, setRepo] = useState("nodejs/node");
@@ -26,118 +31,121 @@ export function WatchForm() {
 
     startTransition(async () => {
       setError(null);
-
-      const body =
-        watchType === "repo"
-          ? {
-              type: "repo",
-              name: name || repo,
-              priority: 4,
-              config: {
-                owner: repo.split("/")[0],
-                repo: repo.split("/")[1],
-                pullsLimit: 5,
-                issuesLimit: 5
-              }
-            }
-          : watchType === "trend"
+      try {
+        const body =
+          watchType === "repo"
             ? {
-                type: "trend",
-                name: name || `Trending ${scope}`,
-                priority: 3,
+                type: "repo",
+                name: name || repo,
+                priority: 4,
                 config: {
-                  source: "github_trending",
-                  scope
+                  owner: repo.split("/")[0],
+                  repo: repo.split("/")[1],
+                  pullsLimit: 5,
+                  issuesLimit: 5
                 }
               }
-            : {
-                type: "topic",
-                name: name || "AI Agent",
-                priority: 5,
-                config: {
-                  aliases: splitCsv(topicAliases),
-                  keywords: splitCsv(topicKeywords),
-                  repoBindings: splitCsv(topicRepos)
+            : watchType === "trend"
+              ? {
+                  type: "trend",
+                  name: name || `${messages.nav.trends} ${scope}`,
+                  priority: 3,
+                  config: {
+                    source: "github_trending",
+                    scope
+                  }
                 }
-              };
+              : {
+                  type: "topic",
+                  name: name || messages.watches.defaultTopicName,
+                  priority: 5,
+                  config: {
+                    aliases: splitCsv(topicAliases),
+                    keywords: splitCsv(topicKeywords),
+                    repoBindings: splitCsv(topicRepos)
+                  }
+                };
 
-      const response = await fetch(`${getClientApiBaseUrl()}/api/v1/watches`, {
-        method: "POST",
-        headers: {
-          "content-type": "application/json"
-        },
-        body: JSON.stringify(body)
-      });
+        const response = await fetch(`${getClientApiBaseUrl()}/api/v1/watches`, {
+          method: "POST",
+          headers: {
+            "content-type": "application/json"
+          },
+          body: JSON.stringify(body)
+        });
 
-      if (!response.ok) {
-        setError(await readResponseError(response, "Failed to create watch"));
-        return;
+        if (!response.ok) {
+          setError(await readResponseError(response, messages.api.watchCreateFailed));
+          return;
+        }
+
+        window.location.reload();
+      } catch {
+        setError(messages.api.watchCreateFailed);
       }
-
-      window.location.reload();
     });
   };
 
   return (
     <form className="panel form" onSubmit={onSubmit}>
-      <h2>Add Watch</h2>
+      <h2>{messages.watches.addWatch}</h2>
       <label>
-        Type
+        {messages.watches.type}
         <select value={watchType} onChange={(event) => setWatchType(event.target.value as "repo" | "trend" | "topic")}>
-          <option value="repo">RepoWatch</option>
-          <option value="topic">TopicWatch</option>
-          <option value="trend">TrendWatch</option>
+          <option value="repo">{messages.enums.watchType.repo}</option>
+          <option value="topic">{messages.enums.watchType.topic}</option>
+          <option value="trend">{messages.enums.watchType.trend}</option>
         </select>
       </label>
 
       <label>
-        Name
-        <input value={name} onChange={(event) => setName(event.target.value)} placeholder="Optional display name" />
+        {messages.watches.name}
+        <input value={name} onChange={(event) => setName(event.target.value)} placeholder={messages.watches.optionalDisplayName} />
       </label>
 
       {watchType === "repo" ? (
         <label>
-          Repo
-          <input value={repo} onChange={(event) => setRepo(event.target.value)} placeholder="owner/repo" />
+          {messages.watches.repo}
+          <input value={repo} onChange={(event) => setRepo(event.target.value)} placeholder={messages.watches.repoPlaceholder} />
         </label>
       ) : watchType === "trend" ? (
         <label>
-          Scope
-          <input value={scope} onChange={(event) => setScope(event.target.value)} placeholder="global" />
+          {messages.watches.scope}
+          <input value={scope} onChange={(event) => setScope(event.target.value)} placeholder={messages.watches.scopePlaceholder} />
         </label>
       ) : (
         <>
           <label>
-            Repo Bindings
+            {messages.watches.repoBindings}
             <input
               value={topicRepos}
               onChange={(event) => setTopicRepos(event.target.value)}
-              placeholder="owner/repo, owner/repo"
+              placeholder={messages.watches.repoBindingsPlaceholder}
             />
           </label>
 
           <label>
-            Aliases
+            {messages.watches.aliases}
             <input
               value={topicAliases}
               onChange={(event) => setTopicAliases(event.target.value)}
-              placeholder="temporal, async context"
+              placeholder={messages.watches.aliasesPlaceholder}
             />
           </label>
 
           <label>
-            Keywords
+            {messages.watches.keywords}
             <input
               value={topicKeywords}
               onChange={(event) => setTopicKeywords(event.target.value)}
-              placeholder="temporal, proposal"
+              placeholder={messages.watches.keywordsPlaceholder}
             />
           </label>
         </>
       )}
 
       <button type="submit" disabled={isPending}>
-        {isPending ? "Saving..." : "Create Watch"}
+        {isPending ? messages.actions.save : messages.actions.createWatch}
       </button>
       {error ? <p className="status status--error">{error}</p> : null}
     </form>

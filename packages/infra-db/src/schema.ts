@@ -21,6 +21,7 @@ export const workspace = pgTable(
     slug: text("slug").notNull(),
     planTier: text("plan_tier").notNull().default("free"),
     timezone: text("timezone").notNull().default("UTC"),
+    locale: text("locale").notNull().default("en-US"),
     createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
     updatedAt: timestamp("updated_at", { withTimezone: true }).notNull().defaultNow()
   },

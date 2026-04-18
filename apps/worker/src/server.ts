@@ -13,8 +13,9 @@ import { scoreCanonicalEvent } from "@akyuu/domain-score";
 import { buildTrendDiffSummary } from "@akyuu/domain-trend";
 import { buildTopicUpdateSummary, matchTopicRules } from "@akyuu/domain-topic";
 import { hashPayload } from "@akyuu/domain-source";
-import { canonicalEventTypeSchema, type JobEnvelope, type QueueName } from "@akyuu/shared-types";
+import { canonicalEventTypeSchema, type JobEnvelope, type QueueName, type SupportedLocale } from "@akyuu/shared-types";
 import { formatDateForTimezone, getDayWindow, getMonthWindow, getWeekWindow } from "@akyuu/shared-utils";
+import { formatDate, formatNumber, getMessages, resolveSupportedLocale } from "@akyuu/shared-i18n";
 import {
   canonicalEntity,
   canonicalEvent,
@@ -48,6 +49,7 @@ import { fetchTrendingHtml, parseTrendingHtml } from "@akyuu/infra-scraper";
 import { getEnv } from "@akyuu/shared-config";
 
 const logger = createLogger("worker");
+const env = getEnv();
 
 type QueueHandler<TPayload, TResult> = (payload: TPayload, job: JobEnvelope<TPayload>) => Promise<TResult>;
 
@@ -124,6 +126,36 @@ function withJobRun<TPayload, TResult>(
       throw error;
     }
   };
+}
+
+async function loadDefaultWorkspaceLocale(): Promise<SupportedLocale> {
+  const [workspaceRow] = await db
+    .select({
+      locale: workspace.locale
+    })
+    .from(workspace)
+    .where(eq(workspace.slug, env.DEFAULT_WORKSPACE_SLUG))
+    .limit(1);
+
+  return resolveSupportedLocale(workspaceRow?.locale ?? env.DEFAULT_LOCALE);
+}
+
+async function loadWorkspaceLocale(workspaceId: string | null | undefined): Promise<SupportedLocale> {
+  if (workspaceId) {
+    const [workspaceRow] = await db
+      .select({
+        locale: workspace.locale
+      })
+      .from(workspace)
+      .where(eq(workspace.id, workspaceId))
+      .limit(1);
+
+    if (workspaceRow) {
+      return resolveSupportedLocale(workspaceRow.locale);
+    }
+  }
+
+  return loadDefaultWorkspaceLocale();
 }
 
 async function upsertEntity(input: {
@@ -541,6 +573,7 @@ const buildTrendDiffHandler = withJobRun(
       db.select().from(trendSnapshotItem).where(eq(trendSnapshotItem.trendSnapshotId, current.id)),
       db.select().from(trendSnapshotItem).where(eq(trendSnapshotItem.trendSnapshotId, previous.id))
     ]);
+    const locale = await loadDefaultWorkspaceLocale();
 
     const summary = buildTrendDiffSummary(
       previousItems.map((item) => ({
@@ -556,7 +589,8 @@ const buildTrendDiffHandler = withJobRun(
         description: item.description,
         language: item.language,
         starsToday: item.metricPrimary ? Number(item.metricPrimary) : null
-      }))
+      })),
+      locale
     );
 
     const [trendDiffRow] = await db
@@ -601,6 +635,7 @@ const aggregateTopicWindowHandler = withJobRun(
     if (!topicRow) {
       throw new Error("topic not found");
     }
+    const locale = await loadWorkspaceLocale(topicRow.workspaceId);
 
     const evidenceResult = await db.execute(sql`
       select
@@ -639,7 +674,8 @@ const aggregateTopicWindowHandler = withJobRun(
         repoFullName: row.repo_full_name,
         eventType: row.event_type,
         explanation: row.explanation
-      }))
+      })),
+      locale
     });
 
     const totalScore = evidenceRows.reduce((sum, row) => sum + Number(row.score), 0);
@@ -830,27 +866,43 @@ const buildDigestSkeletonHandler = withJobRun(
   "build_digest_skeleton",
   async (payload: { workspaceId: string; digestType: "daily" | "weekly" | "monthly"; date: string }) => {
     const data = await buildDigestData(payload.workspaceId, payload.date, payload.digestType);
-    const rangeEndLabel = formatDateForTimezone(new Date(data.end.getTime() - 1000), data.workspaceRow.timezone);
+    const locale = resolveSupportedLocale(data.workspaceRow.locale);
+    const messages = getMessages(locale);
+    const startLabel = formatDate(data.start, locale, {
+      timeZone: data.workspaceRow.timezone
+    });
+    const rangeEndLabel = formatDate(new Date(data.end.getTime() - 1000), locale, {
+      timeZone: data.workspaceRow.timezone
+    });
     const title =
       payload.digestType === "weekly"
-        ? `Weekly Digest · ${formatDateForTimezone(data.start, data.workspaceRow.timezone)} to ${rangeEndLabel}`
+        ? messages.digest.rangedTitle(messages.enums.digestType.weekly, startLabel, rangeEndLabel)
         : payload.digestType === "monthly"
-          ? `Monthly Digest · ${formatDateForTimezone(data.start, data.workspaceRow.timezone)} to ${rangeEndLabel}`
-        : `Daily Digest · ${payload.date}`;
+          ? messages.digest.rangedTitle(messages.enums.digestType.monthly, startLabel, rangeEndLabel)
+        : messages.digest.dailyTitle(startLabel);
     const summary =
       payload.digestType === "weekly"
-        ? `Workspace weekly digest for ${formatDateForTimezone(data.start, data.workspaceRow.timezone)} to ${rangeEndLabel}.`
+        ? messages.digest.rangedSummary(messages.enums.digestType.weekly, startLabel, rangeEndLabel)
         : payload.digestType === "monthly"
-          ? `Workspace monthly digest for ${formatDateForTimezone(data.start, data.workspaceRow.timezone)} to ${rangeEndLabel}.`
-        : `Workspace digest for ${payload.date}.`;
+          ? messages.digest.rangedSummary(messages.enums.digestType.monthly, startLabel, rangeEndLabel)
+        : messages.digest.dailySummary(startLabel);
 
     const topStories = data.eventRows.slice(0, 3).map((row) => ({
       title: String(row.subject_metadata.title ?? row.subject_name),
-      summary: `${row.event_type} in ${row.repo_name ?? "unknown repo"}`
+      summary: messages.digest.topStorySummary(
+        messages.enums.eventType[row.event_type] ?? row.event_type,
+        row.repo_name ?? messages.common.unknownRepo
+      )
     }));
     const repoItems = data.eventRows.slice(0, 5).map((row) => ({
       title: row.repo_name ?? row.subject_name,
-      summary: `${row.event_type} (${Number(row.score ?? 0).toFixed(1)})`
+      summary: messages.digest.repoItemSummary(
+        messages.enums.eventType[row.event_type] ?? row.event_type,
+        formatNumber(Number(row.score ?? 0), locale, {
+          minimumFractionDigits: 1,
+          maximumFractionDigits: 1
+        })
+      )
     }));
     const topicItems = data.topicRows.slice(0, 3).map((row) => {
       const summaryStruct = row.summary_struct as Record<string, unknown>;
@@ -875,7 +927,13 @@ const buildDigestSkeletonHandler = withJobRun(
       itemType: row.event_type.startsWith("issue") ? ("issue" as const) : row.event_type.startsWith("release") ? ("release" as const) : ("pr" as const),
       title: String(row.subject_metadata.title ?? row.subject_name),
       href: typeof row.subject_metadata.htmlUrl === "string" ? row.subject_metadata.htmlUrl : null,
-      reason: `Importance score ${Number(row.score ?? 0).toFixed(1)} from ${row.event_type}`,
+      reason: messages.digest.recommendedReason(
+        formatNumber(Number(row.score ?? 0), locale, {
+          minimumFractionDigits: 1,
+          maximumFractionDigits: 1
+        }),
+        messages.enums.eventType[row.event_type] ?? row.event_type
+      ),
       score: Number(row.score ?? 0),
       rank: index + 1,
       sourceTargetId: row.event_id
@@ -895,7 +953,14 @@ const buildDigestSkeletonHandler = withJobRun(
         href: item.href,
         reason: item.reason,
         score: item.score
-      }))
+      })),
+      sectionTitles: {
+        topStories: messages.digest.topStories,
+        repo: messages.digest.repoSummary,
+        topic: messages.digest.topicSummary,
+        trend: messages.digest.trendSummary,
+        recommended: messages.digest.recommendedReading
+      }
     });
 
     const [digestRow] = await db
@@ -972,6 +1037,8 @@ const buildRecommendedItemsHandler = withJobRun(
       dateLabel,
       digestRow.digestType as "daily" | "weekly" | "monthly"
     );
+    const locale = resolveSupportedLocale(data.workspaceRow.locale);
+    const messages = getMessages(locale);
     const [profileRow] = await db
       .select()
       .from(preferenceProfile)
@@ -1035,8 +1102,24 @@ const buildRecommendedItemsHandler = withJobRun(
           href: typeof row.subject_metadata.htmlUrl === "string" ? row.subject_metadata.htmlUrl : null,
           reason:
             Math.abs(row.preferenceBonus) >= 0.1
-              ? `Importance score ${Number(row.score ?? 0).toFixed(1)} with preference ${row.preferenceBonus.toFixed(1)} from ${row.event_type}`
-              : `Importance score ${Number(row.score ?? 0).toFixed(1)} from ${row.event_type}`
+              ? messages.digest.recommendedReasonWithPreference(
+                  formatNumber(Number(row.score ?? 0), locale, {
+                    minimumFractionDigits: 1,
+                    maximumFractionDigits: 1
+                  }),
+                  formatNumber(row.preferenceBonus, locale, {
+                    minimumFractionDigits: 1,
+                    maximumFractionDigits: 1
+                  }),
+                  messages.enums.eventType[row.event_type] ?? row.event_type
+                )
+              : messages.digest.recommendedReason(
+                  formatNumber(Number(row.score ?? 0), locale, {
+                    minimumFractionDigits: 1,
+                    maximumFractionDigits: 1
+                  }),
+                  messages.enums.eventType[row.event_type] ?? row.event_type
+                )
         }
       });
     }
@@ -1123,8 +1206,9 @@ const renderDigestWithLlmHandler = withJobRun(
     if (!digestRow) {
       throw new Error("digest not found");
     }
+    const locale = await loadWorkspaceLocale(digestRow.workspaceId);
 
-    const result = await renderDigestMarkdown(digestRow.renderedMarkdown);
+    const result = await renderDigestMarkdown(digestRow.renderedMarkdown, locale);
 
     await db
       .update(digest)
@@ -1152,8 +1236,6 @@ await app.register(sensible);
 app.get("/health", async () => ({
   status: "ok"
 }));
-
-const env = getEnv();
 
 const workers = [
   createQueueWorker("ingest.poll", pollRepoEventsHandler, 2),

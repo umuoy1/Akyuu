@@ -1,5 +1,6 @@
 import { buildMarkdownFromSections } from "@akyuu/shared-utils";
-import type { DigestSectionSummary, DigestSkeleton, RecommendedItemView } from "@akyuu/shared-types";
+import { getMessages } from "@akyuu/shared-i18n";
+import type { DigestSectionSummary, DigestSkeleton, RecommendedItemView, SupportedLocale } from "@akyuu/shared-types";
 
 type DigestEventItem = {
   title: string;
@@ -30,15 +31,31 @@ export function buildDigestSkeleton(input: {
   topicItems: DigestEventItem[];
   trendItems: DigestEventItem[];
   recommendedItems: RecommendedItemView[];
+  locale?: SupportedLocale;
+  sectionTitles?: {
+    topStories: string;
+    repo: string;
+    topic: string;
+    trend: string;
+    recommended: string;
+  };
 }): DigestSkeleton {
+  const messages = getMessages(input.locale ?? "en-US");
+  const sectionTitles = input.sectionTitles ?? {
+    topStories: messages.digest.topStories,
+    repo: messages.digest.repoSummary,
+    topic: messages.digest.topicSummary,
+    trend: messages.digest.trendSummary,
+    recommended: messages.digest.recommendedReading
+  };
   const sections = [
-    makeSection("top_stories", "Top Stories", input.topStories),
-    makeSection("repo", "Repo Summary", input.repoItems),
-    makeSection("topic", "Topic Summary", input.topicItems),
-    makeSection("trend", "Trend Summary", input.trendItems),
+    makeSection("top_stories", sectionTitles.topStories, input.topStories),
+    makeSection("repo", sectionTitles.repo, input.repoItems),
+    makeSection("topic", sectionTitles.topic, input.topicItems),
+    makeSection("trend", sectionTitles.trend, input.trendItems),
     makeSection(
       "recommended",
-      "Recommended Reading",
+      sectionTitles.recommended,
       input.recommendedItems.map((item) => ({
         title: item.title,
         summary: item.reason
